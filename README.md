@@ -81,7 +81,6 @@ IIII. Release Note Edgecon
 ==============================
 First commit: standard configuration for Modberry M40804W MAX with the following GPIO settings
 
-GPIO Nummbers
 -  GPIO00  = I2C1 (SDA1)
 -  GPIO01  = I2C1 (SCL1)
 -  GPIO02  = 
@@ -112,7 +111,7 @@ GPIO Nummbers
 -  GPIO27  = LED2 (GREEN/BLUE)
 -  GPIO32  = TXD1 ttyAMA0
 -  GPIO33  = RXD1 ttyAMA0
--  GPIO44  = "ALT1 I2C0" (SDA0)
--  GPIO45  = "ALT1 I2C0" (SCL0)
+-  GPIO44  = I2C0 (SDA0)
+-  GPIO45  = I2C0 (SCL0)
 
 For more information, see file modberry-m40804w-max.inf
