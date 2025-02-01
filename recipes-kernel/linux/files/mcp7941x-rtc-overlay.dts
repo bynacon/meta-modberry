@@ -1,0 +1,29 @@
+// Definitions for several I2C based Real Time Clocks
+/dts-v1/;
+/plugin/;
+
+/ {
+        compatible = "brcm,bcm2835";
+
+        fragment@0 {
+                target = <&i2c0if>;
+                __overlay__ {
+                        #address-cells = <1>;
+                        #size-cells = <0>;
+
+                        mcp7941x: mcp7941x@6f {
+                                compatible = "microchip,mcp7941x";
+                                reg = <0x6f>;
+                                status = "okay";
+                        };
+
+                        24c01@57 {
+                                compatible = "at24,24c01";
+                                status = "okay";
+                                reg = < 0x57 >;
+                        };
+
+                };
+        };
+
+};

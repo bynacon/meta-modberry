@@ -1,0 +1,8 @@
+#bynaconf file example exist
+
+[Match]
+Path=platform-fd500000.pcie-pci-0000:03:00.0-usb-0:2:1.0
+
+[Link]
+Name=lan2
+MTUBytes=10240

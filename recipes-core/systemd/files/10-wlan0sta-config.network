@@ -1,0 +1,9 @@
+#bynaconf file example exist
+
+[Match]
+Name=wlan0_sta
+Type=wlan
+WLANInterfaceType=station
+
+[Network]
+DHCP=yes

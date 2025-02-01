@@ -1,0 +1,220 @@
+RPI GPIO's
+/*
+    GPIO Nummbers
+        0   = I2C1 (SDA1) #COMPLETE TODO - In config.txt and 0001-mood-modberry-cm4-dts.patch finishd
+        1   = I2C1 (SCL1) #COMPLETE TODO - In config.txt and 0001-mood-modberry-cm4-dts.patch finishd
+        2   = 
+        3   = 
+        4   = 
+        5   = IRQ LINE SLB9670 TPM #COMPLETE TODO - In config.txt and 0001-mood-modberry-cm4-dts.patch finishd
+        6   = IRQ LINE MCP23008 DIO #COMPLETE TODO - In 0001-mood-modberry-cm4-dts.patch finishd
+        7   = SPI0 CE1 SLB9670 #COMPLETE TODO - In config.txt and 0001-mood-modberry-cm4-dts.patch finishd
+        8   = SPI0 CE0 MCP2515 #COMPLETE TODO - In 0001-mood-modberry-cm4-dts.patch finishd
+        9   = SPI0 MISO #COMPLETE TODO - In config.txt and 0001-mood-modberry-cm4-dts.patch finishd
+        10  = SPI0 MOSI #COMPLETE TODO - In config.txt and 0001-mood-modberry-cm4-dts.patch finishd
+        11  = SPI0 SCLK #COMPLETE TODO - In config.txt and 0001-mood-modberry-cm4-dts.patch finishd
+        12  = IRQ LINE MCP2515 CAN bus #COMPLETE TODO - In 0001-mood-modberry-cm4-dts.patch finishd
+        13  = USER BUTTON 
+        14  = TXD0 
+        15  = RXD0 
+        16  = IRQ Line SC16IS740 RS485/RS232 #COMPLETE TODO - In 0001-mood-modberry-cm4-dts.patch finishd
+        17  = RTS1 ttyAMA0 #COMPLETE TODO - In config.txt and 0001-mood-modberry-cm4-dts.patch finishd
+        18  = DI #COMPLETE TODO - In config.txt
+        19  = DI #COMPLETE TODO - In config.txt
+        20  = DI #COMPLETE TODO - In config.txt  
+        21  = DI #COMPLETE TODO - In config.txt  
+        22  = DO #COMPLETE TODO - In config.txt
+        23  = DO #COMPLETE TODO - In config.txt
+        24  = DO #COMPLETE TODO - In config.txt
+        25  = DO #COMPLETE TODO - In config.txt
+        26  = 
+        27  = LED2 (GREEN/BLUE)
+
+        32  = TXD1 ttyAMA0 #COMPLETE TODO - In config.txt and 0001-mood-modberry-cm4-dts.patch finishd
+        33  = RXD1 ttyAMA0 #COMPLETE TODO - In config.txt and 0001-mood-modberry-cm4-dts.patch finishd
+
+        44  = "ALT1 I2C0" (SDA0) #COMPLETE TODO - In config.txt and 0001-mood-modberry-cm4-dts.patch finishd
+        45  = "ALT1 I2C0" (SCL0) #COMPLETE TODO - In config.txt and 0001-mood-modberry-cm4-dts.patch finishd
+
+#TODO - implement DIO over GPIO
+    Example for setup Digital Input:
+        4x DI
+        VIL 0 - 0.5 VDC
+        VIH 1.5 - 30 VDC
+        PULL UP 3.3 VDC
+        overvoltage protection transil unidirectional 30V DC
+        Peak min 600W
+
+        Example DIGITAL INPUT
+        echo 18 > /sys/class/gpio/export
+        cat /sys/class/gpio/gpio18/value
+
+    Example for setup Digital Output:
+        4x DO Open Collector
+        max voltage 30VDC
+        max. current load: 500 mA
+        overvoltage protection transil unidirectional 30V DC
+        Peak min 600W
+
+        Example DIGITAL OUTPUT
+        echo 22 > /sys/class/gpio/export
+        Change direction to “out”, without this we will not be able to change the value.
+        echo out > /sys/class/gpio/gpio22/direction
+        Change the value of gpio22(DO1) to 1:
+        echo 1 > /sys/class/gpio/gpio22/value
+*/
+
+#TODO - implement RS458/232 over GPIO
+RS485/RS232 (ttyAMA0) TX GPIO32 RX GPIO33 RTS GPIO17
+/*
+    COM1/COM4 <=> /dev/ttyAMA0
+
+    ttySC0 and ttyAMA0 ports can work in 2 modes - RS-485 or RS-232. By default ttyAMA0(COM2 - RS232) port works as a service port. Before the first connecting an external device to the serial ports, you must set the operating mode (RS-232/RS-485).
+
+    3pin / 2pin
+    overvoltage protection transil bidirectional 24V DC
+    Peak 600W
+*/
+
+#TODO - implement CAN bus
+CAN bus at SPI with MCP2515 / IRQ LINE GPIO12
+/*
+    Chipselect GPIO8 - CS1
+    overvoltage protection transil bidirectional 24V DC
+    Peak 600W
+*/
+
+#TODO - implement TPM
+TPM at SPI with Infineon SLB9670 / IRQ LINE GPIO5
+/*
+    #NOTE - Bootloader?
+    Chipselect GPIO7 - CS0
+*/
+
+#NOTE Important - implement SIM Card not available 
+GPRS SIM Card extention PCIE??
+/*
+    wvdial 
+        nano / etc/wvdial.conf
+            [Dialer play]
+            Modem = /dev/ttyUSB0
+            Baud = 230400
+            Init1 = ATH
+            Init2 = ATE1
+            Init3 = AT+CGDCONT=1,"IP","internet"
+            Dial Command = ATD
+            Phone = *99#
+            Stupid mode = yes
+            Username = "blank"
+            Password = "blank"
+*/
+
+#COMPLETE TODO - implement i2c
+### I2C0 ### (from Image by Bynacon)
+    
+        0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f
+    00:                         -- -- -- -- -- -- -- -- 
+    10: -- -- -- -- -- -- -- -- 18 -- -- -- -- -- -- -- 
+    20: 20 21 -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+    30: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+    40: -- -- -- -- -- -- -- -- -- -- -- -- -- 4d -- -- 
+    50: 50 -- -- -- -- -- -- -- 58 -- -- -- -- -- -- -- 
+    60: -- -- -- -- -- -- -- -- -- -- -- -- 6c -- -- 6f 
+    70: -- -- -- -- -- -- -- --               
+
+
+I2C-0
+echo "Driver name" "address device" > /sys/bus/i2c/devices/i2c-0/new_device 
+e.g. echo MCP23017 "0x27" > /sys/bus/i2c/devices/i2c-0/new_device
+
+#TODO - Implement 1-wire 
+1-wire at I2C with DS2482S-100+ on address 0x18 / IRQ LINE GPIO5
+/*
+
+*/
+
+#TODO - Implement DIO MCP23008 
+DIO at I2C with MCP23008 on address 0x20 / IRQ LINE GPIO6
+/*
+    GPIO0-GPIO7 is a number of the pin from the GPIO device visible on address 0x20.
+        GPIO Nummbers 
+            DIO 1 = IN 500-GP4 / OUT 496-GP0
+            DIO 2 = IN 501-GP5 / OUT 497-GP1
+            DIO 3 = IN 502-GP6 / OUT 498-GP2
+            DIO 4 = IN 503-GP4 / OUT 499-GP3
+
+        Example for setup the mode for DIO1 and DIO2 to DO
+            echo 496 > /sys/class/gpio/export
+            echo 497 > /sys/class/gpio/export
+            echo 500 > /sys/class/gpio/export
+            echo 501 > /sys/class/gpio/export
+            echo out > /sys/class/gpio/gpio496/direction
+            echo out > /sys/class/gpio/gpio497/direction
+            echo in > /sys/class/gpio/gpio500/direction
+            echo in > /sys/class/gpio/gpio501/direction
+
+        Example for setup the mode for DIO1 and DIO2 to DI 
+            echo 496 > /sys/class/gpio/export
+            echo 497 > /sys/class/gpio/export
+            echo 500 > /sys/class/gpio/export
+            echo 501 > /sys/class/gpio/export
+            echo in > /sys/class/gpio/gpio496/direction
+            echo in > /sys/class/gpio/gpio497/direction
+            echo in > /sys/class/gpio/gpio500/direction
+            echo in > /sys/class/gpio/gpio501/direction
+*/
+
+#TODO - Implement function block MCP23008 
+Function at I2C with MCP23008 on address 0x21
+/*
+    GPIO1-GPIO5 is a number of the pin from the GPIO device visible on address 0x21.
+        GPIO Nummbers
+
+            LED1            = 489(RED)-GP1
+            LED2
+            BUZZER          = BUZZER 493-GP5
+            RESET(SC0,SPI)
+            PCI 
+            POWER
+            RESET
+
+    Example
+        echo 255 >  /sys/class/leds/LED1/brightness
+        sleep 2
+        echo 0 >  /sys/class/leds/LED1/brightness
+        sleep 2
+        echo 255 >  /sys/class/leds/LED2/brightness
+        sleep 2
+        echo 0 >  /sys/class/leds/LED2/brightness
+*/
+
+#TODO - implement RS485/RS232 over i2c
+RS485/RS232 at I2C with SC16IS740 on address 0x4d / IRQ LINE GPIO16
+/*
+    COM2/COM3 <=> /dev/ttySC0
+
+    ttySC0 and ttyAMA0 ports can work in 2 modes - RS-485 or RS-232. By default ttyAMA0(COM2 - RS232) port works as a service port. Before the first connecting an external device to the serial ports, you must set the operating mode (RS-232/RS-485).
+
+    3pin / 2pin
+    overvoltage protection transil bidirectional 24V DC
+    Peak 600W
+*/
+
+#TODO - implement EEPROM
+EEPROM AT24CS01-STUM on address 0x50 
+
+#TODO - implement AI
+AI at I2C with MCP3424 on address 0x6C
+/*
+    0-10 VDC Analog Input
+*/
+
+#COMPLETE TODO - implement RTC
+RTC	MCP79412on address 0x6f
+
+#NOTE Important - implement PCIe not available 
+2x PCI-Express
+
+Ethernet and USB ports
+X500 CM4R/CM4/3/1	Ethernet 100Mbps	LAN9514I-JZX	
+X500 CM4R/CM4/3/1	USB port	LAN9514I-JZX

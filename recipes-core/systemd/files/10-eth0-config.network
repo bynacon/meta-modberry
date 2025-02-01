@@ -1,0 +1,7 @@
+#bynaconf file example exist
+
+[Match]
+Name=eth0
+
+[Network]
+DHCP=yes

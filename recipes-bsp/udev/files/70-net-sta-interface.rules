@@ -1,0 +1,7 @@
+#bynaconf file example exist
+SUBSYSTEM=="net", \
+ACTION=="add", \
+KERNEL=="wlan0", \
+NAME="wlan0_sta", \
+RUN+="/usr/sbin/iw phy phy0 interface add wlan0_ap type __ap", \
+RUN+="/sbin/ifup wlan0_ap"

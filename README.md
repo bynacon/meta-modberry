@@ -1,2 +1,118 @@
 # meta-modberry
 Techbase Modberry industrial Computer based on a Raspberry Pi Compute Module 4
+
+This README file contains information on the contents of the meta-bynacon layer.
+
+Please see the corresponding sections below for details.
+
+Dependencies
+============
+
+  URI: [first dependency](https://github.com/yoctoproject/poky.git)
+  branch: kirkstone
+
+  URI: [second dependency](git://git.yoctoproject.org/meta-raspberrypi)
+  branch: kirkstone
+  
+  URI: [third dependency](https://github.com/openembedded/meta-openembedded.git)
+  branch: kirkstone
+
+  URI: [fourth dependency](https://github.com/mendersoftware/meta-mender.git)
+  branch: kirkstone
+
+  URI: [fifth dependency](git@github.com:bynacon/meta-edgecon.git)
+  branch: kirkstone
+
+  URI: [sixth dependency](git://git.yoctoproject.org/meta-security.git)
+  branch: kirkstone
+
+  URI: [seventh dependency](git://git.yoctoproject.org/meta-virtualization)
+  branch: kirkstone
+
+  URI: [eight dependency](https://github.com/bynacon/meta-ota.git), but it is private and not necessary to build a Raspberry Pi image for a Modberry.
+  branch: kirkstone
+
+Patches
+=======
+
+Please submit any patches against the meta-modberry layer to the Bynacon maintainer Ben Roethlisberger <ben.roethlisberger@bynacon.ch>
+
+Table of Contents
+=================
+
+    I.    Adding the meta-modberry layer to your build
+    II.   
+    III.  Release Note of meta-edgecon
+
+
+I. Adding the meta-bynacon layer to your build
+=================================================
+
+Run 'bitbake-layers add-layer meta-egecon' and all other layer how above
+
+II. Misc
+========
+
+--- replace with specific information about the meta-bynacon layer ---
+
+III. Release Note Numbering
+===========================
+Info over numbering of release notes IE 5.04.12.023:
+
+First number => Device Version
+  1. Unknown
+  2. Unknown
+  3. Unknown
+  4. Unknown
+  5. Modberry
+  6. Unknown
+  7. Unknown
+  8. Unknown
+  9. Unknown
+
+Second number => Main release number
+third number => Sub versioning number 
+fourth number => Patch number
+
+IIII. Release Note Edgecon
+==========================
+
+--- Release 5.00.00.001 ---
+==============================
+First commit: standard configuration for Modberry M40804W MAX with the following GPIO settings
+
+GPIO Nummbers
+0   = I2C1 (SDA1)
+1   = I2C1 (SCL1)
+2   = 
+3   = 
+4   = 
+5   = IRQ LINE SLB9670 TPM
+6   = IRQ LINE MCP23008 DIO
+7   = SPI0 CE1 SLB9670
+8   = SPI0 CE0 MCP2515
+9   = SPI0 MISO
+10  = SPI0 MOSI
+11  = SPI0 SCLK
+12  = IRQ LINE MCP2515 CAN bus
+13  = USER BUTTON 
+14  = TXD0 
+15  = RXD0 
+16  = IRQ Line SC16IS740 RS485/RS232
+17  = RTS1 ttyAMA0 
+18  = DI
+19  = DI
+20  = DI  
+21  = DI  
+22  = DO
+23  = DO
+24  = DO
+25  = DO
+26  = 
+27  = LED2 (GREEN/BLUE)
+32  = TXD1 ttyAMA0
+33  = RXD1 ttyAMA0
+44  = "ALT1 I2C0" (SDA0)
+45  = "ALT1 I2C0" (SCL0)
+
+For more information, see file modberry-m40804w-max.inf

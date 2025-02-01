@@ -1,0 +1,49 @@
+/dts-v1/;
+
+/ {
+	compatible = "brcm,bcm2835\0brcm,bcm2708\0brcm,bcm2709\0brcm,bcm2710\0raspberrypi,3-compute-module\0brcm,bcm2837";
+
+	fragment@0 {
+		target = < 0xffffffff >;
+
+		__overlay__ {
+			status = "okay";
+		};
+	};
+
+	fragment@1 {
+		target = < 0xffffffff >;
+
+		__overlay__ {
+			status = "disabled";
+		};
+	};
+
+	fragment@2 {
+		target = < 0xffffffff >;
+
+		__overlay__ {
+			#address-cells = < 0x01 >;
+			#size-cells = < 0x00 >;
+
+			slb9670@0 {
+				compatible = "infineon,slb9670";
+				reg = < 0x01 >;
+				#address-cells = < 0x01 >;
+				#size-cells = < 0x00 >;
+				spi-max-frequency = < 0x1e84800 >;
+				status = "okay";
+				phandle = < 0x01 >;
+			};
+		};
+	};
+
+	__symbols__ {
+		slb9670 = "/fragment@2/__overlay__/slb9670@0";
+	};
+
+	__fixups__ {
+		spi0 = "/fragment@0:target:0\0/fragment@2:target:0";
+		spidev1 = "/fragment@1:target:0";
+	};
+};

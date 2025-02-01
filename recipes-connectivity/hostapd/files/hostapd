@@ -1,0 +1,3 @@
+#bynaconf file example exist
+RUN_DAEMON=yes
+DAEMON_CONF="/etc/hostapd.conf"

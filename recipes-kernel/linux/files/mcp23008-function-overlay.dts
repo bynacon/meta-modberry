@@ -1,0 +1,30 @@
+/*
+ * Device Tree overlay for Ledcontrol
+ *
+ */
+
+/dts-v1/;
+/plugin/;
+
+/{
+        fragment@0 {
+                target = <&leds>;
+                __overlay__ {
+                        compatible = "gpio-leds";
+                        led_mcp_2: led_mcp_2 {
+                                label = "LED1";
+                                linux,default-trigger = "default-off";
+                                gpios = <&mcp23008_10 1 0>;
+                        };
+			buzzer_mcp_6: buzzer_mcp_6 {
+                                label = "BUZZER";
+                                linux,default-trigger = "default-off";
+                                gpios = <&mcp23008_10 5 0>;
+                        };
+                };
+        };
+        __overrides__ {
+                led_trigger_2 =  <&led_mcp_2>,"linux,default-trigger";
+		buzzer_trigger_6 =  <&buzzer_mcp_6>,"linux,default-trigger";
+         };
+};

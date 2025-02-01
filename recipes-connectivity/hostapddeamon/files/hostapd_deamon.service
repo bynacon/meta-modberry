@@ -1,0 +1,13 @@
+#bynaconf file example exist
+
+[Unit]
+Description=load accesspoint conf
+After=hostapd.service
+
+[Service]
+Type=oneshot
+ExecStart=/bin/systemctl start hostapd
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

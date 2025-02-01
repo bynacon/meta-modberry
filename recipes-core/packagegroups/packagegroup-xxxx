@@ -1,0 +1,9 @@
+DESCRIPTION = ""
+LICENCE = "CLOSED"
+SUMMARY = ""
+
+inherit packagegroup
+
+COMPATIBLE_MACHINE = "^rpi$"
+
+

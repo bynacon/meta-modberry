@@ -1,0 +1,9 @@
+#bynaconf file example exist
+
+[Match]
+Name=wlan0_ap
+
+[Network]
+address 192.168.4.254/24
+DHCPServer=yes
+IPMasquerade=both

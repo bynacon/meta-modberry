@@ -1,0 +1,7 @@
+[Match]
+Name=br0_local
+
+[Link]
+Address=
+Gateway=
+DNS=

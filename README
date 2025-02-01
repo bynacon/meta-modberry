@@ -1,0 +1,144 @@
+This README file contains information on the contents of the meta-bynacon layer.
+
+Please see the corresponding sections below for details.
+
+Dependencies
+============
+
+  URI: [first dependency](https://github.com/yoctoproject/poky.git)
+  branch: kirkstone
+
+  URI: [second dependency](git://git.yoctoproject.org/meta-raspberrypi)
+  branch: kirkstone
+  
+  URI: [third dependency](https://github.com/openembedded/meta-openembedded.git)
+  branch: kirkstone
+
+  URI: [fourth dependency](https://github.com/mendersoftware/meta-mender.git)
+  branch: kirkstone
+
+  URI: [fifth dependency](git@github.com:bynacon/meta-edgecon.git)
+  branch: kirkstone
+
+  URI: [sixth dependency](git://git.yoctoproject.org/meta-security.git)
+  branch: kirkstone
+
+  URI: [seventh dependency](git://git.yoctoproject.org/meta-virtualization)
+  branch: kirkstone
+
+Patches
+=======
+
+Please submit any patches against the meta-bynacon layer to the Bynacon mailing list (ben.roethlisberger@bynacon.ch)
+and cc: the maintainer:
+
+Maintainer: Ben Roethlisberger <ben.roethlisberger@bynacon.ch>
+
+Table of Contents
+=================
+
+    I.    Adding the meta-edgecon layer to your build
+    II.   
+    III.  Release Note of meta-edgecon
+
+I. Adding the meta-bynacon layer to your build
+=================================================
+
+Run 'bitbake-layers add-layer meta-egecon' and all other layer how above
+
+II. Misc
+========
+
+--- replace with specific information about the meta-bynacon layer ---
+
+III. Release Note Numbering
+===========================
+Info over numbering of release notes IE 1.04.12.023:
+
+First number => Device Version
+  1. Edgecon V1
+  2. 
+  3. 
+  4. 
+  5. Modberry (https://github.com/bynacon/meta-modberry.git)
+  6. 
+  7. 
+  8. 
+  9. 
+
+Second number => Main release number
+third number => Sub versioning number 
+fourth number => Patch number
+
+IIII. Release Note Edgecon
+==========================
+
+--- Release 1.00.04 ---
+First commit standard configuration of Raspberrypi CM4.
+Without any configuration of mender. Most of hardware is running.
+
+- WIFI is running
+- Bluethoot is running
+
+--- Release 1.01.05 ---
+Image with mender configurations.
+
+- Connecting to Mender-Server
+- Troubleshooting is running
+- File transfere is running
+- Device configuration is running
+- Enable port forwording
+
+--- Release 1.01.10 ---
+Add docker, docker-compose an accesspointmode for communication with wifi devices, i.e. ESP32, ESP8266...
+
+--- Release 1.01.14 ---
+Hardware new functions
+- HDMI
+- uart2
+- uart4
+- spi1-3cs
+- spi4-1cs
+- i2c0
+- i2c1
+
+--- Release 1.02.21 ---
+Hardware new functions
+- Fix USB2 Host problems (Local)
+- Add access point mode via wlan0_ap and change wlan0 to wlan0_sta. Now we can operate access point mode and station mode in parallel.
+- Add a standard WiFi connection to a network via wlan0_sta (Without security "plain text")
+- Disable pci at uboot. uboot running in loop, while pci_xhci has a bug at line 481
+- Add networkinterface eth1 to eth3 over symlink at systemd
+Hardware disable
+- Detect disk with size and mount it / add a SD Card with release 1.04.12.023
+Configuration fix
+- Prepare configuration with JSON-file
+
+
+--- Release 1.04.12.031 ---
+Hardware new functions
+- sd0 (sdcard), creat a overlay for sd0 and add a mountingpoint
+- Change SPI1 to SPI4 if SPI1 is a auxilery SPI who had only SPI-Mode 0 and 2.
+Software
+- Add "C" Programmingtools
+- Add "Python3" Programmigntools 
+Configuration fix
+- Prepare examplefiles for configuration with JSON-file
+#TEMP - Config display rotation over cmdline.txt => fbcon=rotate:1 "this change only the cmdline after boot process" Disable splash, psplash and change kernel output to console
+#TEMP - set all Users wihtout a password
+
+
+To Do:
+#TODO - Networkconfiguration bridge and members of bridge
+#TODO - Create C Code to comunicate with DI/DO at SPI
+
+IIII. Release Note Modberry
+===========================
+
+--- Release 5.01.01.004 ---
+First commit standard configuration of Raspberrypi CM4 Modberry.
+
+- WIFI is running
+- Bluethoot is running
+- I2C0 is running
+  - RTC is running
