@@ -1,7 +1,7 @@
 # meta-modberry
 Techbase Modberry industrial Computer based on a Raspberry Pi Compute Module 4
 
-This README file contains information on the contents of the meta-bynacon layer.
+This README file contains information on the contents of the meta-modberry layer.
 
 Please see the corresponding sections below for details.
 
