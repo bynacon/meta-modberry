@@ -17,10 +17,10 @@ Dependencies
   URI: [third dependency](https://github.com/openembedded/meta-openembedded.git)
   branch: kirkstone
 
-  URI: [fourth dependency](https://github.com/mendersoftware/meta-mender.git)
+  URI: [fourth dependency](https://github.com/mendersoftware/meta-mender.git), but it isn’t necessary to build an image without OTA (Machine: modberry-m40804w-max_basic.conf).
   branch: kirkstone
 
-  URI: [fifth dependency](git@github.com:bynacon/meta-edgecon.git)
+  URI: [fifth dependency](git@github.com:bynacon/meta-edgecon.git), but it is private and not necessary to build a Raspberry Pi image for a Modberry without OTA (Machine: modberry-m40804w-max_basic.conf).
   branch: kirkstone
 
   URI: [sixth dependency](git://git.yoctoproject.org/meta-security.git)
@@ -29,7 +29,7 @@ Dependencies
   URI: [seventh dependency](git://git.yoctoproject.org/meta-virtualization)
   branch: kirkstone
 
-  URI: [eight dependency](https://github.com/bynacon/meta-ota.git), but it is private and not necessary to build a Raspberry Pi image for a Modberry.
+  URI: [eight dependency](https://github.com/bynacon/meta-ota.git), but it is private and not necessary to build a Raspberry Pi image for a Modberry without OTA (Machine: modberry-m40804w-max_basic.conf).
   branch: kirkstone
 
 Patches
@@ -41,8 +41,8 @@ Table of Contents
 =================
 
     I.    Adding the meta-modberry layer to your build
-    II.   
-    III.  Release Note of meta-edgecon
+    II.   Misc
+    III.  Release Note of meta-modberry
 
 
 I. Adding the meta-bynacon layer to your build
@@ -74,7 +74,7 @@ Second number => Main release number
 third number => Sub versioning number 
 fourth number => Patch number
 
-IIII. Release Note Edgecon
+IIII. Release Note Modberry
 ==========================
 
 --- Release 5.00.00.001 ---
