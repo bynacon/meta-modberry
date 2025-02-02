@@ -1,5 +1,5 @@
 SUMMARY = "A console-only image that fully supports the target device hardware."
-COMPATIBLE_MACHINE = '(edgecon-cm4108008-m|modberry-m40804w-max-m)'
+COMPATIBLE_MACHINE = '(modberry-m40804w-max|modberry-m40804w-max-ota|modberry-m40804w-max-basic)'
 
 IMAGE_FEATURES += "splash"
 
