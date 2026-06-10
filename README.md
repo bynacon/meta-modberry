@@ -42,18 +42,19 @@ Table of Contents
 
     I.    Adding the meta-modberry layer to your build
     II.   Misc
-    III.  Release Note of meta-modberry
+    III.  Release Note Numbering
+    IV.   Release Notes Modberry
 
 
-I. Adding the meta-bynacon layer to your build
-=================================================
+I. Adding the meta-modberry layer to your build
+===============================================
 
-Run 'bitbake-layers add-layer meta-egecon' and all other layer how above
+Run 'bitbake-layers add-layer meta-modberry' and add all other dependencies as listed above.
 
 II. Misc
 ========
 
---- replace with specific information about the meta-bynacon layer ---
+--- replace with specific information about the meta-modberry layer ---
 
 III. Release Note Numbering
 ===========================
@@ -74,44 +75,10 @@ Second number => Main release number
 third number => Sub versioning number 
 fourth number => Patch number
 
-IIII. Release Note Modberry
+IV. Release Notes Modberry
 ==========================
 
 --- Release 5.00.00.001 ---
 ==============================
-First commit: standard configuration for Modberry M40804W MAX with the following GPIO settings
-
--  GPIO00  = I2C1 (SDA1)
--  GPIO01  = I2C1 (SCL1)
--  GPIO02  = 
--  GPIO03  = 
--  GPIO04  = 
--  GPIO05  = IRQ LINE SLB9670 TPM
--  GPIO06  = IRQ LINE MCP23008 DIO
--  GPIO07  = SPI0 CE1 SLB9670
--  GPIO08  = SPI0 CE0 MCP2515
--  GPIO09  = SPI0 MISO
--  GPIO10  = SPI0 MOSI
--  GPIO11  = SPI0 SCLK
--  GPIO12  = IRQ LINE MCP2515 CAN bus
--  GPIO13  = USER BUTTON 
--  GPIO14  = TXD0 
--  GPIO15  = RXD0 
--  GPIO16  = IRQ Line SC16IS740 RS485/RS232
--  GPIO17  = RTS1 ttyAMA0 
--  GPIO18  = DI
--  GPIO19  = DI
--  GPIO20  = DI  
--  GPIO21  = DI  
--  GPIO22  = DO
--  GPIO23  = DO
--  GPIO24  = DO
--  GPIO25  = DO
--  GPIO26  = 
--  GPIO27  = LED2 (GREEN/BLUE)
--  GPIO32  = TXD1 ttyAMA0
--  GPIO33  = RXD1 ttyAMA0
--  GPIO44  = I2C0 (SDA0)
--  GPIO45  = I2C0 (SCL0)
-
-For more information, see file modberry-m40804w-max.inf
+First commit: standard configuration for Modberry M40804W MAX. Base GPIO assignments defined.
+For detailed hardware specifications, pinouts, and implementations, please refer exclusively to the central hardware documentation: `docs/hardware/README.md`.
