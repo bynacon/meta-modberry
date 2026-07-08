@@ -61,15 +61,8 @@ III. Release Note Numbering
 Info over numbering of release notes IE 5.04.12.023:
 
 First number => Device Version
-  1. Unknown
-  2. Unknown
-  3. Unknown
-  4. Unknown
+  Numbers bevor are Privat Devices.
   5. Modberry
-  6. Unknown
-  7. Unknown
-  8. Unknown
-  9. Unknown
 
 Second number => Main release number
 third number => Sub versioning number 
@@ -81,4 +74,4 @@ IV. Release Notes Modberry
 --- Release 5.00.00.001 ---
 ==============================
 First commit: standard configuration for Modberry M40804W MAX. Base GPIO assignments defined.
-For detailed hardware specifications, pinouts, and implementations, please refer exclusively to the central hardware documentation: `docs/hardware/README.md`.
+For detailed hardware specifications, pinouts, and implementations, please refer exclusively to the central hardware documentation: `docs/hardware/README.md`. Link to README.md of the hardware documentation [here](docs/hardware/M40804W_MAX.md).
