@@ -138,6 +138,6 @@ This module records the boot state of the device in the TPM. Each boot stage –
 
 | # | Question | Affects | Decision |
 | :-- | :-- | :-- | :-- |
-| 1 | Confirm the PCR allocation (section 5.1). | `BASE-MBOOT-02` | |
-| 2 | Is remote attestation used (attestation server), or are the PCRs only used for LUKS sealing? | `BASE-MBOOT-21`, Scope | |
-| 3 | U-Boot 2022.01 sufficient, or update / backport for measured boot? | `BASE-MBOOT-01` | |
+| 1 | Confirm the PCR allocation (section 5.1). | `BASE-MBOOT-02` | **Decided:** section 5.1. |
+| 2 | Is remote attestation used (attestation server), or are the PCRs only used for LUKS sealing? | `BASE-MBOOT-21`, Scope | **Decided:** device side prepared (`BASE-MBOOT-21`); attestation server later. |
+| 3 | U-Boot 2022.01 sufficient, or update / backport for measured boot? | `BASE-MBOOT-01` | **Deferred:** to be checked → verification task. |

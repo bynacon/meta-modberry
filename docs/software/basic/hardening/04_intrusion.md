@@ -41,7 +41,7 @@ This module detects attacks from the network and blocks the attackers for a limi
 | :-- | :-- | :-- |
 | `python3-fail2ban` 0.11.2 | `meta-security` (recipes-security) | — |
 | `python3-systemd` (journal backend) | `meta-openembedded` (meta-python) | — |
-| Port scan detection (PSAD or alternative) | **not available for kirkstone** (see open point 1) | — |
+| Fail2Ban jail `nft-portscan` on the nftables drop log | `meta-modberry` (`modberry-ids`) | PSAD (not available for kirkstone) |
 | `hostapd-cli` (`hostapd_cli`) | `meta-openembedded` | — |
 | `modberry-ids` (new: jails, nftables actions, event scripts) | `meta-modberry` | — |
 
@@ -62,10 +62,11 @@ This module detects attacks from the network and blocks the attackers for a limi
 - `BASE-IDS-11` **MUST** A jail bans the source IP address after repeated failed SSH logins (`sshd`).
 - `BASE-IDS-12` **MUST** A jail bans after repeated WLAN authentication failures. Because WLAN clients have no IP address before authentication, this ban uses the MAC address (`ban_mac`).
 - `BASE-IDS-13` **MUST** Fail2Ban uses a custom nftables action that adds elements to the ban sets of `BASE-FW`, not the default `nftables` action (which creates its own table).
+- `BASE-IDS-14` **MUST** Repeated offenders get increasing ban durations (`bantime.increment`), up to one week.
 
 ### 4.3 Port Scan Detection
 
-- `BASE-IDS-20` **MUST** Port scans are detected from the firewall drop log (`BASE-FW-50`).
+- `BASE-IDS-20` **MUST** Port scans are detected by a Fail2Ban jail on the firewall drop log (`BASE-FW-50`).
 - `BASE-IDS-21` **MUST** A detected scanner is banned by its source IP address.
 
 ### 4.4 hostapd Events
@@ -97,6 +98,7 @@ This module detects attacks from the network and blocks the attackers for a limi
 | `/etc/fail2ban/action.d/nftables-modberry.conf` | `actionban = nft add element inet filter ban_<family> { <ip> timeout <bantime>s }` | `BASE-IDS-01`, `BASE-IDS-13` |
 | `/etc/fail2ban/filter.d/hostapd-auth.conf` | regex on hostapd authentication failure messages | `BASE-IDS-12` |
 | `/etc/fail2ban/fail2ban.conf` | `dbfile = :memory:` | `BASE-IDS-04` |
+| `/etc/fail2ban/jail.d/modberry.conf` | jail `nft-portscan` (filter on `nft-drop-input:`); `bantime.increment = true`, `bantime.maxtime = 1w` | `BASE-IDS-14`, `BASE-IDS-20` |
 | `modberry-hostapd-events.service` | `hostapd_cli -i <if> -a /usr/libexec/modberry/hostapd-event` per AP interface | `BASE-IDS-30` … `BASE-IDS-32` |
 
 ---
@@ -149,7 +151,7 @@ This module detects attacks from the network and blocks the attackers for a limi
 
 | # | Question | Affects | Decision |
 | :-- | :-- | :-- | :-- |
-| 1 | Port scan detection: own PSAD recipe, Fail2Ban jail on the nftables drop log (recommended), or `crowdsec` / `suricata`? | `BASE-IDS-20`, `BASE-IDS-21`, Components | |
-| 2 | Confirm thresholds and ban durations (section 5.1). | `BASE-IDS-11` … `BASE-IDS-31` | |
-| 3 | Does `brcmfmac` report deauthentication and authentication failure events to hostapd? If not, `BASE-IDS-31` cannot be met with the on-board radio. | `BASE-IDS-30`, `BASE-IDS-31` | |
-| 4 | Should repeated offenders get longer bans (`bantime.increment`)? | `BASE-IDS-11` | |
+| 1 | Port scan detection: own PSAD recipe, Fail2Ban jail on the nftables drop log (recommended), or `crowdsec` / `suricata`? | `BASE-IDS-20`, `BASE-IDS-21`, Components | **Decided:** Fail2Ban jail on the nftables drop log. |
+| 2 | Confirm thresholds and ban durations (section 5.1). | `BASE-IDS-11` … `BASE-IDS-31` | **Decided:** values of section 5.1. |
+| 3 | Does `brcmfmac` report deauthentication and authentication failure events to hostapd? If not, `BASE-IDS-31` cannot be met with the on-board radio. | `BASE-IDS-30`, `BASE-IDS-31` | **Deferred:** needs a test on the device → verification task. |
+| 4 | Should repeated offenders get longer bans (`bantime.increment`)? | `BASE-IDS-11` | **Decided:** yes (`BASE-IDS-14`). |

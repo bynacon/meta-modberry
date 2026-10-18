@@ -153,6 +153,6 @@ This module makes the root filesystem read-only and verifies every block that is
 
 | # | Question | Affects | Decision |
 | :-- | :-- | :-- | :-- |
-| 1 | Root hash in the signed FIT (recommended), or in a TPM NV index as in the source specification? | `BASE-ROOTFS-11` | |
-| 2 | Confirm the persistent paths (section 5.1). Are there more (e.g. Thread dataset of `ot-daemon`, `/var/lib/fail2ban`)? | `BASE-ROOTFS-22` | |
-| 3 | Size of the root partition (room for future images)? | `BASE-ROOTFS-01` | |
+| 1 | Root hash in the signed FIT (recommended), or in a TPM NV index as in the source specification? | `BASE-ROOTFS-11` | **Decided:** in the signed FIT. |
+| 2 | Confirm the persistent paths (section 5.1). Are there more (e.g. Thread dataset of `ot-daemon`, `/var/lib/fail2ban`)? | `BASE-ROOTFS-22` | **Decided:** section 5.1; Thread paths follow with the Thread stack. |
+| 3 | Size of the root partition (room for future images)? | `BASE-ROOTFS-01` | **Deferred:** measured with the first complete image. |

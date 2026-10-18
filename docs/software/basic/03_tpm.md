@@ -48,6 +48,7 @@ This module makes the hardware TPM available to the operating system and to appl
 | `tpm2-openssl` 1.1.0 | `meta-security` (meta-tpm) | OpenSSL TPM engine (`tpm2-tss-engine`) |
 | Kernel: `tpm_tis_spi` | `linux-raspberrypi` + `9670.cfg`, loaded via `KERNEL_MODULE_AUTOLOAD` | `slb9670` (systemd service that runs `modprobe`) – **removed** |
 | — | — | `libtss2-tcti-mssim` (TPM simulator TCTI) – **removed** |
+| — | — | `tpm2-abrmd` (kernel resource manager is used), `tpm2-pkcs11` (not needed) |
 
 ---
 
@@ -76,6 +77,7 @@ This module makes the hardware TPM available to the operating system and to appl
 - `BASE-TPM-30` **MUST** OpenSSL is the TLS library for all encrypted connections of the base system (HTTPS, MQTT-TLS, VPN handshake).
 - `BASE-TPM-31` **MUST** OpenSSL can use private keys that are stored in the TPM.
 - `BASE-TPM-32` **MUST** The private key of the device identity is generated in the TPM and cannot be exported.
+- `BASE-TPM-33` **MUST** The private TLS key of nginx is a TPM key (`BASE-RACC-25`). The WireGuard key stays a file, because WireGuard cannot use TPM keys.
 
 ### 4.5 Access Control
 
@@ -129,7 +131,7 @@ This module makes the hardware TPM available to the operating system and to appl
 | `BASE-TPM-10` | `manifest` | `libtss2`, `libtss2-tcti-device` in image manifest | present |
 | `BASE-TPM-11` | `device` | `tpm2_getcap properties-fixed` with default TCTI | works, uses `/dev/tpmrm0` |
 | `BASE-TPM-12` | `device` | `tss2_list` | works without manual FAPI setup |
-| `BASE-TPM-13` | `manifest` | `libtss2-tcti-mssim` in image manifest | absent |
+| `BASE-TPM-13` | `manifest` | `libtss2-tcti-mssim`, `tpm2-abrmd`, `tpm2-pkcs11` in image manifest | absent |
 | `BASE-TPM-20` | `device` | `tpm2_pcrread sha256` | PCR values listed |
 | `BASE-TPM-30` | `manifest` | `openssl` in image manifest | present |
 | `BASE-TPM-31` | `device` | `openssl list -providers` | TPM provider listed and active |
@@ -152,7 +154,7 @@ This module makes the hardware TPM available to the operating system and to appl
 - The hardware specification assigns GPIO05 as the interrupt line to both the TPM (section 3.2) and the DS2482S 1-wire bridge (section 3.1). The conflict is marked as open in the hardware specification. `BASE-TPM-03` is blocked until it is resolved.
 - The current overlay `slb9670-tpm-overlay.dts` has no `interrupts` property. The TPM runs in polling mode today.
 - Provisioning operations such as `tpm2_clear`, setting the owner hierarchy auth, or creating the device identity key cannot be undone without losing sealed data. They need a human gate and are not part of the image build.
-- `tpm2-abrmd` (user-space resource manager) is not needed when `/dev/tpmrm0` is used (`BASE-TPM-11`).
+- `tpm2-abrmd` and `tpm2-pkcs11` are still in `IMAGE_INSTALL` of the machine conf and are removed with this module.
 
 ---
 
@@ -161,8 +163,8 @@ This module makes the hardware TPM available to the operating system and to appl
 | # | Question | Affects | Decision |
 | :-- | :-- | :-- | :-- |
 | 1 | Confirm the `tpm2-openssl` provider instead of the OpenSSL engine named in the source spec. Check that the recipe exists in `meta-security` (kirkstone). | `BASE-TPM-31`, Components | **Decided:** `tpm2-openssl` 1.1.0 from `meta-security` (kirkstone), recipe verified. |
-| 2 | Kernel resource manager (`/dev/tpmrm0`) or `tpm2-abrmd`? Recommendation: kernel resource manager, remove `tpm2-abrmd`. | `BASE-TPM-11` | |
-| 3 | Is `tpm2-pkcs11` (currently installed) needed, e.g. for WireGuard or SSH keys in the TPM? | Components | |
-| 4 | Which keys are TPM-resident: device identity only, or also the TLS server keys of nginx and the WireGuard private key? (WireGuard cannot use TPM keys directly.) | `BASE-TPM-32` | |
+| 2 | Kernel resource manager (`/dev/tpmrm0`) or `tpm2-abrmd`? Recommendation: kernel resource manager, remove `tpm2-abrmd`. | `BASE-TPM-11` | **Decided:** kernel resource manager `/dev/tpmrm0`; `tpm2-abrmd` removed. |
+| 3 | Is `tpm2-pkcs11` (currently installed) needed, e.g. for WireGuard or SSH keys in the TPM? | Components | **Decided:** not needed; removed. |
+| 4 | Which keys are TPM-resident: device identity only, or also the TLS server keys of nginx and the WireGuard private key? (WireGuard cannot use TPM keys directly.) | `BASE-TPM-32` | **Decided:** device identity and nginx TLS key (`BASE-TPM-33`); WireGuard key is a file. |
 | 5 | When and by whom is the device identity key created (factory provisioning, first boot)? | `BASE-TPM-32` | **Decided:** at factory provisioning (`BASE-PROV`). |
-| 6 | GPIO05 conflict between TPM and DS2482S (hardware spec). To be verified against the schematic. | `BASE-TPM-03` | |
+| 6 | GPIO05 conflict between TPM and DS2482S (hardware spec). To be verified against the schematic. | `BASE-TPM-03` | **Deferred:** needs the schematic → verification task. |

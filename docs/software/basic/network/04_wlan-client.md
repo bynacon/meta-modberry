@@ -124,5 +124,5 @@ This module connects the device as a client to an existing WLAN, which serves as
 | # | Question | Affects | Decision |
 | :-- | :-- | :-- | :-- |
 | 1 | How are WLAN credentials provisioned? | `BASE-WCLI-20`, `BASE-WCLI-21` | **Decided:** optional item of factory provisioning (`BASE-PROV`). |
-| 2 | Is WPA2/WPA3-Enterprise (802.1X) needed in company networks? | `BASE-WCLI-10` | |
+| 2 | Is WPA2/WPA3-Enterprise (802.1X) needed in company networks? | `BASE-WCLI-10` | **Decided:** not for now. |
 | 3 | Is the WLAN client needed in every installation, or only when no LAN uplink exists? | Scope | **Decided:** fallback uplink when LAN0 is not available (`BASE-NETD-30`). |

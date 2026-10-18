@@ -86,6 +86,8 @@ This module confines the network-facing and privileged services of the device wi
 | `chronyd` | `BASE-TIME` | UDP 123, TCP 4460 out, `/dev/rtc0`, `/var/lib/chrony/` |
 | `syslog-ng` | `BASE-LOG` | journal read, `/etc/syslog-ng/`, own log files, PostgreSQL socket (`BASE-LOGDB`) |
 | `iwd` | `BASE-WCLI` | nl80211 netlink, `/var/lib/iwd/` |
+| `fail2ban-server` | `BASE-IDS` | journal read, `nft` with the ban sets only |
+| provisioning helper | `BASE-PROV` | `/data/provisioning/`, TPM, `cryptsetup` (recovery key) |
 
 ### 5.2 Files
 
@@ -143,6 +145,6 @@ This module confines the network-facing and privileged services of the device wi
 
 | # | Question | Affects | Decision |
 | :-- | :-- | :-- | :-- |
-| 1 | Confirm the list of confined services (section 5.1). Add Thread services (`otbr-agent`, `ot-daemon`), `fail2ban`, the provisioning helper? | `BASE-MAC-10` | |
-| 2 | Profiles written from scratch, or derived from the upstream `apparmor-profiles` and adapted? | `BASE-MAC-03` | |
-| 3 | Are the Docker containers of the application layer confined (own profiles instead of `docker-default`)? | Scope | |
+| 1 | Confirm the list of confined services (section 5.1). Add Thread services (`otbr-agent`, `ot-daemon`), `fail2ban`, the provisioning helper? | `BASE-MAC-10` | **Decided:** section 5.1 plus `fail2ban` and the provisioning helper; Thread services follow with the Thread stack. |
+| 2 | Profiles written from scratch, or derived from the upstream `apparmor-profiles` and adapted? | `BASE-MAC-03` | **Decided:** derived from the upstream profiles where available, adapted. |
+| 3 | Are the Docker containers of the application layer confined (own profiles instead of `docker-default`)? | Scope | **Deferred:** application layer. |

@@ -65,7 +65,7 @@ This module defines the packet filter of the device with nftables. It owns the b
 - `BASE-FW-12` **MUST** The `input` chain allows only the services of the port matrix (section 5.1), and each only from the segments listed there.
 - `BASE-FW-13` **MUST** Packets with invalid connection state are dropped.
 - `BASE-FW-14` **MUST** From LAN0, the management services (SSH, HTTPS, HTTP redirect, Border Router API) are reachable only from sources in the allow list `service_nets`.
-- `BASE-FW-15` **MUST** In the image, `service_nets` contains only the factory subnet `10.99.0.0/24`. Site entries are added by factory provisioning (`BASE-PROV`) and are stored persistently outside the image.
+- `BASE-FW-15` **MUST** In the image, `service_nets` contains only the factory subnet `10.99.0.0/24`, and only while the device is not provisioned (marker `BASE-PROV-23` absent). After provisioning, `service_nets` contains only the site entries of the provisioning store.
 
 ### 4.3 Forward Chain & NAT
 
@@ -78,8 +78,9 @@ This module defines the packet filter of the device with nftables. It owns the b
 
 ### 4.4 Output Chain
 
-- `BASE-FW-30` **MUST** The `output` chain has the default policy `drop`.
+- `BASE-FW-30` **MUST** In the production image, the `output` chain has the default policy `drop`.
 - `BASE-FW-31` **MUST** The `output` chain allows only the protocols and destinations of the output matrix (section 5.3), plus established/related traffic.
+- `BASE-FW-32` **MAY** In the debug image, the `output` chain has the policy `accept` and logs packets that would be dropped in the production image.
 
 ### 4.5 Ban Sets
 
@@ -148,7 +149,8 @@ Segments: **LAN0** = `lan0` (IPv4 from upstream DHCP), **IoT** = `br-iot` (`172.
 | :-- | :-- | :-- |
 | `/etc/nftables.conf` | `flush ruleset`, `table inet filter`, chains `input`/`forward`/`output` with `policy drop` | `BASE-FW-04` … `BASE-FW-30` |
 | `/etc/nftables.conf` | `define`/set `uplinks = { "lan0", "wlan0_sta" }` | `BASE-FW-05` |
-| `/etc/nftables.conf` | set `service_nets_v4` (`type ipv4_addr; flags interval; elements = { 10.99.0.0/24 }`), set `service_nets_v6` (empty) | `BASE-FW-14`, `BASE-FW-15` |
+| `/etc/nftables.conf` | sets `service_nets_v4` (`type ipv4_addr; flags interval`), `service_nets_v6`, empty | `BASE-FW-14` |
+| `/etc/nftables.d/05-factory.nft` | `add element inet filter service_nets_v4 { 10.99.0.0/24 }`; loaded only if `/data/provisioning/provisioned` is absent | `BASE-FW-15` |
 | `/data/provisioning/firewall/service_nets.nft` | site elements of `service_nets_v4` / `service_nets_v6`, loaded after the base ruleset | `BASE-FW-15` |
 | `/etc/nftables.conf` | `table inet nat`, chain `postrouting`: `iifname "wlan0_guest" oifname @uplinks masquerade` | `BASE-FW-22` |
 | `/etc/nftables.conf` | sets `ban_ipv4` (`type ipv4_addr; flags timeout`), `ban_ipv6`, `ban_mac` (`type ether_addr`) | `BASE-FW-40` |
@@ -189,7 +191,7 @@ Segments: **LAN0** = `lan0` (IPv4 from upstream DHCP), **IoT** = `br-iot` (`172.
 | `BASE-FW-12` | `device` | `nmap -sT -sU -p- <device>` from each segment | only the ports of section 5.1 for that segment |
 | `BASE-FW-13` | `device` | `nft list chain inet filter input` | `ct state invalid drop` |
 | `BASE-FW-14` | `device` | SSH/HTTPS from a LAN0 host outside and inside `service_nets` | refused / accepted |
-| `BASE-FW-15` | `rootfs` | `nft` set definitions in `<rootfs>/etc/nftables.conf` | `service_nets_v4` contains only `10.99.0.0/24`, `service_nets_v6` empty |
+| `BASE-FW-15` | `device` | `nft list set inet filter service_nets_v4` before and after provisioning | `10.99.0.0/24` / only site entries |
 | `BASE-FW-15` | `device` | Add an element, reboot, `nft list set inet filter service_nets_v4` | element still present |
 | `BASE-FW-21` | `device` | Connection attempts for each row of section 5.2 | only allowed flows succeed |
 | `BASE-FW-22` | `device` | Guest client: `curl https://example.com` | works; source address on the uplink is the device |
@@ -226,8 +228,8 @@ Segments: **LAN0** = `lan0` (IPv4 from upstream DHCP), **IoT** = `br-iot` (`172.
 | :-- | :-- | :-- | :-- |
 | 1 | ESP32 OTA source. | `BASE-FW-12`, `BASE-FW-25` | **Decided:** the device caches the firmware and serves it locally; it downloads the firmware through the existing OTA system. Port of the local OTA server per application layer. |
 | 2 | Which outbound destinations does the device need besides DNS, NTP, WireGuard and the OTA system (cloud, package feeds)? Value of `VPN_ENDPOINT`? | `BASE-FW-31` | **Partly decided:** OTA rules come from `meta-ota` (`BASE-FW-60`); Bynacon VPN server, host name follows. |
-| 3 | Is `policy drop` on `output` wanted from the start, or first `accept` with logging, then `drop`? | `BASE-FW-30` | |
-| 4 | May guest clients reach the local web interface (e.g. for a landing page)? Current assumption: no. | `BASE-FW-23` | |
+| 3 | Is `policy drop` on `output` wanted from the start, or first `accept` with logging, then `drop`? | `BASE-FW-30` | **Decided:** `drop` in production, `accept` with logging in debug (`BASE-FW-32`). |
+| 4 | May guest clients reach the local web interface (e.g. for a landing page)? Current assumption: no. | `BASE-FW-23` | **Decided:** no. |
 | 5 | Allowed flows between segments. | `BASE-FW-21` … `BASE-FW-25` | **Decided:** guest → internet only; LAN0 → IoT and management services only from `service_nets`; IoT isolated from guest, LAN0 and internet. |
 | 6 | Who fills `service_nets` at commissioning? | `BASE-FW-15` | **Decided:** factory provisioning (`BASE-PROV`); the image contains the factory subnet `10.99.0.0/24`. |
-| 7 | Is the factory subnet removed at the end of provisioning (`BASE-PROV` open point 3)? | `BASE-FW-15` | |
+| 7 | Is the factory subnet removed at the end of provisioning (`BASE-PROV` open point 3)? | `BASE-FW-15` | **Decided:** yes; active only while unprovisioned (`BASE-FW-15`). |

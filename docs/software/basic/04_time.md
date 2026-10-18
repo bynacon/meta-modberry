@@ -64,10 +64,11 @@ This module keeps the system time correct. A correct time is required for TLS ce
 - `BASE-TIME-20` **MUST** At boot, the system time is set from the hardware RTC before network time is available.
 - `BASE-TIME-21` **MUST** chrony keeps the hardware RTC synchronized with the system time while sources are reachable.
 - `BASE-TIME-22` **MUST** On network loss, the system keeps running on the last synchronized time without a time jump.
+- `BASE-TIME-23` **MUST** If the RTC time is invalid at boot, chrony may make exactly one clock update without checking the time validity of the NTS-KE certificates (`nocerttimecheck 1`). Certificate chain and signature are still checked.
 
 ### 4.4 NTP Server
 
-- `BASE-TIME-30` **MUST** chronyd serves time via NTP to the local networks defined in open point 2.
+- `BASE-TIME-30` **MUST** chronyd serves time via NTP to the IoT segment (`br-iot`) only.
 - `BASE-TIME-31` **MUST** chronyd denies NTP clients from all other networks.
 - `BASE-TIME-32` **MUST** chronyd does not serve time to clients while it is not synchronized.
 
@@ -75,15 +76,21 @@ This module keeps the system time correct. A correct time is required for TLS ce
 
 - `BASE-TIME-40` **SHOULD** `time-sync.target` is reached only after chrony is synchronized, so that services which validate certificates can order themselves after it.
 
+### 4.6 Time Zone
+
+- `BASE-TIME-50` **MUST** The system time zone is UTC. Conversion to local time is done by the applications.
+
 ---
 
 ## 5. Configuration
 
 | Target path | Key settings | Req. |
 | :-- | :-- | :-- |
-| `/etc/chrony.conf` | `server <host> iburst nts` per source, no `pool` | `BASE-TIME-10`, `BASE-TIME-11`, `BASE-TIME-12` |
+| `/etc/chrony.conf` | `server <host> iburst nts` for `time.cloudflare.com`, `nts.netnod.se`, `ptbtime1.ptb.de`, `ntppool1.time.nl`; no `pool` | `BASE-TIME-10`, `BASE-TIME-11`, `BASE-TIME-12` |
+| `/etc/chrony.conf` | `nocerttimecheck 1` | `BASE-TIME-23` |
+| Build: distro conf `modberry` | `DEFAULT_TIMEZONE = "UTC"` (replaces `CET` in `local_kirkstone.conf`) | `BASE-TIME-50` |
 | `/etc/chrony.conf` | `rtcsync` or `rtcfile` + `rtcdevice /dev/rtc0` | `BASE-TIME-21` |
-| `/etc/chrony.conf` | `allow <network>` per served network, no `allow all` | `BASE-TIME-30`, `BASE-TIME-31` |
+| `/etc/chrony.conf` | `allow 172.30.10.0/24`, no `allow all` | `BASE-TIME-30`, `BASE-TIME-31` |
 | `/etc/chrony.conf` | no `local` directive | `BASE-TIME-32` |
 | `/etc/chrony.conf` | `ntsdumpdir /var/lib/chrony` | `BASE-TIME-10` |
 | systemd | `chrony-wait.service` enabled | `BASE-TIME-40` |
@@ -120,9 +127,11 @@ This module keeps the system time correct. A correct time is required for TLS ce
 | `BASE-TIME-20` | `device` | Boot without network, `date` | time from RTC, not 1970 or build time |
 | `BASE-TIME-21` | `device` | `hwclock -r` vs. `date` after sync | difference < 1 s |
 | `BASE-TIME-22` | `device` | Unplug network for 1 h, then reconnect, `chronyc tracking` | no step correction |
+| `BASE-TIME-23` | `device` | Clear the RTC, boot (lab) | one clock step, then normal NTS operation |
 | `BASE-TIME-30` | `device` | `chronyd -Q 'server <device> iburst'` from a host in a served network | offset reported |
 | `BASE-TIME-31` | `device` | Same query from another network | no answer |
 | `BASE-TIME-40` | `device` | `systemctl show -p After <TLS service>` | contains `time-sync.target` |
+| `BASE-TIME-50` | `device` | `timedatectl show -p Timezone` | `UTC` |
 
 ---
 
@@ -140,9 +149,9 @@ This module keeps the system time correct. A correct time is required for TLS ce
 
 | # | Question | Affects | Decision |
 | :-- | :-- | :-- | :-- |
-| 1 | Which NTS servers are used (public servers, or a company time server)? | `BASE-TIME-10`, `BASE-TIME-12` | |
-| 2 | To which networks does the device serve time: LAN0 (service), LAN1 (sensor/actuator), WLAN AP, Thread? | `BASE-TIME-30`, `BASE-TIME-31` | |
-| 3 | Is `nocerttimecheck` allowed as a fallback when the RTC is invalid? | `BASE-TIME-20` | |
-| 4 | Is the MCP79412 battery-backed on this device? The hardware spec does not say. Without a battery, `BASE-TIME-20` cannot be met after power loss. | `BASE-TIME-20` | |
-| 5 | The source spec mentions "TPM PCR timestamping". TPM PCRs have no timestamps. What is meant (e.g. timestamps in attestation quotes or in the event log)? | Purpose | |
-| 6 | Time zone of the device (UTC, or `Europe/Zurich`)? Which module owns it? | Scope | |
+| 1 | Which NTS servers are used (public servers, or a company time server)? | `BASE-TIME-10`, `BASE-TIME-12` | **Decided:** public NTS servers of at least 3 operators (section 5). |
+| 2 | To which networks does the device serve time: LAN0 (service), LAN1 (sensor/actuator), WLAN AP, Thread? | `BASE-TIME-30`, `BASE-TIME-31` | **Decided:** IoT segment only. |
+| 3 | Is `nocerttimecheck` allowed as a fallback when the RTC is invalid? | `BASE-TIME-20` | **Decided:** yes, one update (`BASE-TIME-23`). |
+| 4 | Is the MCP79412 battery-backed on this device? The hardware spec does not say. Without a battery, `BASE-TIME-20` cannot be met after power loss. | `BASE-TIME-20` | **Deferred:** needs hardware information → verification task. |
+| 5 | The source spec mentions "TPM PCR timestamping". TPM PCRs have no timestamps. What is meant (e.g. timestamps in attestation quotes or in the event log)? | Purpose | **Decided:** removed; PCRs have no timestamps. |
+| 6 | Time zone of the device (UTC, or `Europe/Zurich`)? Which module owns it? | Scope | **Decided:** UTC, owned by this module (`BASE-TIME-50`). |

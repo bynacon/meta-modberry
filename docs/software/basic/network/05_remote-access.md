@@ -69,6 +69,7 @@ This module provides secured remote access to the device. The device connects as
 - `BASE-RACC-13` **MUST** SSH host keys are generated on the device at first boot and stored persistently. They are not part of the image.
 - `BASE-RACC-14` **MUST** The image contains exactly one authorized key: the Bynacon service public key for `user`. Further keys are added by provisioning (`BASE-PROV`).
 - `BASE-RACC-15` **MUST** The Bynacon service key can be replaced by an image update, without reprovisioning the device.
+- `BASE-RACC-16` **MUST** If `/data` is not available (e.g. locked, `BASE-LUKS-12`), sshd starts with temporary host keys generated in `/run`, so that login with the service key remains possible.
 
 ### 4.3 nginx
 
@@ -77,7 +78,7 @@ This module provides secured remote access to the device. The device connects as
 - `BASE-RACC-22` **MUST** HTTP requests on port 80 are answered only with a redirect to HTTPS.
 - `BASE-RACC-23` **MUST** nginx restricts access by source address to `service_nets` and the VPN subnet.
 - `BASE-RACC-24` **MUST** The local web application listens only on loopback or a Unix socket, so that it is reachable only through nginx.
-- `BASE-RACC-25` **SHOULD** The TLS private key of nginx is TPM-resident (see `BASE-TPM` open point 4).
+- `BASE-RACC-25` **MUST** The TLS private key of nginx is a TPM key (`BASE-TPM-33`); nginx uses it through the OpenSSL TPM provider.
 - `BASE-RACC-26` **MUST** The TLS certificate of nginx is signed by the Bynacon CA and is issued per device during provisioning.
 
 ---
@@ -136,6 +137,7 @@ This module provides secured remote access to the device. The device connects as
 | `BASE-RACC-13` | `device` | Fingerprint before and after reboot | unchanged |
 | `BASE-RACC-14` | `rootfs` | `cat <rootfs>/home/user/.ssh/authorized_keys` | exactly the Bynacon service key |
 | `BASE-RACC-15` | `rootfs` | Service key installed by its own recipe, not from provisioning | yes |
+| `BASE-RACC-16` | `device` | Boot with `/data` locked (lab), SSH with the service key | login works; host key warning expected |
 | `BASE-RACC-20` | `device` | `curl --cacert <Bynacon CA> https://<device>/` | answer of the web application |
 | `BASE-RACC-21` | `device` | `openssl s_client -tls1_1 -connect <device>:443` | handshake fails |
 | `BASE-RACC-22` | `device` | `curl -I http://<device>/` | `301` to `https://` |
@@ -165,6 +167,6 @@ This module provides secured remote access to the device. The device connects as
 | 1 | WireGuard role. | `BASE-RACC-01` … `BASE-RACC-06` | **Decided:** device is client of the Bynacon VPN server. Values of `VPN_ENDPOINT`, port and VPN subnet follow. |
 | 2 | `PermitRootLogin`. | `BASE-RACC-12` | **Decided:** `no`; root is locked (`BASE-INIT-45`). |
 | 3 | Provisioning of authorized SSH keys. | `BASE-RACC-14` | **Decided:** Bynacon service key in the image for `user`; further keys via provisioning. |
-| 4 | Which web application runs behind nginx, and on which port or socket? (e.g. SmartHomeWebApp) | `BASE-RACC-20`, `BASE-RACC-24` | |
+| 4 | Which web application runs behind nginx, and on which port or socket? (e.g. SmartHomeWebApp) | `BASE-RACC-20`, `BASE-RACC-24` | **Deferred:** application layer not yet defined. |
 | 5 | TLS certificate source. | `BASE-RACC-21`, `BASE-RACC-26` | **Decided:** Bynacon CA, issued per device at factory provisioning. |
 | 6 | Source networks for nginx. | `BASE-RACC-23` | **Decided:** `service_nets` and the VPN subnet. |

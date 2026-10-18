@@ -51,7 +51,8 @@ This module blocks unauthorized USB devices. USBGuard allows only the USB device
 - `BASE-USB-02` **MUST** The default policy is `block` for every device that matches no rule (`ImplicitPolicyTarget=block`).
 - `BASE-USB-03` **MUST** Devices that are present at boot are checked against the rules too (`PresentDevicePolicy=apply-policy`).
 - `BASE-USB-04` **MUST** The internal USB devices of the hardware are allowed: the LAN9514 hub and its Ethernet controller. They are matched by vendor/product ID **and** port (`via-port`), so that an external device with the same IDs is not allowed.
-- `BASE-USB-05` **MUST** External devices are allowed only by explicit rules (section 5.1).
+- `BASE-USB-05` **MUST** External devices are allowed only by explicit rules (section 5.1): one defined service USB stick, one defined USB WLAN adapter, one defined LTE modem. Each is matched by vendor/product ID and the external port; the service stick also by serial number.
+- `BASE-USB-06` **MUST** The kernel authorizes no USB device by default (`usbcore.authorized_default=0`); only USBGuard authorizes devices.
 
 ### 4.2 Operation
 
@@ -73,7 +74,9 @@ This module blocks unauthorized USB devices. USBGuard allows only the USB device
 | LAN9514 USB hub | `allow id 0424:9514 via-port "<port>"` | `BASE-USB-04` |
 | LAN9514 Ethernet (`smsc95xx`) | `allow id 0424:ec00 via-port "<port>"` | `BASE-USB-04` |
 | Root hubs of the CM4 | `allow with-interface 09:00:*` on the internal bus only | `BASE-USB-04` |
-| External devices (e.g. service USB stick, USB WLAN radio) | open point 2 | `BASE-USB-05` |
+| Service USB stick (defined model) | `allow id <vid:pid> serial "<serial>" via-port "<external port>"` | `BASE-USB-05` |
+| USB WLAN adapter (defined model) | `allow id <vid:pid> via-port "<external port>"` | `BASE-USB-05` |
+| LTE modem (defined model) | `allow id <vid:pid> via-port "<external port>"` | `BASE-USB-05` |
 
 ### 5.2 Files
 
@@ -82,6 +85,7 @@ This module blocks unauthorized USB devices. USBGuard allows only the USB device
 | `/etc/usbguard/usbguard-daemon.conf` | `ImplicitPolicyTarget=block`, `PresentDevicePolicy=apply-policy`, `PresentControllerPolicy=keep`, `IPCAllowedUsers=root` | `BASE-USB-02`, `BASE-USB-03`, `BASE-USB-12` |
 | `/etc/usbguard/rules.conf` | rules of section 5.1, mode `0600` | `BASE-USB-04`, `BASE-USB-05`, `BASE-USB-11` |
 | `usbguard.service.d/` | `DefaultDependencies=no`, `Before=sysinit.target` (or as early as the unit allows) | `BASE-USB-01` |
+| `cmdline.txt` / kernel command line in the FIT | `usbcore.authorized_default=0` | `BASE-USB-06` |
 
 ---
 
@@ -118,6 +122,8 @@ This module blocks unauthorized USB devices. USBGuard allows only the USB device
 
 - **The second Ethernet port (`lan1`) is a USB device** (LAN9514). A missing or wrong rule disables `lan1` and the USB host port. Every policy change is tested with console access (human gate).
 - `via-port` values depend on the USB topology of the board. They must be read on the device (`usbguard generate-policy`) and are then fixed for this hardware variant.
+- With `usbcore.authorized_default=0`, `lan1` and the USB port work only after USBGuard has started.
+- An LTE modem is a further uplink. It is not yet specified in `BASE-NETD` and `BASE-FW` (see `README.md`, open points).
 - USBGuard blocks at the authorization level of the kernel. A device that is blocked is still powered and visible in `lsusb`, but no driver binds to it.
 - If USBGuard fails to start, the kernel default (authorize all) applies. `BASE-INIT-23` (restart) and `BASE-KERN-21` (reboot after start limit) limit this window.
 
@@ -127,6 +133,6 @@ This module blocks unauthorized USB devices. USBGuard allows only the USB device
 
 | # | Question | Affects | Decision |
 | :-- | :-- | :-- | :-- |
-| 1 | Read the vendor/product IDs and ports of the internal USB devices on the device (`usbguard generate-policy`). | `BASE-USB-04` | |
-| 2 | Which external USB devices are allowed (service USB stick for provisioning/diagnostics, USB WLAN radio, USB modem)? | `BASE-USB-05` | |
-| 3 | Should USBGuard be the only mechanism, or should the kernel default be "deny" as well (`usbcore.authorized_default=0` on the kernel command line)? | `BASE-USB-01` | |
+| 1 | Read the vendor/product IDs and ports of the internal USB devices on the device (`usbguard generate-policy`). | `BASE-USB-04` | **Deferred:** read on the device → verification task. |
+| 2 | Which external USB devices are allowed (service USB stick for provisioning/diagnostics, USB WLAN radio, USB modem)? | `BASE-USB-05` | **Decided:** service USB stick, USB WLAN adapter, LTE modem (one defined model each). Models and IDs follow. |
+| 3 | Should USBGuard be the only mechanism, or should the kernel default be "deny" as well (`usbcore.authorized_default=0` on the kernel command line)? | `BASE-USB-01` | **Decided:** kernel default deny in addition (`BASE-USB-06`). |

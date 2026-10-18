@@ -16,6 +16,7 @@ Device-specific values (UART paths, GPIO numbers, I2C addresses) are defined onl
 - **Requirement levels:** `MUST` (part of the Definition of Done), `SHOULD` (implement unless a reason is documented), `MAY`.
 - **Verification levels:** `build`, `manifest`, `rootfs` (no hardware needed), `device` (real hardware).
 - **Module status:** `planned` (file empty) → `draft` → `review` → `approved`. Only `approved` modules are handed over for implementation.
+- **Open points:** each open point ends as **Decided** (requirement updated) or **Deferred** (with reason). A deferred point that needs a measurement or test on the device becomes a verification task; a requirement affected by a deferred point is blocked until it is resolved.
 - **Image composition:** the image contains only packages that a module lists under *Components*. Packages that no module lists are removed or added to a module.
 - **OTA:** this layer contains no OTA-specific configuration. OTA machine configurations, OTA packages and OTA accounts are defined device-specifically in `meta-ota`. `meta-ota` extends this layer only through the extension points of the modules (e.g. `/etc/nftables.d/`, `/etc/dnsmasq.d/`, image bbappend) and must meet their requirements (e.g. `BASE-INIT-46`).
 
@@ -182,11 +183,12 @@ Each shared resource has exactly one owner module. Other modules use it and neve
 
 | # | Question | Affects | Decision |
 | :-- | :-- | :-- | :-- |
-| 1 | PostgreSQL is used by `BASE-LOGDB` but not specified. Which module or stack owns it? | `BASE-LOGDB` | |
+| 1 | PostgreSQL is used by `BASE-LOGDB` but not specified. Which module or stack owns it? | `BASE-LOGDB` | **Deferred:** application layer. |
 | 2 | The layer has no distro configuration. Distro settings (`INIT_MANAGER`, `DISTRO_FEATURES`) currently come from `local.conf`. Create `conf/distro/modberry.conf`? | `BASE-INIT`, all modules | **Decided:** distro conf in this layer (`BASE-INIT-02`). |
-| 3 | `README.md` of the layer lists only `poky`, `meta-raspberrypi`, `meta-openembedded`, `meta-security`, `meta-virtualization`. `layer.conf` declares only `core` in `LAYERDEPENDS`. Add the required layers there? | all modules | |
-| 4 | Hardware spec: GPIO05 is the interrupt line of both the TPM and the DS2482S. Marked as open in the hardware spec; to be verified against the schematic. | `BASE-TPM` | |
+| 3 | `README.md` of the layer lists only `poky`, `meta-raspberrypi`, `meta-openembedded`, `meta-security`, `meta-virtualization`. `layer.conf` declares only `core` in `LAYERDEPENDS`. Add the required layers there? | all modules | **Decided:** `LAYERDEPENDS` = `core raspberrypi openembedded-layer meta-python networking-layer webserver security tpm-layer`; `README.md` lists the same layers. The build script must also add `meta-security` and `meta-webserver`. |
+| 4 | Hardware spec: GPIO05 is the interrupt line of both the TPM and the DS2482S. Marked as open in the hardware spec; to be verified against the schematic. | `BASE-TPM` | **Deferred:** needs the schematic → verification task. |
 | 5 | The source spec states that U-Boot signing keys are stored in the TPM. With U-Boot verified boot, the private key stays on the build host and the public key is embedded in U-Boot. Clarify in `BASE-VBOOT`. | `BASE-VBOOT` | **Decided:** private key on the build host, public key in U-Boot (`BASE-VBOOT`, section 8). |
 | 6 | How are the production and debug image variants defined (two image recipes or an `IMAGE_FEATURES` switch)? `debug-tweaks` is enabled today for every build. | `BASE-INIT-40`, all modules | **Decided:** one image recipe, switch `MODBERRY_DEBUG = "1"` (`BASE-INIT-42` … `BASE-INIT-44`). |
 | 7 | WLAN credentials and the AP passphrase are in the Git history (`hostapd.conf`, `scripts/Yocto/local_kirkstone.conf`). They must be changed on all devices, and a per-device provisioning is needed (`BASE-WAP-14`, `BASE-WCLI-20`). | `BASE-WAP`, `BASE-WCLI` | **Interim done:** values moved to the non-versioned `scripts/Yocto/secrets_kirkstone.conf`. **Decided:** factory provisioning (`BASE-PROV`). Open: change the old values. |
-| 8 | Value of the placeholder `VPN_ENDPOINT` (port, VPN subnet). | `BASE-FW`, `BASE-RACC` | |
+| 8 | Value of the placeholder `VPN_ENDPOINT` (port, VPN subnet). | `BASE-FW`, `BASE-RACC` | **Deferred:** infrastructure information. |
+| 9 | An LTE modem is allowed as USB device (`BASE-USB-05`). Uplink role, priority and firewall rules of an LTE uplink are not yet specified. | `BASE-NETD`, `BASE-FW` | **Deferred:** specified when the modem model is chosen. |

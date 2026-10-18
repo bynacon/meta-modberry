@@ -85,6 +85,7 @@ This module defines systemd as the init system and service manager of the base i
 - `BASE-INIT-44` **MUST** A debug image can be identified on the device and by its file name (e.g. `VARIANT_ID=debug` in `/etc/os-release`, image name suffix `-debug`).
 - `BASE-INIT-45` **MUST** The production variant of this layer has the account `user` with a locked password; it logs in only via SSH key. `root` is locked.
 - `BASE-INIT-46` **MUST** Accounts that other layers add (e.g. the OTA layer) also meet `BASE-INIT-43` and `BASE-INIT-45`.
+- `BASE-INIT-47` **MUST** `user` has password-less `sudo` (its password is locked, so `sudo` cannot ask for one).
 
 ---
 
@@ -102,6 +103,7 @@ This module defines systemd as the init system and service manager of the base i
 | Build: image recipe `rpi-cm4.bb` | `debug-tweaks`, `systemd-serialgetty`, debug users only if `MODBERRY_DEBUG` is `1` (e.g. via `bb.utils.contains`/`oe.utils.conditional`) | `BASE-INIT-41`, `BASE-INIT-43` |
 | Build: image recipe `rpi-cm4.bb` | `IMAGE_NAME_SUFFIX`/`IMAGE_BASENAME` and `os-release` `VARIANT_ID` per variant | `BASE-INIT-44` |
 | Build: image recipe `rpi-cm4.bb` | production: `useradd -p '!'` for `user`; `usermod -L root` (instead of `-p ''`) | `BASE-INIT-45` |
+| `/etc/sudoers.d/10-user` | `user ALL=(ALL) NOPASSWD: ALL`, mode `0440` | `BASE-INIT-47` |
 
 ---
 
@@ -148,6 +150,7 @@ This module defines systemd as the init system and service manager of the base i
 | `BASE-INIT-44` | `rootfs` | `grep VARIANT_ID <rootfs>/etc/os-release`; image file name | `debug` / `-debug` only for the debug variant |
 | `BASE-INIT-45` | `rootfs` | `cut -d: -f1,2 <rootfs>/etc/shadow` of the production image | `root`, `user` start with `!` or `*` |
 | `BASE-INIT-46` | `rootfs` | `awk -F: '$2==""' <rootfs>/etc/shadow` of the production image with all layers | no output |
+| `BASE-INIT-47` | `device` | `sudo -n true` as `user` | exit code 0 |
 
 ---
 
@@ -174,4 +177,4 @@ This module defines systemd as the init system and service manager of the base i
 | 4 | Serial console getty on the production image? | `BASE-INIT-40`, `BASE-INIT-41` | **Decided:** debug image only. |
 | 5 | How are the production and debug image variants defined: two image recipes, or a switch? Which module owns the definition? | `BASE-INIT-40` … `BASE-INIT-44` | **Decided:** one image recipe with the switch `MODBERRY_DEBUG`; owned by `BASE-INIT`. |
 | 6 | Which accounts does the production image have, and how do they log in? | `BASE-INIT-43`, `BASE-INIT-45` | **Decided:** this layer provides `user` (SSH key only), root locked. Accounts of the OTA stack are defined in `meta-ota`. |
-| 7 | `sudo` rules: today `user` is in `sudo` (and `docker`). Password-less `sudo` for `user`? | `BASE-INIT-45` | |
+| 7 | `sudo` rules: today `user` is in `sudo` (and `docker`). Password-less `sudo` for `user`? | `BASE-INIT-45` | **Decided:** password-less `sudo` for `user` (`BASE-INIT-47`). |

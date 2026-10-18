@@ -60,6 +60,7 @@ This module collects and routes the logs of the system on the device. systemd-jo
 - `BASE-LOG-12` **MUST** syslog-ng routes the entries by facility and severity.
 - `BASE-LOG-13` **MUST** Exactly one syslog daemon runs on the system.
 - `BASE-LOG-14` **MUST** The syslog-ng configuration includes the files of `/etc/syslog-ng/conf.d/`, so that `BASE-LOGDB` can add its destination without changing the main configuration.
+- `BASE-LOG-15` **MUST** syslog-ng writes no local log files. Its only persistent destination is the database (`BASE-LOGDB`).
 
 ---
 
@@ -68,7 +69,7 @@ This module collects and routes the logs of the system on the device. systemd-jo
 | Target path | Key settings | Req. |
 | :-- | :-- | :-- |
 | `/etc/systemd/journald.conf` | `Storage=persistent` | `BASE-LOG-02` |
-| `/etc/systemd/journald.conf` | `SystemMaxUse=<value>` | `BASE-LOG-04` |
+| `/etc/systemd/journald.conf` | `SystemMaxUse=64M` | `BASE-LOG-04` |
 | `/etc/syslog-ng/syslog-ng.conf` | source `systemd-journal()` | `BASE-LOG-11` |
 | `/etc/syslog-ng/syslog-ng.conf` | filters by `facility()` and `level()` | `BASE-LOG-12` |
 | `/etc/syslog-ng/syslog-ng.conf` | `@include "/etc/syslog-ng/conf.d/*.conf"` | `BASE-LOG-14` |
@@ -101,10 +102,11 @@ This module collects and routes the logs of the system on the device. systemd-jo
 | `BASE-LOG-04` | `device` | `journalctl --disk-usage` | below the configured limit |
 | `BASE-LOG-10` | `manifest` | `syslog-ng` in image manifest | present |
 | `BASE-LOG-10` | `device` | `systemctl is-active syslog-ng` | `active` |
-| `BASE-LOG-11` | `device` | `logger -t hwtest test` and `echo test > /dev/kmsg`, then check a syslog-ng file destination | both entries present |
+| `BASE-LOG-11` | `device` | `logger -t hwtest test` and `echo test > /dev/kmsg`, then `syslog-ng-ctl stats` | counters of the journal source increase |
 | `BASE-LOG-12` | `rootfs` | Review of filters in `syslog-ng.conf` | filters by facility and level exist |
 | `BASE-LOG-13` | `manifest` | `busybox-syslog`, `sysklogd`, `rsyslog` in image manifest | absent |
 | `BASE-LOG-14` | `rootfs` | `grep '@include' <rootfs>/etc/syslog-ng/syslog-ng.conf` | includes `conf.d` |
+| `BASE-LOG-15` | `rootfs` | `grep -E 'file\(' <rootfs>/etc/syslog-ng/syslog-ng.conf` | no file destination |
 
 ---
 
@@ -120,6 +122,6 @@ This module collects and routes the logs of the system on the device. systemd-jo
 
 | # | Question | Affects | Decision |
 | :-- | :-- | :-- | :-- |
-| 1 | Maximum journal size (`SystemMaxUse`)? | `BASE-LOG-04` | |
-| 2 | Is a persistent journal needed once syslog-ng writes into the database, or is `Storage=volatile` enough? (Fail2Ban and PSAD read the journal.) | `BASE-LOG-02` | |
-| 3 | Does syslog-ng also write local files (e.g. `/var/log/messages`) next to the database, or only the database? | `BASE-LOG-12` | |
+| 1 | Maximum journal size (`SystemMaxUse`)? | `BASE-LOG-04` | **Decided:** `SystemMaxUse=64M`. |
+| 2 | Is a persistent journal needed once syslog-ng writes into the database, or is `Storage=volatile` enough? (Fail2Ban and PSAD read the journal.) | `BASE-LOG-02` | **Decided:** persistent journal (Fail2Ban reads it). |
+| 3 | Does syslog-ng also write local files (e.g. `/var/log/messages`) next to the database, or only the database? | `BASE-LOG-12` | **Decided:** no local files (`BASE-LOG-15`). |

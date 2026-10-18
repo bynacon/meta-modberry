@@ -52,7 +52,7 @@ This module records security-relevant events and detects unauthorized changes to
 
 - `BASE-AUDIT-01` **MUST** auditd runs from early boot. The kernel is started with `audit=1`, so that processes started before auditd are also audited.
 - `BASE-AUDIT-02` **MUST** The audit rules of this module are installed under `/etc/audit/rules.d/` and loaded by `augenrules` at boot.
-- `BASE-AUDIT-03` **MUST** Every open, read and write access to the serial interfaces of the hardware specification is logged, with the persistent names of `BASE-HWT` and the kernel names.
+- `BASE-AUDIT-03` **MUST** Every open of the serial interfaces of the hardware specification (for reading or writing) and every attribute change is logged, with the persistent names of `BASE-HWT` and the kernel names. Individual `read`/`write` calls on an open file are not logged.
 - `BASE-AUDIT-04` **MUST** Every access to the TPM device nodes (`/dev/tpm0`, `/dev/tpmrm0`) is logged.
 - `BASE-AUDIT-05` **MUST** Changes to the audit configuration, user and group files (`/etc/passwd`, `/etc/shadow`, `/etc/group`, `/etc/sudoers*`) and to `/data/provisioning/` are logged.
 - `BASE-AUDIT-06` **SHOULD** In the production image, the audit rules are immutable after loading (`-e 2`).
@@ -79,7 +79,7 @@ This module records security-relevant events and detects unauthorized changes to
 
 | Rule | Key | Req. |
 | :-- | :-- | :-- |
-| `-w /dev/ttyAMA0 -p rwa -k serial` (and every serial node and persistent name) | `serial` | `BASE-AUDIT-03` |
+| `-w /dev/ttyAMA0 -p rwa -k serial`, `-w /dev/ttySC0 -p rwa -k serial` (file watches trigger on open and attribute changes) | `serial` | `BASE-AUDIT-03` |
 | `-w /dev/tpm0 -p rwa -k tpm`, `-w /dev/tpmrm0 -p rwa -k tpm` | `tpm` | `BASE-AUDIT-04` |
 | `-w /etc/passwd -p wa -k identity` (and `shadow`, `group`, `sudoers`, `sudoers.d/`) | `identity` | `BASE-AUDIT-05` |
 | `-w /etc/audit/ -p wa -k audit-config` | `audit-config` | `BASE-AUDIT-05` |
@@ -151,7 +151,7 @@ This module records security-relevant events and detects unauthorized changes to
 
 - **Baseline at first boot:** a change made before the first boot (e.g. in the image file) is part of the baseline and is not detected. With dm-verity (`BASE-ROOTFS`), the read-only root filesystem is protected at block level; AIDE then mainly protects `/etc` overlays, `/boot` and `/data`.
 - An attacker with root access can modify the AIDE database. Protecting the database (e.g. a hash sealed in the TPM, or a copy off the device) is not part of this module (open point 3).
-- auditd writes to the eMMC for every watched access. Frequent accesses to the serial interfaces (e.g. Modbus polling) produce many events. Watch rules on `r` may need to be reduced to `wa` plus `open` (open point 1).
+- auditd writes to the eMMC for every watched access. File watches trigger when a file is opened, not on every `read`/`write`; an application that reopens a serial port for every poll still produces many events.
 - `-e 2` prevents any change of the audit rules until the next reboot, also for legitimate debugging. It applies only to the production image.
 - `/data` does not exist yet. Until `BASE-ROOTFS` is implemented, the paths of this module are on the writable root filesystem.
 
@@ -161,7 +161,7 @@ This module records security-relevant events and detects unauthorized changes to
 
 | # | Question | Affects | Decision |
 | :-- | :-- | :-- | :-- |
-| 1 | Log every read/write on the serial interfaces (high volume with Modbus polling), or only open and attribute changes? | `BASE-AUDIT-03`, `BASE-AUDIT-04` | |
-| 2 | Confirm the AIDE scope (section 5.2) and the check interval (proposal: daily and at every boot). | `BASE-AUDIT-20`, `BASE-AUDIT-21` | |
-| 3 | Is the AIDE database protected against modification (hash sealed in the TPM, upload off the device)? | `BASE-AUDIT-23` | |
-| 4 | Who updates the baseline after an OTA update – the OTA layer, or a procedure of this module? | `BASE-AUDIT-24` | |
+| 1 | Log every read/write on the serial interfaces (high volume with Modbus polling), or only open and attribute changes? | `BASE-AUDIT-03`, `BASE-AUDIT-04` | **Decided:** open and attribute changes only (`BASE-AUDIT-03`). |
+| 2 | Confirm the AIDE scope (section 5.2) and the check interval (proposal: daily and at every boot). | `BASE-AUDIT-20`, `BASE-AUDIT-21` | **Decided:** scope of section 5.2, daily and at every boot. |
+| 3 | Is the AIDE database protected against modification (hash sealed in the TPM, upload off the device)? | `BASE-AUDIT-23` | **Deferred:** together with remote attestation (`BASE-MBOOT` open point 2). |
+| 4 | Who updates the baseline after an OTA update – the OTA layer, or a procedure of this module? | `BASE-AUDIT-24` | **Deferred:** OTA layer. |

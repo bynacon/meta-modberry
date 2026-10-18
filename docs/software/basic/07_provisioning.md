@@ -72,6 +72,8 @@ This module defines how a device that runs the production image gets its per-dev
 - `BASE-PROV-30` **MUST** On an unprovisioned device, services that need provisioned data do not start and do not fail (`ConditionPathExists=`), so that `BASE-INIT-11` holds.
 - `BASE-PROV-31` **MUST** Provisioning can be repeated. Repeating it replaces the provisioned items without leftovers.
 - `BASE-PROV-32` **SHOULD** The factory script records serial number, public keys and certificate of each device in the factory registry.
+- `BASE-PROV-33` **MUST** The factory script assigns the Bynacon serial number and writes it into the user area of the AT24CS01 EEPROM and into the provisioning store.
+- `BASE-PROV-34` **MUST** After provisioning, the factory subnet no longer grants access (`BASE-FW-15`). Re-provisioning is done through the VPN or from `service_nets`.
 
 ---
 
@@ -86,12 +88,13 @@ This module defines how a device that runs the production image gets its per-dev
 | WLAN country code (default `CH`) | factory script | `wlan/country` | `BASE-WAP-15` |
 | WLAN client credentials (optional) | factory script | iwd network file | `BASE-WCLI-21` |
 | Site entries of `service_nets` | factory script | `firewall/service_nets.nft` | `BASE-FW-15` |
-| nginx TLS key | on the device | `tls/server.key` (or TPM) | `BASE-RACC-25` |
+| nginx TLS key | in the TPM | TPM persistent handle (reference in `tls/`) | `BASE-RACC-25`, `BASE-TPM-33` |
 | nginx TLS certificate | Bynacon CA from CSR | `tls/server.crt` | `BASE-RACC-26` |
 | WireGuard private key | on the device | `wireguard/wg0.key` | `BASE-RACC-02` |
 | WireGuard peer (endpoint, server public key, tunnel address) | factory script | `wireguard/peer.conf` | `BASE-RACC-06` |
 | TPM device identity key | in the TPM | TPM persistent handle | `BASE-TPM-32` |
 | Additional authorized SSH keys (optional) | factory script | `ssh/authorized_keys` | `BASE-RACC-14` |
+| Serial number | factory script | EEPROM user area and `serial` | `BASE-PROV-33` |
 | Marker | factory script | `provisioned` | `BASE-PROV-23` |
 
 ### 5.2 Files
@@ -134,6 +137,8 @@ This module defines how a device that runs the production image gets its per-dev
 | `BASE-PROV-23` | `device` | `cat /data/provisioning/provisioned` | version and date |
 | `BASE-PROV-30` | `device` | Boot an unprovisioned device, `systemctl --failed` | empty; hostapd, wg0, nginx not started |
 | `BASE-PROV-31` | `device` | Provision twice | second run succeeds, no old items left |
+| `BASE-PROV-33` | `device` | Read the EEPROM user area; `cat /data/provisioning/serial` | same serial number |
+| `BASE-PROV-34` | `device` | SSH from the factory subnet after provisioning | refused |
 
 ---
 
@@ -143,6 +148,7 @@ This module defines how a device that runs the production image gets its per-dev
 - `/data` does not exist yet (`BASE-ROOTFS`). Until then, `/data/provisioning/` is a directory on the writable root filesystem and is not encrypted.
 - **Interim:** the AP passphrase and WLAN client credentials still come from `secrets_kirkstone.conf` at build time. They move to provisioning together with this module (`BASE-WAP-14`, `BASE-WCLI-20`).
 - The factory script, the Bynacon CA and the device registry are not part of this layer. Their location and security (CA key protection) must be defined separately.
+- The EEPROM (AT24CS01) is not yet implemented in the device tree (hardware specification, section 8). `BASE-PROV-33` needs the `at24` driver.
 - Moving private keys out of the device is not allowed (`BASE-PROV-11`). A replaced device therefore gets new keys; peers (VPN server) must be updated.
 
 ---
@@ -151,7 +157,7 @@ This module defines how a device that runs the production image gets its per-dev
 
 | # | Question | Affects | Decision |
 | :-- | :-- | :-- | :-- |
-| 1 | Where does the factory script live, and where are the Bynacon CA and the device registry operated? | `BASE-PROV-12`, `BASE-PROV-32` | |
-| 2 | Device serial number: from the AT24CS01 EEPROM (factory-programmed 128-bit serial), from the CM4, or assigned by the factory script? | `BASE-PROV-32` | |
-| 3 | Is the factory subnet removed from `service_nets` at the end of provisioning? | `BASE-FW-15` | |
+| 1 | Where does the factory script live, and where are the Bynacon CA and the device registry operated? | `BASE-PROV-12`, `BASE-PROV-32` | **Deferred:** infrastructure information. |
+| 2 | Device serial number: from the AT24CS01 EEPROM (factory-programmed 128-bit serial), from the CM4, or assigned by the factory script? | `BASE-PROV-32` | **Decided:** assigned by the factory script, stored in the EEPROM user area (`BASE-PROV-33`). |
+| 3 | Is the factory subnet removed from `service_nets` at the end of provisioning? | `BASE-FW-15` | **Decided:** yes (`BASE-PROV-34`, `BASE-FW-15`). |
 | 4 | Provisioning method. | all | **Decided:** factory provisioning over SSH with the Bynacon service key from the factory subnet `10.99.0.0/24`. |

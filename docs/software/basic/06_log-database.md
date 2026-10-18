@@ -104,7 +104,7 @@ This module transfers the log entries collected by `BASE-LOG` into the local Pos
 
 | # | Question | Affects | Decision |
 | :-- | :-- | :-- | :-- |
-| 1 | Which module owns PostgreSQL (database, user, log table, retention)? | all | |
-| 2 | Retention of log entries in the database (time, row count)? | `BASE-LOGDB-01` | |
-| 3 | Are all severities written into the database, or only from a minimum level (e.g. `info`)? | `BASE-LOGDB-01` | |
-| 4 | Maximum size of the disk buffer? | `BASE-LOGDB-05` | |
+| 1 | Which module owns PostgreSQL (database, user, log table, retention)? | all | **Deferred:** depends on the PostgreSQL / application layer specification. |
+| 2 | Retention of log entries in the database (time, row count)? | `BASE-LOGDB-01` | **Deferred:** depends on the PostgreSQL / application layer specification. |
+| 3 | Are all severities written into the database, or only from a minimum level (e.g. `info`)? | `BASE-LOGDB-01` | **Deferred:** depends on the PostgreSQL / application layer specification. |
+| 4 | Maximum size of the disk buffer? | `BASE-LOGDB-05` | **Deferred:** depends on the PostgreSQL / application layer specification. |

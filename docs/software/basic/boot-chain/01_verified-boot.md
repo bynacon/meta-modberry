@@ -133,7 +133,7 @@ This module makes U-Boot boot only a kernel, device tree and initramfs that are 
 
 | # | Question | Affects | Decision |
 | :-- | :-- | :-- | :-- |
-| 1 | Use Raspberry Pi secure boot (signed `boot.img`, customer key in CM4 OTP)? Closes the gap before U-Boot, but OTP programming is irreversible and must be done in the factory. | Scope, `BASE-PROV` | |
-| 2 | Where are the production signing key and the development key kept (HSM, build host), and who may sign? | `BASE-VBOOT-30` … `BASE-VBOOT-32` | |
-| 3 | Merge the board overlays into the kernel device tree at build time, or apply them in U-Boot from the FIT? | `BASE-VBOOT-01` | |
-| 4 | Key rotation: how is a new public key brought onto devices (U-Boot update via OTA, signed with the old key)? | `BASE-VBOOT-10` | |
+| 1 | Use Raspberry Pi secure boot (signed `boot.img`, customer key in CM4 OTP)? Closes the gap before U-Boot, but OTP programming is irreversible and must be done in the factory. | Scope, `BASE-PROV` | **Deferred:** decided after verified and measured boot are tested on lab devices. |
+| 2 | Where are the production signing key and the development key kept (HSM, build host), and who may sign? | `BASE-VBOOT-30` … `BASE-VBOOT-32` | **Deferred:** infrastructure information. |
+| 3 | Merge the board overlays into the kernel device tree at build time, or apply them in U-Boot from the FIT? | `BASE-VBOOT-01` | **Decided:** merged into the kernel device tree at build time. |
+| 4 | Key rotation: how is a new public key brought onto devices (U-Boot update via OTA, signed with the old key)? | `BASE-VBOOT-10` | **Deferred:** OTA layer. |
