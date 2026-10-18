@@ -22,7 +22,6 @@ DEPENDS:append = " \
 
 EXTRA_USERS_PARAMS = "\
 	useradd -p '' user; \ 
-    useradd -p '' mender; \
 	usermod -p '' root; \ 
     groupadd docker; \
     groupadd bynacon; \
@@ -31,6 +30,5 @@ EXTRA_USERS_PARAMS = "\
     groupmod -g 1040 bynacon; \
     groupmod -g 1030 netdev; \
     usermod -a -G sudo,docker,bynacon,dip user; \
-	usermod -a -G sudo,docker,bynacon mender; \
 	usermod -a -G netdev root; \
 "
