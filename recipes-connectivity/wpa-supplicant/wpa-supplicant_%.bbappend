@@ -15,8 +15,7 @@ do_install:append() {
 
   install -d ${D}${sysconfdir}/wpa_supplicant
 
-  sed -i -e 's#[@]WIFI_PASSKEY[@]#${WIFI_PASSKEY}#' ${WORKDIR}/wpa_supplicant-wlan0_sta.conf
-	sed -i -e 's#[@]WIFI_SSID[@]#${WIFI_SSID}#' ${WORKDIR}/wpa_supplicant-wlan0_sta.conf
-
-	install -m 0755 ${WORKDIR}/wpa_supplicant-wlan0_sta.conf ${D}${sysconfdir}/wpa_supplicant/
+  install -m 0600 ${WORKDIR}/wpa_supplicant-wlan0_sta.conf ${D}${sysconfdir}/wpa_supplicant/
+  sed -i -e 's#[@]WIFI_PASSKEY[@]#${WIFI_PASSKEY}#' ${D}${sysconfdir}/wpa_supplicant/wpa_supplicant-wlan0_sta.conf
+  sed -i -e 's#[@]WIFI_SSID[@]#${WIFI_SSID}#' ${D}${sysconfdir}/wpa_supplicant/wpa_supplicant-wlan0_sta.conf
 }
