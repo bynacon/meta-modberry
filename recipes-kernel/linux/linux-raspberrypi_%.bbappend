@@ -8,7 +8,7 @@ SRC_URI += "   \
     file://slb9670-tpm-overlay.dts;subdir=git/arch/arm64/boot/dts/overlays \
 "
 
-SRC_URI:append:modberry-m40804w-max-m = "   \
+SRC_URI:append:modberry-m40804w-max = "   \
     file://modberry-m40804w-max-m/0001-mood-modberry-cm4-dts.patch \
     file://modberry-m40804w-max-m/9670.cfg \
 "
