@@ -4,7 +4,7 @@ This folder specifies the base system layer of the Modberry image: init system, 
 
 Device-specific values (UART paths, GPIO numbers, I2C addresses) are defined only in the [hardware specification](../../hardware/M40804W_MAX.md). The module files reference it.
 
-> This folder replaces [`01_basic.md`](../01_basic.md). Until all modules are written, `01_basic.md` remains the reference for modules in status `planned`.
+> This folder replaces [`01_basic.md`](../01_basic.md). All modules of the basic stack are written; `01_basic.md` is no longer needed as reference and can be removed.
 
 ---
 
@@ -37,10 +37,10 @@ Device-specific values (UART paths, GPIO numbers, I2C addresses) are defined onl
 | `BASE-WAP` | [network/03_wlan-ap.md](network/03_wlan-ap.md) | hostapd (IoT + guest WLAN), dnsmasq | INIT, NETD, FW | medium | `draft` |
 | `BASE-WCLI` | [network/04_wlan-client.md](network/04_wlan-client.md) | iwd | INIT, NETD | low | `draft` |
 | `BASE-RACC` | [network/05_remote-access.md](network/05_remote-access.md) | WireGuard client, OpenSSH, nginx | INIT, NETD, FW, TPM, TIME, PROV | high | `draft` |
-| `BASE-VBOOT` | [boot-chain/01_verified-boot.md](boot-chain/01_verified-boot.md) | U-Boot verified boot | INIT | high | `planned` |
-| `BASE-MBOOT` | [boot-chain/02_measured-boot.md](boot-chain/02_measured-boot.md) | TPM measured boot | TPM, VBOOT | high | `planned` |
-| `BASE-ROOTFS` | [boot-chain/03_rootfs-integrity.md](boot-chain/03_rootfs-integrity.md) | dm-verity, read-only rootfs, overlayfs | VBOOT, MBOOT | high | `planned` |
-| `BASE-LUKS` | [boot-chain/04_data-encryption.md](boot-chain/04_data-encryption.md) | LUKS data partition, TPM-sealed key | TPM, MBOOT, ROOTFS | high | `planned` |
+| `BASE-VBOOT` | [boot-chain/01_verified-boot.md](boot-chain/01_verified-boot.md) | U-Boot verified boot (signed FIT) | INIT | high | `draft` |
+| `BASE-MBOOT` | [boot-chain/02_measured-boot.md](boot-chain/02_measured-boot.md) | TPM measured boot | TPM, VBOOT | high | `draft` |
+| `BASE-ROOTFS` | [boot-chain/03_rootfs-integrity.md](boot-chain/03_rootfs-integrity.md) | dm-verity, read-only rootfs, overlay, partition layout | VBOOT, MBOOT | high | `draft` |
+| `BASE-LUKS` | [boot-chain/04_data-encryption.md](boot-chain/04_data-encryption.md) | LUKS data partition, TPM-sealed key | TPM, MBOOT, ROOTFS | high | `draft` |
 | `BASE-KERN` | [hardening/01_kernel.md](hardening/01_kernel.md) | sysctl hardening, hardware watchdog | INIT | medium | `draft` |
 | `BASE-MAC` | [hardening/02_mac.md](hardening/02_mac.md) | AppArmor profiles | INIT, all service modules | medium | `draft` |
 | `BASE-AUDIT` | [hardening/03_audit-integrity.md](hardening/03_audit-integrity.md) | auditd, AIDE | INIT, HWT, TPM, LOG | low | `draft` |
@@ -186,7 +186,7 @@ Each shared resource has exactly one owner module. Other modules use it and neve
 | 2 | The layer has no distro configuration. Distro settings (`INIT_MANAGER`, `DISTRO_FEATURES`) currently come from `local.conf`. Create `conf/distro/modberry.conf`? | `BASE-INIT`, all modules | **Decided:** distro conf in this layer (`BASE-INIT-02`). |
 | 3 | `README.md` of the layer lists only `poky`, `meta-raspberrypi`, `meta-openembedded`, `meta-security`, `meta-virtualization`. `layer.conf` declares only `core` in `LAYERDEPENDS`. Add the required layers there? | all modules | |
 | 4 | Hardware spec: GPIO05 is the interrupt line of both the TPM and the DS2482S. Marked as open in the hardware spec; to be verified against the schematic. | `BASE-TPM` | |
-| 5 | The source spec states that U-Boot signing keys are stored in the TPM. With U-Boot verified boot, the private key stays on the build host and the public key is embedded in U-Boot. Clarify in `BASE-VBOOT`. | `BASE-VBOOT` | |
+| 5 | The source spec states that U-Boot signing keys are stored in the TPM. With U-Boot verified boot, the private key stays on the build host and the public key is embedded in U-Boot. Clarify in `BASE-VBOOT`. | `BASE-VBOOT` | **Decided:** private key on the build host, public key in U-Boot (`BASE-VBOOT`, section 8). |
 | 6 | How are the production and debug image variants defined (two image recipes or an `IMAGE_FEATURES` switch)? `debug-tweaks` is enabled today for every build. | `BASE-INIT-40`, all modules | **Decided:** one image recipe, switch `MODBERRY_DEBUG = "1"` (`BASE-INIT-42` … `BASE-INIT-44`). |
 | 7 | WLAN credentials and the AP passphrase are in the Git history (`hostapd.conf`, `scripts/Yocto/local_kirkstone.conf`). They must be changed on all devices, and a per-device provisioning is needed (`BASE-WAP-14`, `BASE-WCLI-20`). | `BASE-WAP`, `BASE-WCLI` | **Interim done:** values moved to the non-versioned `scripts/Yocto/secrets_kirkstone.conf`. **Decided:** factory provisioning (`BASE-PROV`). Open: change the old values. |
 | 8 | Value of the placeholder `VPN_ENDPOINT` (port, VPN subnet). | `BASE-FW`, `BASE-RACC` | |
