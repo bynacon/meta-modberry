@@ -1,0 +1,5045 @@
+{
+  "generated_by": "agent/tools/gen_tasks.py",
+  "spec_dir": "docs/software/basic",
+  "statuses": [
+    "todo",
+    "in_progress",
+    "implemented",
+    "verified",
+    "blocked",
+    "deferred",
+    "obsolete"
+  ],
+  "tasks": [
+    {
+      "id": "T-BASE-BUILD-4.1",
+      "module": "BASE-BUILD",
+      "spec": "docs/software/basic/hardening/06_build.md",
+      "spec_hash": "cc62212798dd5715",
+      "group": "4.1",
+      "title": "Build Hardening & Vulnerability Management – Compiler Hardening",
+      "phase": 1,
+      "risk": "medium",
+      "human_gate": false,
+      "depends_on_modules": [
+        "BASE-INIT"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-BUILD-01",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-BUILD-02",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "build",
+        "rootfs"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-BUILD-4.1.md",
+      "status": "todo",
+      "verified": {
+        "build": "pending",
+        "rootfs": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 367
+    },
+    {
+      "id": "T-BASE-BUILD-4.2",
+      "module": "BASE-BUILD",
+      "spec": "docs/software/basic/hardening/06_build.md",
+      "spec_hash": "cc62212798dd5715",
+      "group": "4.2",
+      "title": "Build Hardening & Vulnerability Management – Kernel Configuration",
+      "phase": 1,
+      "risk": "medium",
+      "human_gate": false,
+      "depends_on_modules": [
+        "BASE-INIT"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-BUILD-10",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-BUILD-11",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "build"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-BUILD-4.2.md",
+      "status": "todo",
+      "verified": {
+        "build": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 404
+    },
+    {
+      "id": "T-BASE-BUILD-4.3",
+      "module": "BASE-BUILD",
+      "spec": "docs/software/basic/hardening/06_build.md",
+      "spec_hash": "cc62212798dd5715",
+      "group": "4.3",
+      "title": "Build Hardening & Vulnerability Management – Image Content",
+      "phase": 1,
+      "risk": "medium",
+      "human_gate": false,
+      "depends_on_modules": [
+        "BASE-INIT"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-BUILD-20",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-BUILD-21",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-BUILD-22",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "build",
+        "device",
+        "manifest"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-BUILD-4.3.md",
+      "status": "todo",
+      "verified": {
+        "build": "pending",
+        "device": "pending",
+        "manifest": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 499
+    },
+    {
+      "id": "T-BASE-BUILD-4.4",
+      "module": "BASE-BUILD",
+      "spec": "docs/software/basic/hardening/06_build.md",
+      "spec_hash": "cc62212798dd5715",
+      "group": "4.4",
+      "title": "Build Hardening & Vulnerability Management – Vulnerability Management",
+      "phase": 1,
+      "risk": "medium",
+      "human_gate": false,
+      "depends_on_modules": [
+        "BASE-INIT"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-BUILD-30",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-BUILD-31",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-BUILD-32",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-BUILD-33",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "build"
+      ],
+      "blocked_by": [
+        {
+          "open_point": "1",
+          "question": "Kirkstone is end of life since April 2026: migrate to scarthgap (LTS until April 2028) or the next LTS release, or stay on kirkstone with own backports?",
+          "decision": "open",
+          "reqs": [
+            "BASE-BUILD-30",
+            "BASE-BUILD-32"
+          ]
+        },
+        {
+          "open_point": "2",
+          "question": "Where are CVE reports and SBOMs stored, and who reviews them per release?",
+          "decision": "open",
+          "reqs": [
+            "BASE-BUILD-31",
+            "BASE-BUILD-32"
+          ]
+        }
+      ],
+      "blocked_reqs": [
+        "BASE-BUILD-30",
+        "BASE-BUILD-31",
+        "BASE-BUILD-32"
+      ],
+      "pack": "agent/packs/T-BASE-BUILD-4.4.md",
+      "status": "todo",
+      "verified": {
+        "build": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 674
+    },
+    {
+      "id": "T-BASE-HWT-4.1",
+      "module": "BASE-HWT",
+      "spec": "docs/software/basic/02_hw-tooling.md",
+      "spec_hash": "f98c8cff30902aa2",
+      "group": "4.1",
+      "title": "Hardware Interface Tooling – Tools",
+      "phase": 1,
+      "risk": "low",
+      "human_gate": false,
+      "depends_on_modules": [
+        "BASE-INIT"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-HWT-01",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-HWT-02",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-HWT-03",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-HWT-04",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-HWT-05",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-HWT-06",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device",
+        "manifest"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-HWT-4.1.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending",
+        "manifest": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 610
+    },
+    {
+      "id": "T-BASE-HWT-4.2",
+      "module": "BASE-HWT",
+      "spec": "docs/software/basic/02_hw-tooling.md",
+      "spec_hash": "f98c8cff30902aa2",
+      "group": "4.2",
+      "title": "Hardware Interface Tooling – Kernel Support",
+      "phase": 1,
+      "risk": "low",
+      "human_gate": false,
+      "depends_on_modules": [
+        "BASE-INIT"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-HWT-10",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-HWT-11",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-HWT-12",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-HWT-13",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-HWT-14",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device",
+        "rootfs"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-HWT-4.2.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending",
+        "rootfs": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 820
+    },
+    {
+      "id": "T-BASE-HWT-4.3",
+      "module": "BASE-HWT",
+      "spec": "docs/software/basic/02_hw-tooling.md",
+      "spec_hash": "f98c8cff30902aa2",
+      "group": "4.3",
+      "title": "Hardware Interface Tooling – udev Rules",
+      "phase": 1,
+      "risk": "low",
+      "human_gate": false,
+      "depends_on_modules": [
+        "BASE-INIT"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-HWT-20",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-HWT-21",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-HWT-22",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-HWT-23",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-HWT-24",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device",
+        "rootfs"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-HWT-4.3.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending",
+        "rootfs": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 899
+    },
+    {
+      "id": "T-BASE-INIT-4.1",
+      "module": "BASE-INIT",
+      "spec": "docs/software/basic/01_init.md",
+      "spec_hash": "9d1d5344c48d341a",
+      "group": "4.1",
+      "title": "Init System & Service Management – Init System",
+      "phase": 1,
+      "risk": "medium",
+      "human_gate": false,
+      "depends_on_modules": [],
+      "reqs": [
+        {
+          "id": "BASE-INIT-01",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-INIT-02",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-INIT-03",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "build",
+        "device",
+        "manifest",
+        "rootfs"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-INIT-4.1.md",
+      "status": "todo",
+      "verified": {
+        "build": "pending",
+        "device": "pending",
+        "manifest": "pending",
+        "rootfs": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 644
+    },
+    {
+      "id": "T-BASE-INIT-4.2",
+      "module": "BASE-INIT",
+      "spec": "docs/software/basic/01_init.md",
+      "spec_hash": "9d1d5344c48d341a",
+      "group": "4.2",
+      "title": "Init System & Service Management – Boot Sequence",
+      "phase": 1,
+      "risk": "medium",
+      "human_gate": false,
+      "depends_on_modules": [],
+      "reqs": [
+        {
+          "id": "BASE-INIT-10",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-INIT-11",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-INIT-12",
+          "level": "SHOULD"
+        }
+      ],
+      "verify_levels": [
+        "device",
+        "rootfs"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-INIT-4.2.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending",
+        "rootfs": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 421
+    },
+    {
+      "id": "T-BASE-INIT-4.3",
+      "module": "BASE-INIT",
+      "spec": "docs/software/basic/01_init.md",
+      "spec_hash": "9d1d5344c48d341a",
+      "group": "4.3",
+      "title": "Init System & Service Management – Service Lifecycle",
+      "phase": 1,
+      "risk": "medium",
+      "human_gate": false,
+      "depends_on_modules": [],
+      "reqs": [
+        {
+          "id": "BASE-INIT-20",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-INIT-21",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-INIT-22",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-INIT-23",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-INIT-24",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-INIT-25",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device",
+        "rootfs"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-INIT-4.3.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending",
+        "rootfs": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 858
+    },
+    {
+      "id": "T-BASE-INIT-4.4",
+      "module": "BASE-INIT",
+      "spec": "docs/software/basic/01_init.md",
+      "spec_hash": "9d1d5344c48d341a",
+      "group": "4.4",
+      "title": "Init System & Service Management – Socket Activation",
+      "phase": 1,
+      "risk": "medium",
+      "human_gate": false,
+      "depends_on_modules": [],
+      "reqs": [
+        {
+          "id": "BASE-INIT-30",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-INIT-31",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-INIT-32",
+          "level": "SHOULD"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-INIT-4.4.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 478
+    },
+    {
+      "id": "T-BASE-INIT-4.5",
+      "module": "BASE-INIT",
+      "spec": "docs/software/basic/01_init.md",
+      "spec_hash": "9d1d5344c48d341a",
+      "group": "4.5",
+      "title": "Init System & Service Management – Image Variants & Serial Console",
+      "phase": 1,
+      "risk": "medium",
+      "human_gate": false,
+      "depends_on_modules": [],
+      "reqs": [
+        {
+          "id": "BASE-INIT-40",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-INIT-41",
+          "level": "MAY"
+        },
+        {
+          "id": "BASE-INIT-42",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-INIT-43",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-INIT-44",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-INIT-45",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-INIT-46",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-INIT-47",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-INIT-48",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "build",
+        "device",
+        "manifest",
+        "rootfs"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-INIT-4.5.md",
+      "status": "todo",
+      "verified": {
+        "build": "pending",
+        "device": "pending",
+        "manifest": "pending",
+        "rootfs": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 1387
+    },
+    {
+      "id": "T-BASE-INIT-4.6",
+      "module": "BASE-INIT",
+      "spec": "docs/software/basic/01_init.md",
+      "spec_hash": "9d1d5344c48d341a",
+      "group": "4.6",
+      "title": "Init System & Service Management – Service Sandboxing",
+      "phase": 1,
+      "risk": "medium",
+      "human_gate": false,
+      "depends_on_modules": [],
+      "reqs": [
+        {
+          "id": "BASE-INIT-50",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-INIT-51",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-INIT-52",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-INIT-53",
+          "level": "SHOULD"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-INIT-4.6.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 555
+    },
+    {
+      "id": "T-BASE-TPM-4.1",
+      "module": "BASE-TPM",
+      "spec": "docs/software/basic/03_tpm.md",
+      "spec_hash": "962856a0a0e4b1e3",
+      "group": "4.1",
+      "title": "TPM & Cryptography – Kernel & Device",
+      "phase": 1,
+      "risk": "medium",
+      "human_gate": false,
+      "depends_on_modules": [
+        "BASE-INIT"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-TPM-01",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-TPM-02",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-TPM-03",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-TPM-04",
+          "level": "SHOULD"
+        }
+      ],
+      "verify_levels": [
+        "device",
+        "manifest",
+        "rootfs"
+      ],
+      "blocked_by": [
+        {
+          "open_point": "6",
+          "question": "GPIO05 conflict between TPM and DS2482S (hardware spec). To be verified against the schematic.",
+          "decision": "**Deferred:** needs the schematic → verification task.",
+          "reqs": [
+            "BASE-TPM-03"
+          ]
+        }
+      ],
+      "blocked_reqs": [
+        "BASE-TPM-03"
+      ],
+      "pack": "agent/packs/T-BASE-TPM-4.1.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending",
+        "manifest": "pending",
+        "rootfs": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 780
+    },
+    {
+      "id": "T-BASE-TPM-4.2",
+      "module": "BASE-TPM",
+      "spec": "docs/software/basic/03_tpm.md",
+      "spec_hash": "962856a0a0e4b1e3",
+      "group": "4.2",
+      "title": "TPM & Cryptography – TPM2 Software Stack",
+      "phase": 1,
+      "risk": "medium",
+      "human_gate": false,
+      "depends_on_modules": [
+        "BASE-INIT"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-TPM-10",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-TPM-11",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-TPM-12",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-TPM-13",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device",
+        "manifest"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-TPM-4.2.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending",
+        "manifest": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 731
+    },
+    {
+      "id": "T-BASE-TPM-4.3",
+      "module": "BASE-TPM",
+      "spec": "docs/software/basic/03_tpm.md",
+      "spec_hash": "962856a0a0e4b1e3",
+      "group": "4.3",
+      "title": "TPM & Cryptography – TPM2 Tools",
+      "phase": 1,
+      "risk": "medium",
+      "human_gate": false,
+      "depends_on_modules": [
+        "BASE-INIT"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-TPM-20",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-TPM-4.3.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 322
+    },
+    {
+      "id": "T-BASE-TPM-4.4",
+      "module": "BASE-TPM",
+      "spec": "docs/software/basic/03_tpm.md",
+      "spec_hash": "962856a0a0e4b1e3",
+      "group": "4.4",
+      "title": "TPM & Cryptography – OpenSSL",
+      "phase": 1,
+      "risk": "medium",
+      "human_gate": false,
+      "depends_on_modules": [
+        "BASE-INIT"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-TPM-30",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-TPM-31",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-TPM-32",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-TPM-33",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device",
+        "manifest"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-TPM-4.4.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending",
+        "manifest": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 808
+    },
+    {
+      "id": "T-BASE-TPM-4.5",
+      "module": "BASE-TPM",
+      "spec": "docs/software/basic/03_tpm.md",
+      "spec_hash": "962856a0a0e4b1e3",
+      "group": "4.5",
+      "title": "TPM & Cryptography – Access Control",
+      "phase": 1,
+      "risk": "medium",
+      "human_gate": false,
+      "depends_on_modules": [
+        "BASE-INIT"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-TPM-40",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-TPM-41",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-TPM-4.5.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 422
+    },
+    {
+      "id": "V-BASE-TPM-OP6",
+      "module": "BASE-TPM",
+      "spec": "docs/software/basic/03_tpm.md",
+      "spec_hash": "962856a0a0e4b1e3",
+      "group": "OP6",
+      "title": "Verify: GPIO05 conflict between TPM and DS2482S (hardware spec). To be verified against the schematic.",
+      "phase": 1,
+      "risk": "medium",
+      "human_gate": true,
+      "depends_on_modules": [],
+      "reqs": [
+        {
+          "id": "BASE-TPM-03",
+          "level": "—"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/V-BASE-TPM-OP6.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 177
+    },
+    {
+      "id": "T-BASE-DNS-4",
+      "module": "BASE-DNS",
+      "spec": "docs/software/basic/network/05_dhcp-dns.md",
+      "spec_hash": "6b0bf69966caea6e",
+      "group": "4",
+      "title": "DHCP & DNS for Local Segments (dnsmasq) – Requirements",
+      "phase": 2,
+      "risk": "low",
+      "human_gate": false,
+      "depends_on_modules": [
+        "BASE-FW",
+        "BASE-INIT",
+        "BASE-NETD"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-DNS-01",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-DNS-02",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-DNS-03",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-DNS-04",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-DNS-05",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-DNS-06",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device",
+        "rootfs"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-DNS-4.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending",
+        "rootfs": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 875
+    },
+    {
+      "id": "T-BASE-FW-4.1",
+      "module": "BASE-FW",
+      "spec": "docs/software/basic/network/02_firewall.md",
+      "spec_hash": "98d1d2067e1b5aad",
+      "group": "4.1",
+      "title": "Firewall Framework (nftables) – Packet Filter",
+      "phase": 2,
+      "risk": "high",
+      "human_gate": true,
+      "depends_on_modules": [
+        "BASE-INIT",
+        "BASE-NETD"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-FW-01",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-FW-02",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-FW-03",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-FW-04",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-FW-05",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device",
+        "manifest"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-FW-4.1.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending",
+        "manifest": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 622
+    },
+    {
+      "id": "T-BASE-FW-4.2",
+      "module": "BASE-FW",
+      "spec": "docs/software/basic/network/02_firewall.md",
+      "spec_hash": "98d1d2067e1b5aad",
+      "group": "4.2",
+      "title": "Firewall Framework (nftables) – Base Chains",
+      "phase": 2,
+      "risk": "high",
+      "human_gate": true,
+      "depends_on_modules": [
+        "BASE-INIT",
+        "BASE-NETD"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-FW-10",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-FW-11",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-FW-13",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-FW-20",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-FW-30",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-FW-32",
+          "level": "MAY"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-FW-4.2.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 682
+    },
+    {
+      "id": "T-BASE-FW-4.3",
+      "module": "BASE-FW",
+      "spec": "docs/software/basic/network/02_firewall.md",
+      "spec_hash": "98d1d2067e1b5aad",
+      "group": "4.3",
+      "title": "Firewall Framework (nftables) – Ban Sets",
+      "phase": 2,
+      "risk": "high",
+      "human_gate": true,
+      "depends_on_modules": [
+        "BASE-INIT",
+        "BASE-NETD"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-FW-40",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-FW-41",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-FW-42",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-FW-4.3.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 396
+    },
+    {
+      "id": "T-BASE-FW-4.4",
+      "module": "BASE-FW",
+      "spec": "docs/software/basic/network/02_firewall.md",
+      "spec_hash": "98d1d2067e1b5aad",
+      "group": "4.4",
+      "title": "Firewall Framework (nftables) – Logging",
+      "phase": 2,
+      "risk": "high",
+      "human_gate": true,
+      "depends_on_modules": [
+        "BASE-INIT",
+        "BASE-NETD"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-FW-50",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-FW-51",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-FW-4.4.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 297
+    },
+    {
+      "id": "T-BASE-FW-4.5",
+      "module": "BASE-FW",
+      "spec": "docs/software/basic/network/02_firewall.md",
+      "spec_hash": "98d1d2067e1b5aad",
+      "group": "4.5",
+      "title": "Firewall Framework (nftables) – Extension",
+      "phase": 2,
+      "risk": "high",
+      "human_gate": true,
+      "depends_on_modules": [
+        "BASE-INIT",
+        "BASE-NETD"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-FW-60",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-FW-61",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "rootfs"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-FW-4.5.md",
+      "status": "todo",
+      "verified": {
+        "rootfs": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 309
+    },
+    {
+      "id": "T-BASE-FWP-4.1",
+      "module": "BASE-FWP",
+      "spec": "docs/software/basic/network/03_firewall-policy.md",
+      "spec_hash": "9dff288ef56efb55",
+      "group": "4.1",
+      "title": "Firewall Policy (port, forward and output matrices) – Input",
+      "phase": 2,
+      "risk": "high",
+      "human_gate": true,
+      "depends_on_modules": [
+        "BASE-FW",
+        "BASE-NETD",
+        "BASE-PROV"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-FWP-01",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-FWP-02",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-FWP-03",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-FWP-4.1.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 1031
+    },
+    {
+      "id": "T-BASE-FWP-4.2",
+      "module": "BASE-FWP",
+      "spec": "docs/software/basic/network/03_firewall-policy.md",
+      "spec_hash": "9dff288ef56efb55",
+      "group": "4.2",
+      "title": "Firewall Policy (port, forward and output matrices) – Forward & NAT",
+      "phase": 2,
+      "risk": "high",
+      "human_gate": true,
+      "depends_on_modules": [
+        "BASE-FW",
+        "BASE-NETD",
+        "BASE-PROV"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-FWP-10",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-FWP-11",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-FWP-12",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-FWP-13",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-FWP-14",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-FWP-4.2.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 981
+    },
+    {
+      "id": "T-BASE-FWP-4.3",
+      "module": "BASE-FWP",
+      "spec": "docs/software/basic/network/03_firewall-policy.md",
+      "spec_hash": "9dff288ef56efb55",
+      "group": "4.3",
+      "title": "Firewall Policy (port, forward and output matrices) – Output",
+      "phase": 2,
+      "risk": "high",
+      "human_gate": true,
+      "depends_on_modules": [
+        "BASE-FW",
+        "BASE-NETD",
+        "BASE-PROV"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-FWP-20",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-FWP-4.3.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 587
+    },
+    {
+      "id": "T-BASE-NETD-4.1",
+      "module": "BASE-NETD",
+      "spec": "docs/software/basic/network/01_networkd.md",
+      "spec_hash": "d28a3daa118dcdce",
+      "group": "4.1",
+      "title": "Network Configuration (systemd-networkd) – Network Daemon",
+      "phase": 2,
+      "risk": "medium",
+      "human_gate": false,
+      "depends_on_modules": [
+        "BASE-INIT"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-NETD-01",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-NETD-02",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-NETD-03",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-NETD-04",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device",
+        "manifest",
+        "rootfs"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-NETD-4.1.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending",
+        "manifest": "pending",
+        "rootfs": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 662
+    },
+    {
+      "id": "T-BASE-NETD-4.2",
+      "module": "BASE-NETD",
+      "spec": "docs/software/basic/network/01_networkd.md",
+      "spec_hash": "d28a3daa118dcdce",
+      "group": "4.2",
+      "title": "Network Configuration (systemd-networkd) – Network Segments",
+      "phase": 2,
+      "risk": "medium",
+      "human_gate": false,
+      "depends_on_modules": [
+        "BASE-INIT"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-NETD-10",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-NETD-11",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-NETD-12",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-NETD-13",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-NETD-14",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-NETD-4.2.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 960
+    },
+    {
+      "id": "T-BASE-NETD-4.3",
+      "module": "BASE-NETD",
+      "spec": "docs/software/basic/network/01_networkd.md",
+      "spec_hash": "d28a3daa118dcdce",
+      "group": "4.3",
+      "title": "Network Configuration (systemd-networkd) – Naming & Addressing",
+      "phase": 2,
+      "risk": "medium",
+      "human_gate": false,
+      "depends_on_modules": [
+        "BASE-INIT"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-NETD-20",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-NETD-21",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-NETD-22",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-NETD-23",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-NETD-24",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-NETD-25",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-NETD-26",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-NETD-4.3.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 1388
+    },
+    {
+      "id": "T-BASE-NETD-4.4",
+      "module": "BASE-NETD",
+      "spec": "docs/software/basic/network/01_networkd.md",
+      "spec_hash": "d28a3daa118dcdce",
+      "group": "4.4",
+      "title": "Network Configuration (systemd-networkd) – Uplink",
+      "phase": 2,
+      "risk": "medium",
+      "human_gate": false,
+      "depends_on_modules": [
+        "BASE-INIT"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-NETD-30",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-NETD-31",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-NETD-32",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-NETD-4.4.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 641
+    },
+    {
+      "id": "T-BASE-NETD-4.5",
+      "module": "BASE-NETD",
+      "spec": "docs/software/basic/network/01_networkd.md",
+      "spec_hash": "d28a3daa118dcdce",
+      "group": "4.5",
+      "title": "Network Configuration (systemd-networkd) – CAN Interface",
+      "phase": 2,
+      "risk": "medium",
+      "human_gate": false,
+      "depends_on_modules": [
+        "BASE-INIT"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-NETD-40",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-NETD-4.5.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 430
+    },
+    {
+      "id": "T-BASE-WAP-4.1",
+      "module": "BASE-WAP",
+      "spec": "docs/software/basic/network/04_wlan-ap.md",
+      "spec_hash": "d2cd0f6c8bea1db3",
+      "group": "4.1",
+      "title": "WLAN Access Point (hostapd) – Interfaces & Service",
+      "phase": 2,
+      "risk": "medium",
+      "human_gate": false,
+      "depends_on_modules": [
+        "BASE-FW",
+        "BASE-INIT",
+        "BASE-NETD",
+        "BASE-PROV"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-WAP-01",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-WAP-02",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-WAP-03",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-WAP-04",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-WAP-05",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-WAP-06",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device",
+        "manifest"
+      ],
+      "blocked_by": [
+        {
+          "open_point": "2",
+          "question": "SSID scheme (per device or fixed)?",
+          "decision": "open",
+          "reqs": [
+            "BASE-WAP-04"
+          ]
+        },
+        {
+          "open_point": "5",
+          "question": "Can `brcmfmac` run two APs plus a client, and SAE in AP mode?",
+          "decision": "**Deferred:** test on the device → verification task.",
+          "reqs": [
+            "BASE-WAP-06"
+          ]
+        }
+      ],
+      "blocked_reqs": [
+        "BASE-WAP-04",
+        "BASE-WAP-06"
+      ],
+      "pack": "agent/packs/T-BASE-WAP-4.1.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending",
+        "manifest": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 1027
+    },
+    {
+      "id": "T-BASE-WAP-4.2",
+      "module": "BASE-WAP",
+      "spec": "docs/software/basic/network/04_wlan-ap.md",
+      "spec_hash": "d2cd0f6c8bea1db3",
+      "group": "4.2",
+      "title": "WLAN Access Point (hostapd) – Security",
+      "phase": 2,
+      "risk": "medium",
+      "human_gate": false,
+      "depends_on_modules": [
+        "BASE-FW",
+        "BASE-INIT",
+        "BASE-NETD",
+        "BASE-PROV"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-WAP-10",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-WAP-11",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-WAP-12",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-WAP-13",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-WAP-14",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-WAP-15",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-WAP-16",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device",
+        "rootfs"
+      ],
+      "blocked_by": [
+        {
+          "open_point": "5",
+          "question": "Can `brcmfmac` run two APs plus a client, and SAE in AP mode?",
+          "decision": "**Deferred:** test on the device → verification task.",
+          "reqs": [
+            "BASE-WAP-10"
+          ]
+        }
+      ],
+      "blocked_reqs": [
+        "BASE-WAP-10"
+      ],
+      "pack": "agent/packs/T-BASE-WAP-4.2.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending",
+        "rootfs": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 1049
+    },
+    {
+      "id": "T-BASE-WAP-4.3",
+      "module": "BASE-WAP",
+      "spec": "docs/software/basic/network/04_wlan-ap.md",
+      "spec_hash": "d2cd0f6c8bea1db3",
+      "group": "4.3",
+      "title": "WLAN Access Point (hostapd) – Control Interface",
+      "phase": 2,
+      "risk": "medium",
+      "human_gate": false,
+      "depends_on_modules": [
+        "BASE-FW",
+        "BASE-INIT",
+        "BASE-NETD",
+        "BASE-PROV"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-WAP-30",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-WAP-4.3.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 350
+    },
+    {
+      "id": "V-BASE-WAP-OP5",
+      "module": "BASE-WAP",
+      "spec": "docs/software/basic/network/04_wlan-ap.md",
+      "spec_hash": "d2cd0f6c8bea1db3",
+      "group": "OP5",
+      "title": "Verify: Can `brcmfmac` run two APs plus a client, and SAE in AP mode?",
+      "phase": 2,
+      "risk": "medium",
+      "human_gate": true,
+      "depends_on_modules": [],
+      "reqs": [
+        {
+          "id": "BASE-WAP-06",
+          "level": "—"
+        },
+        {
+          "id": "BASE-WAP-10",
+          "level": "—"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/V-BASE-WAP-OP5.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 190
+    },
+    {
+      "id": "T-BASE-WCLI-4.1",
+      "module": "BASE-WCLI",
+      "spec": "docs/software/basic/network/06_wlan-client.md",
+      "spec_hash": "16b9136419f5610e",
+      "group": "4.1",
+      "title": "WLAN Client (iwd) – Daemon",
+      "phase": 2,
+      "risk": "low",
+      "human_gate": false,
+      "depends_on_modules": [
+        "BASE-INIT",
+        "BASE-NETD"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-WCLI-01",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-WCLI-02",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-WCLI-03",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device",
+        "manifest"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-WCLI-4.1.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending",
+        "manifest": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 374
+    },
+    {
+      "id": "T-BASE-WCLI-4.2",
+      "module": "BASE-WCLI",
+      "spec": "docs/software/basic/network/06_wlan-client.md",
+      "spec_hash": "16b9136419f5610e",
+      "group": "4.2",
+      "title": "WLAN Client (iwd) – Security",
+      "phase": 2,
+      "risk": "low",
+      "human_gate": false,
+      "depends_on_modules": [
+        "BASE-INIT",
+        "BASE-NETD"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-WCLI-10",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-WCLI-11",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-WCLI-12",
+          "level": "SHOULD"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-WCLI-4.2.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 435
+    },
+    {
+      "id": "T-BASE-WCLI-4.3",
+      "module": "BASE-WCLI",
+      "spec": "docs/software/basic/network/06_wlan-client.md",
+      "spec_hash": "16b9136419f5610e",
+      "group": "4.3",
+      "title": "WLAN Client (iwd) – Credentials",
+      "phase": 2,
+      "risk": "low",
+      "human_gate": false,
+      "depends_on_modules": [
+        "BASE-INIT",
+        "BASE-NETD"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-WCLI-20",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-WCLI-21",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-WCLI-22",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device",
+        "rootfs"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-WCLI-4.3.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending",
+        "rootfs": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 520
+    },
+    {
+      "id": "T-BASE-LOG-4.1",
+      "module": "BASE-LOG",
+      "spec": "docs/software/basic/05_logging.md",
+      "spec_hash": "1f840f65facb4ad6",
+      "group": "4.1",
+      "title": "Logging – journald",
+      "phase": 3,
+      "risk": "low",
+      "human_gate": false,
+      "depends_on_modules": [
+        "BASE-INIT",
+        "BASE-TIME"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-LOG-01",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-LOG-02",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-LOG-03",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-LOG-04",
+          "level": "SHOULD"
+        }
+      ],
+      "verify_levels": [
+        "device",
+        "rootfs"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-LOG-4.1.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending",
+        "rootfs": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 611
+    },
+    {
+      "id": "T-BASE-LOG-4.2",
+      "module": "BASE-LOG",
+      "spec": "docs/software/basic/05_logging.md",
+      "spec_hash": "1f840f65facb4ad6",
+      "group": "4.2",
+      "title": "Logging – syslog-ng",
+      "phase": 3,
+      "risk": "low",
+      "human_gate": false,
+      "depends_on_modules": [
+        "BASE-INIT",
+        "BASE-TIME"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-LOG-10",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-LOG-11",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-LOG-12",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-LOG-13",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-LOG-14",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-LOG-15",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device",
+        "manifest",
+        "rootfs"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-LOG-4.2.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending",
+        "manifest": "pending",
+        "rootfs": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 732
+    },
+    {
+      "id": "T-BASE-PROV-4.1",
+      "module": "BASE-PROV",
+      "spec": "docs/software/basic/07_provisioning.md",
+      "spec_hash": "e16e4038a9e12d06",
+      "group": "4.1",
+      "title": "Factory Provisioning – Access",
+      "phase": 3,
+      "risk": "high",
+      "human_gate": true,
+      "depends_on_modules": [
+        "BASE-FWP",
+        "BASE-INIT",
+        "BASE-SSH",
+        "BASE-TPM"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-PROV-01",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-PROV-02",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-PROV-4.1.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 377
+    },
+    {
+      "id": "T-BASE-PROV-4.2",
+      "module": "BASE-PROV",
+      "spec": "docs/software/basic/07_provisioning.md",
+      "spec_hash": "e16e4038a9e12d06",
+      "group": "4.2",
+      "title": "Factory Provisioning – Provisioned Items",
+      "phase": 3,
+      "risk": "high",
+      "human_gate": true,
+      "depends_on_modules": [
+        "BASE-FWP",
+        "BASE-INIT",
+        "BASE-SSH",
+        "BASE-TPM"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-PROV-10",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-PROV-11",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-PROV-12",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device",
+        "rootfs"
+      ],
+      "blocked_by": [
+        {
+          "open_point": "1",
+          "question": "Where does the factory script live, and where are the Bynacon CA and the device registry operated?",
+          "decision": "**Deferred:** infrastructure information.",
+          "reqs": [
+            "BASE-PROV-12"
+          ]
+        }
+      ],
+      "blocked_reqs": [
+        "BASE-PROV-12"
+      ],
+      "pack": "agent/packs/T-BASE-PROV-4.2.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending",
+        "rootfs": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 879
+    },
+    {
+      "id": "T-BASE-PROV-4.3",
+      "module": "BASE-PROV",
+      "spec": "docs/software/basic/07_provisioning.md",
+      "spec_hash": "e16e4038a9e12d06",
+      "group": "4.3",
+      "title": "Factory Provisioning – Storage",
+      "phase": 3,
+      "risk": "high",
+      "human_gate": true,
+      "depends_on_modules": [
+        "BASE-FWP",
+        "BASE-INIT",
+        "BASE-SSH",
+        "BASE-TPM"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-PROV-20",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-PROV-21",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-PROV-22",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-PROV-23",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device",
+        "rootfs"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-PROV-4.3.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending",
+        "rootfs": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 570
+    },
+    {
+      "id": "T-BASE-PROV-4.4",
+      "module": "BASE-PROV",
+      "spec": "docs/software/basic/07_provisioning.md",
+      "spec_hash": "e16e4038a9e12d06",
+      "group": "4.4",
+      "title": "Factory Provisioning – Behavior",
+      "phase": 3,
+      "risk": "high",
+      "human_gate": true,
+      "depends_on_modules": [
+        "BASE-FWP",
+        "BASE-INIT",
+        "BASE-SSH",
+        "BASE-TPM"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-PROV-30",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-PROV-31",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-PROV-32",
+          "level": "SHOULD"
+        },
+        {
+          "id": "BASE-PROV-33",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-PROV-34",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [
+        {
+          "open_point": "1",
+          "question": "Where does the factory script live, and where are the Bynacon CA and the device registry operated?",
+          "decision": "**Deferred:** infrastructure information.",
+          "reqs": [
+            "BASE-PROV-32"
+          ]
+        }
+      ],
+      "blocked_reqs": [
+        "BASE-PROV-32"
+      ],
+      "pack": "agent/packs/T-BASE-PROV-4.4.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 811
+    },
+    {
+      "id": "T-BASE-PROV-4.5",
+      "module": "BASE-PROV",
+      "spec": "docs/software/basic/07_provisioning.md",
+      "spec_hash": "e16e4038a9e12d06",
+      "group": "4.5",
+      "title": "Factory Provisioning – Factory Reset & Decommissioning",
+      "phase": 3,
+      "risk": "high",
+      "human_gate": true,
+      "depends_on_modules": [
+        "BASE-FWP",
+        "BASE-INIT",
+        "BASE-SSH",
+        "BASE-TPM"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-PROV-40",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-PROV-41",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-PROV-42",
+          "level": "SHOULD"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-PROV-4.5.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 484
+    },
+    {
+      "id": "T-BASE-SSH-4",
+      "module": "BASE-SSH",
+      "spec": "docs/software/basic/network/08_ssh.md",
+      "spec_hash": "9e81f820bfd837c6",
+      "group": "4",
+      "title": "SSH Access (OpenSSH, Bynacon service key) – Requirements",
+      "phase": 3,
+      "risk": "high",
+      "human_gate": true,
+      "depends_on_modules": [
+        "BASE-FWP",
+        "BASE-INIT",
+        "BASE-PROV"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-SSH-01",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-SSH-02",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-SSH-03",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-SSH-04",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-SSH-05",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-SSH-06",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-SSH-07",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device",
+        "manifest",
+        "rootfs"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-SSH-4.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending",
+        "manifest": "pending",
+        "rootfs": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 1053
+    },
+    {
+      "id": "T-BASE-TIME-4.1",
+      "module": "BASE-TIME",
+      "spec": "docs/software/basic/04_time.md",
+      "spec_hash": "23d378c6b216b491",
+      "group": "4.1",
+      "title": "Time Synchronization – Time Service",
+      "phase": 3,
+      "risk": "low",
+      "human_gate": false,
+      "depends_on_modules": [
+        "BASE-INIT",
+        "BASE-NETD"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-TIME-01",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-TIME-02",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-TIME-03",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device",
+        "manifest"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-TIME-4.1.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending",
+        "manifest": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 265
+    },
+    {
+      "id": "T-BASE-TIME-4.2",
+      "module": "BASE-TIME",
+      "spec": "docs/software/basic/04_time.md",
+      "spec_hash": "23d378c6b216b491",
+      "group": "4.2",
+      "title": "Time Synchronization – Authenticated Sources",
+      "phase": 3,
+      "risk": "low",
+      "human_gate": false,
+      "depends_on_modules": [
+        "BASE-INIT",
+        "BASE-NETD"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-TIME-10",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-TIME-11",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-TIME-12",
+          "level": "SHOULD"
+        }
+      ],
+      "verify_levels": [
+        "device",
+        "rootfs"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-TIME-4.2.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending",
+        "rootfs": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 419
+    },
+    {
+      "id": "T-BASE-TIME-4.3",
+      "module": "BASE-TIME",
+      "spec": "docs/software/basic/04_time.md",
+      "spec_hash": "23d378c6b216b491",
+      "group": "4.3",
+      "title": "Time Synchronization – Hardware RTC",
+      "phase": 3,
+      "risk": "low",
+      "human_gate": false,
+      "depends_on_modules": [
+        "BASE-INIT",
+        "BASE-NETD"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-TIME-20",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-TIME-21",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-TIME-22",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-TIME-23",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [
+        {
+          "open_point": "4",
+          "question": "Is the MCP79412 battery-backed on this device? The hardware spec does not say. Without a battery, `BASE-TIME-20` cannot be met after power loss.",
+          "decision": "**Deferred:** needs hardware information → verification task.",
+          "reqs": [
+            "BASE-TIME-20"
+          ]
+        }
+      ],
+      "blocked_reqs": [
+        "BASE-TIME-20"
+      ],
+      "pack": "agent/packs/T-BASE-TIME-4.3.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 655
+    },
+    {
+      "id": "T-BASE-TIME-4.4",
+      "module": "BASE-TIME",
+      "spec": "docs/software/basic/04_time.md",
+      "spec_hash": "23d378c6b216b491",
+      "group": "4.4",
+      "title": "Time Synchronization – NTP Server",
+      "phase": 3,
+      "risk": "low",
+      "human_gate": false,
+      "depends_on_modules": [
+        "BASE-INIT",
+        "BASE-NETD"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-TIME-30",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-TIME-31",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-TIME-32",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-TIME-4.4.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 369
+    },
+    {
+      "id": "T-BASE-TIME-4.5",
+      "module": "BASE-TIME",
+      "spec": "docs/software/basic/04_time.md",
+      "spec_hash": "23d378c6b216b491",
+      "group": "4.5",
+      "title": "Time Synchronization – Service Ordering",
+      "phase": 3,
+      "risk": "low",
+      "human_gate": false,
+      "depends_on_modules": [
+        "BASE-INIT",
+        "BASE-NETD"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-TIME-40",
+          "level": "SHOULD"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-TIME-4.5.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 235
+    },
+    {
+      "id": "T-BASE-TIME-4.6",
+      "module": "BASE-TIME",
+      "spec": "docs/software/basic/04_time.md",
+      "spec_hash": "23d378c6b216b491",
+      "group": "4.6",
+      "title": "Time Synchronization – Time Zone",
+      "phase": 3,
+      "risk": "low",
+      "human_gate": false,
+      "depends_on_modules": [
+        "BASE-INIT",
+        "BASE-NETD"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-TIME-50",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-TIME-4.6.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 226
+    },
+    {
+      "id": "V-BASE-TIME-OP4",
+      "module": "BASE-TIME",
+      "spec": "docs/software/basic/04_time.md",
+      "spec_hash": "23d378c6b216b491",
+      "group": "OP4",
+      "title": "Verify: Is the MCP79412 battery-backed on this device? The hardware spec does not say. Without a battery, `BASE-TIME-20` cannot be met after power loss.",
+      "phase": 3,
+      "risk": "low",
+      "human_gate": true,
+      "depends_on_modules": [],
+      "reqs": [
+        {
+          "id": "BASE-TIME-20",
+          "level": "—"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/V-BASE-TIME-OP4.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 204
+    },
+    {
+      "id": "T-BASE-VPN-4",
+      "module": "BASE-VPN",
+      "spec": "docs/software/basic/network/07_vpn.md",
+      "spec_hash": "69d3bc2290a82e0a",
+      "group": "4",
+      "title": "VPN (WireGuard client) – Requirements",
+      "phase": 3,
+      "risk": "high",
+      "human_gate": true,
+      "depends_on_modules": [
+        "BASE-FWP",
+        "BASE-INIT",
+        "BASE-NETD",
+        "BASE-PROV"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-VPN-01",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-VPN-02",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-VPN-03",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-VPN-04",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-VPN-05",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-VPN-06",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-VPN-07",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device",
+        "rootfs"
+      ],
+      "blocked_by": [
+        {
+          "open_point": "2",
+          "question": "Values of `VPN_ENDPOINT`, port and VPN subnet.",
+          "decision": "**Deferred:** infrastructure information.",
+          "reqs": [
+            "BASE-VPN-04",
+            "BASE-VPN-06"
+          ]
+        }
+      ],
+      "blocked_reqs": [
+        "BASE-VPN-04",
+        "BASE-VPN-06"
+      ],
+      "pack": "agent/packs/T-BASE-VPN-4.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending",
+        "rootfs": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 870
+    },
+    {
+      "id": "T-BASE-WEB-4",
+      "module": "BASE-WEB",
+      "spec": "docs/software/basic/network/09_web-proxy.md",
+      "spec_hash": "8dc0fe9b88faa295",
+      "group": "4",
+      "title": "Web Proxy (nginx) – Requirements",
+      "phase": 3,
+      "risk": "medium",
+      "human_gate": false,
+      "depends_on_modules": [
+        "BASE-FWP",
+        "BASE-INIT",
+        "BASE-PROV",
+        "BASE-TIME",
+        "BASE-TPM"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-WEB-01",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-WEB-02",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-WEB-03",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-WEB-04",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-WEB-05",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-WEB-06",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-WEB-07",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [
+        {
+          "open_point": "1",
+          "question": "Which web application runs behind nginx, and on which port or socket?",
+          "decision": "**Deferred:** application layer.",
+          "reqs": [
+            "BASE-WEB-01",
+            "BASE-WEB-05"
+          ]
+        }
+      ],
+      "blocked_reqs": [
+        "BASE-WEB-01",
+        "BASE-WEB-05"
+      ],
+      "pack": "agent/packs/T-BASE-WEB-4.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 881
+    },
+    {
+      "id": "T-BASE-BLE-4.1",
+      "module": "BASE-BLE",
+      "spec": "docs/software/basic/network/10_bluetooth.md",
+      "spec_hash": "3b5efd35d2b22aac",
+      "group": "4.1",
+      "title": "Bluetooth Low Energy (BlueZ) – Controller",
+      "phase": 4,
+      "risk": "medium",
+      "human_gate": false,
+      "depends_on_modules": [
+        "BASE-INIT"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-BLE-01",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-BLE-02",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-BLE-03",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "build",
+        "device"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-BLE-4.1.md",
+      "status": "todo",
+      "verified": {
+        "build": "pending",
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 522
+    },
+    {
+      "id": "T-BASE-BLE-4.2",
+      "module": "BASE-BLE",
+      "spec": "docs/software/basic/network/10_bluetooth.md",
+      "spec_hash": "3b5efd35d2b22aac",
+      "group": "4.2",
+      "title": "Bluetooth Low Energy (BlueZ) – Roles & Pairing",
+      "phase": 4,
+      "risk": "medium",
+      "human_gate": false,
+      "depends_on_modules": [
+        "BASE-INIT"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-BLE-10",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-BLE-11",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-BLE-12",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-BLE-13",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [
+        {
+          "open_point": "1",
+          "question": "Which BLE sensors are used: advertisements only, or GATT connections with pairing?",
+          "decision": "open",
+          "reqs": [
+            "BASE-BLE-11",
+            "BASE-BLE-12"
+          ]
+        },
+        {
+          "open_point": "2",
+          "question": "Who manages the allow list (provisioning, web interface)?",
+          "decision": "open",
+          "reqs": [
+            "BASE-BLE-12"
+          ]
+        }
+      ],
+      "blocked_reqs": [
+        "BASE-BLE-11",
+        "BASE-BLE-12"
+      ],
+      "pack": "agent/packs/T-BASE-BLE-4.2.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 686
+    },
+    {
+      "id": "T-BASE-BLE-4.3",
+      "module": "BASE-BLE",
+      "spec": "docs/software/basic/network/10_bluetooth.md",
+      "spec_hash": "3b5efd35d2b22aac",
+      "group": "4.3",
+      "title": "Bluetooth Low Energy (BlueZ) – Access Control",
+      "phase": 4,
+      "risk": "medium",
+      "human_gate": false,
+      "depends_on_modules": [
+        "BASE-INIT"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-BLE-20",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-BLE-21",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-BLE-4.3.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 308
+    },
+    {
+      "id": "T-BASE-IDS-4.1",
+      "module": "BASE-IDS",
+      "spec": "docs/software/basic/hardening/04_intrusion.md",
+      "spec_hash": "43cc56e5ab385823",
+      "group": "4.1",
+      "title": "Intrusion Detection & Prevention (Fail2Ban, port scan detection, hostapd events) – General",
+      "phase": 4,
+      "risk": "medium",
+      "human_gate": false,
+      "depends_on_modules": [
+        "BASE-FW",
+        "BASE-INIT",
+        "BASE-LOG",
+        "BASE-WAP"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-IDS-01",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-IDS-02",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-IDS-03",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-IDS-04",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-IDS-4.1.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 636
+    },
+    {
+      "id": "T-BASE-IDS-4.2",
+      "module": "BASE-IDS",
+      "spec": "docs/software/basic/hardening/04_intrusion.md",
+      "spec_hash": "43cc56e5ab385823",
+      "group": "4.2",
+      "title": "Intrusion Detection & Prevention (Fail2Ban, port scan detection, hostapd events) – Fail2Ban",
+      "phase": 4,
+      "risk": "medium",
+      "human_gate": false,
+      "depends_on_modules": [
+        "BASE-FW",
+        "BASE-INIT",
+        "BASE-LOG",
+        "BASE-WAP"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-IDS-10",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-IDS-11",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-IDS-12",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-IDS-13",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-IDS-14",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device",
+        "rootfs"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-IDS-4.2.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending",
+        "rootfs": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 799
+    },
+    {
+      "id": "T-BASE-IDS-4.3",
+      "module": "BASE-IDS",
+      "spec": "docs/software/basic/hardening/04_intrusion.md",
+      "spec_hash": "43cc56e5ab385823",
+      "group": "4.3",
+      "title": "Intrusion Detection & Prevention (Fail2Ban, port scan detection, hostapd events) – Port Scan Detection",
+      "phase": 4,
+      "risk": "medium",
+      "human_gate": false,
+      "depends_on_modules": [
+        "BASE-FW",
+        "BASE-INIT",
+        "BASE-LOG",
+        "BASE-WAP"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-IDS-20",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-IDS-21",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-IDS-4.3.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 499
+    },
+    {
+      "id": "T-BASE-IDS-4.4",
+      "module": "BASE-IDS",
+      "spec": "docs/software/basic/hardening/04_intrusion.md",
+      "spec_hash": "43cc56e5ab385823",
+      "group": "4.4",
+      "title": "Intrusion Detection & Prevention (Fail2Ban, port scan detection, hostapd events) – hostapd Events",
+      "phase": 4,
+      "risk": "medium",
+      "human_gate": false,
+      "depends_on_modules": [
+        "BASE-FW",
+        "BASE-INIT",
+        "BASE-LOG",
+        "BASE-WAP"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-IDS-30",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-IDS-31",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-IDS-32",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [
+        {
+          "open_point": "3",
+          "question": "Does `brcmfmac` report deauthentication and authentication failure events to hostapd? If not, `BASE-IDS-31` cannot be met with the on-board radio.",
+          "decision": "**Deferred:** needs a test on the device → verification task.",
+          "reqs": [
+            "BASE-IDS-30",
+            "BASE-IDS-31"
+          ]
+        }
+      ],
+      "blocked_reqs": [
+        "BASE-IDS-30",
+        "BASE-IDS-31"
+      ],
+      "pack": "agent/packs/T-BASE-IDS-4.4.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 618
+    },
+    {
+      "id": "V-BASE-IDS-OP3",
+      "module": "BASE-IDS",
+      "spec": "docs/software/basic/hardening/04_intrusion.md",
+      "spec_hash": "43cc56e5ab385823",
+      "group": "OP3",
+      "title": "Verify: Does `brcmfmac` report deauthentication and authentication failure events to hostapd? If not, `BASE-IDS-31` cannot be met with the on-board radio.",
+      "phase": 4,
+      "risk": "medium",
+      "human_gate": true,
+      "depends_on_modules": [],
+      "reqs": [
+        {
+          "id": "BASE-IDS-30",
+          "level": "—"
+        },
+        {
+          "id": "BASE-IDS-31",
+          "level": "—"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/V-BASE-IDS-OP3.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 244
+    },
+    {
+      "id": "T-BASE-KERN-4.1",
+      "module": "BASE-KERN",
+      "spec": "docs/software/basic/hardening/01_kernel.md",
+      "spec_hash": "041731bca1cf1615",
+      "group": "4.1",
+      "title": "Kernel Hardening & Watchdog – Kernel Parameters",
+      "phase": 4,
+      "risk": "medium",
+      "human_gate": false,
+      "depends_on_modules": [
+        "BASE-INIT"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-KERN-01",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-KERN-02",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-KERN-03",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-KERN-04",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-KERN-05",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-KERN-06",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-KERN-07",
+          "level": "SHOULD"
+        },
+        {
+          "id": "BASE-KERN-08",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-KERN-09",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device",
+        "rootfs"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-KERN-4.1.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending",
+        "rootfs": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 866
+    },
+    {
+      "id": "T-BASE-KERN-4.2",
+      "module": "BASE-KERN",
+      "spec": "docs/software/basic/hardening/01_kernel.md",
+      "spec_hash": "041731bca1cf1615",
+      "group": "4.2",
+      "title": "Kernel Hardening & Watchdog – Hardware Watchdog",
+      "phase": 4,
+      "risk": "medium",
+      "human_gate": false,
+      "depends_on_modules": [
+        "BASE-INIT"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-KERN-10",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-KERN-11",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-KERN-12",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-KERN-13",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-KERN-4.2.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 731
+    },
+    {
+      "id": "T-BASE-KERN-4.3",
+      "module": "BASE-KERN",
+      "spec": "docs/software/basic/hardening/01_kernel.md",
+      "spec_hash": "041731bca1cf1615",
+      "group": "4.3",
+      "title": "Kernel Hardening & Watchdog – Service Watchdogs",
+      "phase": 4,
+      "risk": "medium",
+      "human_gate": false,
+      "depends_on_modules": [
+        "BASE-INIT"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-KERN-20",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-KERN-21",
+          "level": "SHOULD"
+        },
+        {
+          "id": "BASE-KERN-22",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-KERN-4.3.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 581
+    },
+    {
+      "id": "T-BASE-KERN-4.4",
+      "module": "BASE-KERN",
+      "spec": "docs/software/basic/hardening/01_kernel.md",
+      "spec_hash": "041731bca1cf1615",
+      "group": "4.4",
+      "title": "Kernel Hardening & Watchdog – Kernel Modules",
+      "phase": 4,
+      "risk": "medium",
+      "human_gate": false,
+      "depends_on_modules": [
+        "BASE-INIT"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-KERN-30",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-KERN-4.4.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 411
+    },
+    {
+      "id": "T-BASE-USB-4.1",
+      "module": "BASE-USB",
+      "spec": "docs/software/basic/hardening/05_usb.md",
+      "spec_hash": "e35ae3935de948ae",
+      "group": "4.1",
+      "title": "USB Device Control (USBGuard) – Policy",
+      "phase": 4,
+      "risk": "high",
+      "human_gate": true,
+      "depends_on_modules": [
+        "BASE-INIT"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-USB-01",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-USB-02",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-USB-03",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-USB-04",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-USB-05",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-USB-06",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [
+        {
+          "open_point": "1",
+          "question": "Read the vendor/product IDs and ports of the internal USB devices on the device (`usbguard generate-policy`).",
+          "decision": "**Deferred:** read on the device → verification task.",
+          "reqs": [
+            "BASE-USB-04"
+          ]
+        }
+      ],
+      "blocked_reqs": [
+        "BASE-USB-04"
+      ],
+      "pack": "agent/packs/T-BASE-USB-4.1.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 1257
+    },
+    {
+      "id": "T-BASE-USB-4.2",
+      "module": "BASE-USB",
+      "spec": "docs/software/basic/hardening/05_usb.md",
+      "spec_hash": "e35ae3935de948ae",
+      "group": "4.2",
+      "title": "USB Device Control (USBGuard) – Operation",
+      "phase": 4,
+      "risk": "high",
+      "human_gate": true,
+      "depends_on_modules": [
+        "BASE-INIT"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-USB-10",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-USB-11",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-USB-12",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-USB-13",
+          "level": "MAY"
+        }
+      ],
+      "verify_levels": [
+        "device",
+        "rootfs"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-USB-4.2.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending",
+        "rootfs": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 432
+    },
+    {
+      "id": "V-BASE-USB-OP1",
+      "module": "BASE-USB",
+      "spec": "docs/software/basic/hardening/05_usb.md",
+      "spec_hash": "e35ae3935de948ae",
+      "group": "OP1",
+      "title": "Verify: Read the vendor/product IDs and ports of the internal USB devices on the device (`usbguard generate-policy`).",
+      "phase": 4,
+      "risk": "high",
+      "human_gate": true,
+      "depends_on_modules": [],
+      "reqs": [
+        {
+          "id": "BASE-USB-04",
+          "level": "—"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/V-BASE-USB-OP1.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 221
+    },
+    {
+      "id": "T-BASE-USBG-4.1",
+      "module": "BASE-USBG",
+      "spec": "docs/software/basic/network/11_usb-gadget.md",
+      "spec_hash": "772cf60c7e1603f6",
+      "group": "4.1",
+      "title": "USB Service Port (USB gadget) – Gadget",
+      "phase": 4,
+      "risk": "high",
+      "human_gate": true,
+      "depends_on_modules": [
+        "BASE-DNS",
+        "BASE-FWP",
+        "BASE-INIT",
+        "BASE-NETD"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-USBG-01",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-USBG-02",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-USBG-03",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-USBG-04",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [
+        {
+          "open_point": "2",
+          "question": "Does the board have a USB connector for device mode that does not disconnect the LAN9514?",
+          "decision": "**Deferred:** needs the schematic → verification task.",
+          "reqs": [
+            "BASE-USBG-04"
+          ]
+        }
+      ],
+      "blocked_reqs": [
+        "BASE-USBG-04"
+      ],
+      "pack": "agent/packs/T-BASE-USBG-4.1.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 763
+    },
+    {
+      "id": "T-BASE-USBG-4.2",
+      "module": "BASE-USBG",
+      "spec": "docs/software/basic/network/11_usb-gadget.md",
+      "spec_hash": "772cf60c7e1603f6",
+      "group": "4.2",
+      "title": "USB Service Port (USB gadget) – Service Segment",
+      "phase": 4,
+      "risk": "high",
+      "human_gate": true,
+      "depends_on_modules": [
+        "BASE-DNS",
+        "BASE-FWP",
+        "BASE-INIT",
+        "BASE-NETD"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-USBG-10",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-USBG-11",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-USBG-12",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-USBG-4.2.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 478
+    },
+    {
+      "id": "T-BASE-USBG-4.3",
+      "module": "BASE-USBG",
+      "spec": "docs/software/basic/network/11_usb-gadget.md",
+      "spec_hash": "772cf60c7e1603f6",
+      "group": "4.3",
+      "title": "USB Service Port (USB gadget) – Activation",
+      "phase": 4,
+      "risk": "high",
+      "human_gate": true,
+      "depends_on_modules": [
+        "BASE-DNS",
+        "BASE-FWP",
+        "BASE-INIT",
+        "BASE-NETD"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-USBG-20",
+          "level": "SHOULD"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [
+        {
+          "open_point": "1",
+          "question": "Is the service port always active, or only for a limited time after pressing the user button (GPIO13)? Duration?",
+          "decision": "open",
+          "reqs": [
+            "BASE-USBG-20"
+          ]
+        }
+      ],
+      "blocked_reqs": [
+        "BASE-USBG-20"
+      ],
+      "pack": "agent/packs/T-BASE-USBG-4.3.md",
+      "status": "blocked",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 345
+    },
+    {
+      "id": "V-BASE-USBG-OP2",
+      "module": "BASE-USBG",
+      "spec": "docs/software/basic/network/11_usb-gadget.md",
+      "spec_hash": "772cf60c7e1603f6",
+      "group": "OP2",
+      "title": "Verify: Does the board have a USB connector for device mode that does not disconnect the LAN9514?",
+      "phase": 4,
+      "risk": "high",
+      "human_gate": true,
+      "depends_on_modules": [],
+      "reqs": [
+        {
+          "id": "BASE-USBG-04",
+          "level": "—"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/V-BASE-USBG-OP2.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 181
+    },
+    {
+      "id": "T-BASE-LUKS-4.1",
+      "module": "BASE-LUKS",
+      "spec": "docs/software/basic/boot-chain/04_data-encryption.md",
+      "spec_hash": "891e7647602c7f65",
+      "group": "4.1",
+      "title": "Data Partition Encryption (LUKS, TPM-sealed key) – Encryption",
+      "phase": 5,
+      "risk": "high",
+      "human_gate": true,
+      "depends_on_modules": [
+        "BASE-MBOOT",
+        "BASE-ROOTFS",
+        "BASE-TPM"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-LUKS-01",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-LUKS-02",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [
+        {
+          "open_point": "5",
+          "question": "Cipher: `aes-xts-plain64` (as in `BASE-LUKS-01`) or Adiantum? Decide after a throughput measurement on the device.",
+          "decision": "**Deferred:** throughput measurement on the device → verification task.",
+          "reqs": [
+            "BASE-LUKS-01"
+          ]
+        }
+      ],
+      "blocked_reqs": [
+        "BASE-LUKS-01"
+      ],
+      "pack": "agent/packs/T-BASE-LUKS-4.1.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 585
+    },
+    {
+      "id": "T-BASE-LUKS-4.2",
+      "module": "BASE-LUKS",
+      "spec": "docs/software/basic/boot-chain/04_data-encryption.md",
+      "spec_hash": "891e7647602c7f65",
+      "group": "4.2",
+      "title": "Data Partition Encryption (LUKS, TPM-sealed key) – TPM Sealing",
+      "phase": 5,
+      "risk": "high",
+      "human_gate": true,
+      "depends_on_modules": [
+        "BASE-MBOOT",
+        "BASE-ROOTFS",
+        "BASE-TPM"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-LUKS-10",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-LUKS-11",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-LUKS-12",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-LUKS-13",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-LUKS-4.2.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 986
+    },
+    {
+      "id": "T-BASE-LUKS-4.3",
+      "module": "BASE-LUKS",
+      "spec": "docs/software/basic/boot-chain/04_data-encryption.md",
+      "spec_hash": "891e7647602c7f65",
+      "group": "4.3",
+      "title": "Data Partition Encryption (LUKS, TPM-sealed key) – Updates & Recovery",
+      "phase": 5,
+      "risk": "high",
+      "human_gate": true,
+      "depends_on_modules": [
+        "BASE-MBOOT",
+        "BASE-ROOTFS",
+        "BASE-TPM"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-LUKS-20",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-LUKS-21",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-LUKS-22",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-LUKS-4.3.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 656
+    },
+    {
+      "id": "V-BASE-LUKS-OP5",
+      "module": "BASE-LUKS",
+      "spec": "docs/software/basic/boot-chain/04_data-encryption.md",
+      "spec_hash": "891e7647602c7f65",
+      "group": "OP5",
+      "title": "Verify: Cipher: `aes-xts-plain64` (as in `BASE-LUKS-01`) or Adiantum? Decide after a throughput measurement on the device.",
+      "phase": 5,
+      "risk": "high",
+      "human_gate": true,
+      "depends_on_modules": [],
+      "reqs": [
+        {
+          "id": "BASE-LUKS-01",
+          "level": "—"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/V-BASE-LUKS-OP5.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 195
+    },
+    {
+      "id": "T-BASE-MBOOT-4.1",
+      "module": "BASE-MBOOT",
+      "spec": "docs/software/basic/boot-chain/02_measured-boot.md",
+      "spec_hash": "06f83d43b85eb66b",
+      "group": "4.1",
+      "title": "Measured Boot (TPM PCRs) – Measurements",
+      "phase": 5,
+      "risk": "high",
+      "human_gate": true,
+      "depends_on_modules": [
+        "BASE-TPM",
+        "BASE-VBOOT"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-MBOOT-01",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-MBOOT-02",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-MBOOT-03",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-MBOOT-04",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-MBOOT-05",
+          "level": "SHOULD"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [
+        {
+          "open_point": "3",
+          "question": "U-Boot 2022.01 sufficient, or update / backport for measured boot?",
+          "decision": "**Deferred:** to be checked → verification task.",
+          "reqs": [
+            "BASE-MBOOT-01"
+          ]
+        }
+      ],
+      "blocked_reqs": [
+        "BASE-MBOOT-01"
+      ],
+      "pack": "agent/packs/T-BASE-MBOOT-4.1.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 918
+    },
+    {
+      "id": "T-BASE-MBOOT-4.2",
+      "module": "BASE-MBOOT",
+      "spec": "docs/software/basic/boot-chain/02_measured-boot.md",
+      "spec_hash": "06f83d43b85eb66b",
+      "group": "4.2",
+      "title": "Measured Boot (TPM PCRs) – Event Log",
+      "phase": 5,
+      "risk": "high",
+      "human_gate": true,
+      "depends_on_modules": [
+        "BASE-TPM",
+        "BASE-VBOOT"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-MBOOT-10",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-MBOOT-11",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-MBOOT-4.2.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 401
+    },
+    {
+      "id": "T-BASE-MBOOT-4.3",
+      "module": "BASE-MBOOT",
+      "spec": "docs/software/basic/boot-chain/02_measured-boot.md",
+      "spec_hash": "06f83d43b85eb66b",
+      "group": "4.3",
+      "title": "Measured Boot (TPM PCRs) – Reference Values & Attestation",
+      "phase": 5,
+      "risk": "high",
+      "human_gate": true,
+      "depends_on_modules": [
+        "BASE-TPM",
+        "BASE-VBOOT"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-MBOOT-20",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-MBOOT-21",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "build",
+        "device"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-MBOOT-4.3.md",
+      "status": "todo",
+      "verified": {
+        "build": "pending",
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 491
+    },
+    {
+      "id": "V-BASE-MBOOT-OP3",
+      "module": "BASE-MBOOT",
+      "spec": "docs/software/basic/boot-chain/02_measured-boot.md",
+      "spec_hash": "06f83d43b85eb66b",
+      "group": "OP3",
+      "title": "Verify: U-Boot 2022.01 sufficient, or update / backport for measured boot?",
+      "phase": 5,
+      "risk": "high",
+      "human_gate": true,
+      "depends_on_modules": [],
+      "reqs": [
+        {
+          "id": "BASE-MBOOT-01",
+          "level": "—"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/V-BASE-MBOOT-OP3.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 184
+    },
+    {
+      "id": "T-BASE-ROOTFS-4.1",
+      "module": "BASE-ROOTFS",
+      "spec": "docs/software/basic/boot-chain/03_rootfs-integrity.md",
+      "spec_hash": "393dbc478ef6bcb5",
+      "group": "4.1",
+      "title": "Root Filesystem Integrity (dm-verity, read-only root, overlay) – Partition Layout",
+      "phase": 5,
+      "risk": "high",
+      "human_gate": true,
+      "depends_on_modules": [
+        "BASE-MBOOT",
+        "BASE-VBOOT"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-ROOTFS-01",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-ROOTFS-02",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [
+        {
+          "open_point": "3",
+          "question": "Size of the root partition (room for future images)?",
+          "decision": "**Deferred:** measured with the first complete image.",
+          "reqs": [
+            "BASE-ROOTFS-01"
+          ]
+        }
+      ],
+      "blocked_reqs": [
+        "BASE-ROOTFS-01"
+      ],
+      "pack": "agent/packs/T-BASE-ROOTFS-4.1.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 458
+    },
+    {
+      "id": "T-BASE-ROOTFS-4.2",
+      "module": "BASE-ROOTFS",
+      "spec": "docs/software/basic/boot-chain/03_rootfs-integrity.md",
+      "spec_hash": "393dbc478ef6bcb5",
+      "group": "4.2",
+      "title": "Root Filesystem Integrity (dm-verity, read-only root, overlay) – dm-verity",
+      "phase": 5,
+      "risk": "high",
+      "human_gate": true,
+      "depends_on_modules": [
+        "BASE-MBOOT",
+        "BASE-VBOOT"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-ROOTFS-10",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-ROOTFS-11",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-ROOTFS-12",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-ROOTFS-13",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "build",
+        "device"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-ROOTFS-4.2.md",
+      "status": "todo",
+      "verified": {
+        "build": "pending",
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 768
+    },
+    {
+      "id": "T-BASE-ROOTFS-4.3",
+      "module": "BASE-ROOTFS",
+      "spec": "docs/software/basic/boot-chain/03_rootfs-integrity.md",
+      "spec_hash": "393dbc478ef6bcb5",
+      "group": "4.3",
+      "title": "Root Filesystem Integrity (dm-verity, read-only root, overlay) – Writable Paths",
+      "phase": 5,
+      "risk": "high",
+      "human_gate": true,
+      "depends_on_modules": [
+        "BASE-MBOOT",
+        "BASE-VBOOT"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-ROOTFS-20",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-ROOTFS-21",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-ROOTFS-22",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-ROOTFS-23",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-ROOTFS-4.3.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 972
+    },
+    {
+      "id": "T-BASE-ROOTFS-4.4",
+      "module": "BASE-ROOTFS",
+      "spec": "docs/software/basic/boot-chain/03_rootfs-integrity.md",
+      "spec_hash": "393dbc478ef6bcb5",
+      "group": "4.4",
+      "title": "Root Filesystem Integrity (dm-verity, read-only root, overlay) – Boot Process",
+      "phase": 5,
+      "risk": "high",
+      "human_gate": true,
+      "depends_on_modules": [
+        "BASE-MBOOT",
+        "BASE-VBOOT"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-ROOTFS-30",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-ROOTFS-31",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-ROOTFS-4.4.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 418
+    },
+    {
+      "id": "T-BASE-VBOOT-4.1",
+      "module": "BASE-VBOOT",
+      "spec": "docs/software/basic/boot-chain/01_verified-boot.md",
+      "spec_hash": "71fcbcd7cf913bdf",
+      "group": "4.1",
+      "title": "Verified Boot (U-Boot FIT Signature) – FIT Image",
+      "phase": 5,
+      "risk": "high",
+      "human_gate": true,
+      "depends_on_modules": [
+        "BASE-INIT"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-VBOOT-01",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-VBOOT-02",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-VBOOT-03",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "build"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-VBOOT-4.1.md",
+      "status": "todo",
+      "verified": {
+        "build": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 540
+    },
+    {
+      "id": "T-BASE-VBOOT-4.2",
+      "module": "BASE-VBOOT",
+      "spec": "docs/software/basic/boot-chain/01_verified-boot.md",
+      "spec_hash": "71fcbcd7cf913bdf",
+      "group": "4.2",
+      "title": "Verified Boot (U-Boot FIT Signature) – Verification",
+      "phase": 5,
+      "risk": "high",
+      "human_gate": true,
+      "depends_on_modules": [
+        "BASE-INIT"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-VBOOT-10",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-VBOOT-11",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-VBOOT-12",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "build",
+        "device"
+      ],
+      "blocked_by": [
+        {
+          "open_point": "4",
+          "question": "Key rotation: how is a new public key brought onto devices (U-Boot update via OTA, signed with the old key)?",
+          "decision": "**Deferred:** OTA layer.",
+          "reqs": [
+            "BASE-VBOOT-10"
+          ]
+        }
+      ],
+      "blocked_reqs": [
+        "BASE-VBOOT-10"
+      ],
+      "pack": "agent/packs/T-BASE-VBOOT-4.2.md",
+      "status": "todo",
+      "verified": {
+        "build": "pending",
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 690
+    },
+    {
+      "id": "T-BASE-VBOOT-4.3",
+      "module": "BASE-VBOOT",
+      "spec": "docs/software/basic/boot-chain/01_verified-boot.md",
+      "spec_hash": "71fcbcd7cf913bdf",
+      "group": "4.3",
+      "title": "Verified Boot (U-Boot FIT Signature) – U-Boot Lock-down",
+      "phase": 5,
+      "risk": "high",
+      "human_gate": true,
+      "depends_on_modules": [
+        "BASE-INIT"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-VBOOT-20",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-VBOOT-21",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-VBOOT-22",
+          "level": "MAY"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-VBOOT-4.3.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 495
+    },
+    {
+      "id": "T-BASE-VBOOT-4.4",
+      "module": "BASE-VBOOT",
+      "spec": "docs/software/basic/boot-chain/01_verified-boot.md",
+      "spec_hash": "71fcbcd7cf913bdf",
+      "group": "4.4",
+      "title": "Verified Boot (U-Boot FIT Signature) – Signing Key",
+      "phase": 5,
+      "risk": "high",
+      "human_gate": true,
+      "depends_on_modules": [
+        "BASE-INIT"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-VBOOT-30",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-VBOOT-31",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-VBOOT-32",
+          "level": "SHOULD"
+        }
+      ],
+      "verify_levels": [
+        "rootfs"
+      ],
+      "blocked_by": [
+        {
+          "open_point": "2",
+          "question": "Where are the production signing key and the development key kept (HSM, build host), and who may sign?",
+          "decision": "**Deferred:** infrastructure information.",
+          "reqs": [
+            "BASE-VBOOT-30",
+            "BASE-VBOOT-31",
+            "BASE-VBOOT-32"
+          ]
+        }
+      ],
+      "blocked_reqs": [
+        "BASE-VBOOT-30",
+        "BASE-VBOOT-31",
+        "BASE-VBOOT-32"
+      ],
+      "pack": "agent/packs/T-BASE-VBOOT-4.4.md",
+      "status": "blocked",
+      "verified": {
+        "rootfs": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 486
+    },
+    {
+      "id": "T-BASE-VBOOT-4.5",
+      "module": "BASE-VBOOT",
+      "spec": "docs/software/basic/boot-chain/01_verified-boot.md",
+      "spec_hash": "71fcbcd7cf913bdf",
+      "group": "4.5",
+      "title": "Verified Boot (U-Boot FIT Signature) – Anti-Rollback",
+      "phase": 5,
+      "risk": "high",
+      "human_gate": true,
+      "depends_on_modules": [
+        "BASE-INIT"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-VBOOT-40",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-VBOOT-41",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-VBOOT-4.5.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 501
+    },
+    {
+      "id": "T-BASE-AUDIT-4.1",
+      "module": "BASE-AUDIT",
+      "spec": "docs/software/basic/hardening/03_audit-integrity.md",
+      "spec_hash": "cec91f82c37b13f6",
+      "group": "4.1",
+      "title": "Audit & File Integrity (auditd, AIDE) – Audit Subsystem",
+      "phase": 6,
+      "risk": "low",
+      "human_gate": false,
+      "depends_on_modules": [
+        "BASE-HWT",
+        "BASE-INIT",
+        "BASE-LOG",
+        "BASE-TPM"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-AUDIT-01",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-AUDIT-02",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-AUDIT-03",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-AUDIT-04",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-AUDIT-05",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-AUDIT-06",
+          "level": "SHOULD"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-AUDIT-4.1.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 916
+    },
+    {
+      "id": "T-BASE-AUDIT-4.2",
+      "module": "BASE-AUDIT",
+      "spec": "docs/software/basic/hardening/03_audit-integrity.md",
+      "spec_hash": "cec91f82c37b13f6",
+      "group": "4.2",
+      "title": "Audit & File Integrity (auditd, AIDE) – Audit Log",
+      "phase": 6,
+      "risk": "low",
+      "human_gate": false,
+      "depends_on_modules": [
+        "BASE-HWT",
+        "BASE-INIT",
+        "BASE-LOG",
+        "BASE-TPM"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-AUDIT-10",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-AUDIT-11",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-AUDIT-12",
+          "level": "SHOULD"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-AUDIT-4.2.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 462
+    },
+    {
+      "id": "T-BASE-AUDIT-4.3",
+      "module": "BASE-AUDIT",
+      "spec": "docs/software/basic/hardening/03_audit-integrity.md",
+      "spec_hash": "cec91f82c37b13f6",
+      "group": "4.3",
+      "title": "Audit & File Integrity (auditd, AIDE) – File Integrity (AIDE)",
+      "phase": 6,
+      "risk": "low",
+      "human_gate": false,
+      "depends_on_modules": [
+        "BASE-HWT",
+        "BASE-INIT",
+        "BASE-LOG",
+        "BASE-TPM"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-AUDIT-20",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-AUDIT-21",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-AUDIT-22",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-AUDIT-23",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-AUDIT-24",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [
+        {
+          "open_point": "3",
+          "question": "Is the AIDE database protected against modification (hash sealed in the TPM, upload off the device)?",
+          "decision": "**Deferred:** together with remote attestation (`BASE-MBOOT` open point 2).",
+          "reqs": [
+            "BASE-AUDIT-23"
+          ]
+        },
+        {
+          "open_point": "4",
+          "question": "Who updates the baseline after an OTA update – the OTA layer, or a procedure of this module?",
+          "decision": "**Deferred:** OTA layer.",
+          "reqs": [
+            "BASE-AUDIT-24"
+          ]
+        }
+      ],
+      "blocked_reqs": [
+        "BASE-AUDIT-23",
+        "BASE-AUDIT-24"
+      ],
+      "pack": "agent/packs/T-BASE-AUDIT-4.3.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 880
+    },
+    {
+      "id": "T-BASE-CONT-4.1",
+      "module": "BASE-CONT",
+      "spec": "docs/software/basic/08_container.md",
+      "spec_hash": "5c171b6e6397d70f",
+      "group": "4.1",
+      "title": "Container Runtime (Docker) – Daemon",
+      "phase": 6,
+      "risk": "high",
+      "human_gate": true,
+      "depends_on_modules": [
+        "BASE-FW",
+        "BASE-FWP",
+        "BASE-INIT",
+        "BASE-MAC",
+        "BASE-ROOTFS"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-CONT-01",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-CONT-02",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-CONT-03",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-CONT-04",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-CONT-05",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-CONT-4.1.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 611
+    },
+    {
+      "id": "T-BASE-CONT-4.2",
+      "module": "BASE-CONT",
+      "spec": "docs/software/basic/08_container.md",
+      "spec_hash": "5c171b6e6397d70f",
+      "group": "4.2",
+      "title": "Container Runtime (Docker) – Isolation",
+      "phase": 6,
+      "risk": "high",
+      "human_gate": true,
+      "depends_on_modules": [
+        "BASE-FW",
+        "BASE-FWP",
+        "BASE-INIT",
+        "BASE-MAC",
+        "BASE-ROOTFS"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-CONT-10",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-CONT-11",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-CONT-12",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-CONT-13",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-CONT-14",
+          "level": "SHOULD"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [
+        {
+          "open_point": "2",
+          "question": "Rootless Docker instead of `userns-remap`?",
+          "decision": "open",
+          "reqs": [
+            "BASE-CONT-10"
+          ]
+        }
+      ],
+      "blocked_reqs": [
+        "BASE-CONT-10"
+      ],
+      "pack": "agent/packs/T-BASE-CONT-4.2.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 543
+    },
+    {
+      "id": "T-BASE-CONT-4.3",
+      "module": "BASE-CONT",
+      "spec": "docs/software/basic/08_container.md",
+      "spec_hash": "5c171b6e6397d70f",
+      "group": "4.3",
+      "title": "Container Runtime (Docker) – Networking",
+      "phase": 6,
+      "risk": "high",
+      "human_gate": true,
+      "depends_on_modules": [
+        "BASE-FW",
+        "BASE-FWP",
+        "BASE-INIT",
+        "BASE-MAC",
+        "BASE-ROOTFS"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-CONT-20",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-CONT-21",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-CONT-22",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-CONT-4.3.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 507
+    },
+    {
+      "id": "T-BASE-CONT-4.4",
+      "module": "BASE-CONT",
+      "spec": "docs/software/basic/08_container.md",
+      "spec_hash": "5c171b6e6397d70f",
+      "group": "4.4",
+      "title": "Container Runtime (Docker) – Images",
+      "phase": 6,
+      "risk": "high",
+      "human_gate": true,
+      "depends_on_modules": [
+        "BASE-FW",
+        "BASE-FWP",
+        "BASE-INIT",
+        "BASE-MAC",
+        "BASE-ROOTFS"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-CONT-30",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-CONT-31",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [
+        {
+          "open_point": "1",
+          "question": "Which registry, and signed images (Notation/cosign) or pinned digests?",
+          "decision": "open",
+          "reqs": [
+            "BASE-CONT-30",
+            "BASE-CONT-31"
+          ]
+        }
+      ],
+      "blocked_reqs": [
+        "BASE-CONT-30",
+        "BASE-CONT-31"
+      ],
+      "pack": "agent/packs/T-BASE-CONT-4.4.md",
+      "status": "blocked",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 329
+    },
+    {
+      "id": "T-BASE-LOGDB-4",
+      "module": "BASE-LOGDB",
+      "spec": "docs/software/basic/06_log-database.md",
+      "spec_hash": "884bc4e57e692e38",
+      "group": "4",
+      "title": "Log Database Destination – Requirements",
+      "phase": 6,
+      "risk": "low",
+      "human_gate": false,
+      "depends_on_modules": [
+        "BASE-LOG",
+        "BASE-LUKS",
+        "BASE-ROOTFS"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-LOGDB-01",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-LOGDB-02",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-LOGDB-03",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-LOGDB-04",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-LOGDB-05",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-LOGDB-06",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [
+        {
+          "open_point": "1",
+          "question": "Which module owns PostgreSQL (database, user, log table, retention)?",
+          "decision": "**Deferred:** depends on the PostgreSQL / application layer specification.",
+          "reqs": [
+            "BASE-LOGDB-01",
+            "BASE-LOGDB-02",
+            "BASE-LOGDB-03",
+            "BASE-LOGDB-04",
+            "BASE-LOGDB-05",
+            "BASE-LOGDB-06"
+          ]
+        },
+        {
+          "open_point": "2",
+          "question": "Retention of log entries in the database (time, row count)?",
+          "decision": "**Deferred:** depends on the PostgreSQL / application layer specification.",
+          "reqs": [
+            "BASE-LOGDB-01"
+          ]
+        },
+        {
+          "open_point": "3",
+          "question": "Are all severities written into the database, or only from a minimum level (e.g. `info`)?",
+          "decision": "**Deferred:** depends on the PostgreSQL / application layer specification.",
+          "reqs": [
+            "BASE-LOGDB-01"
+          ]
+        },
+        {
+          "open_point": "4",
+          "question": "Maximum size of the disk buffer?",
+          "decision": "**Deferred:** depends on the PostgreSQL / application layer specification.",
+          "reqs": [
+            "BASE-LOGDB-05"
+          ]
+        }
+      ],
+      "blocked_reqs": [
+        "BASE-LOGDB-01",
+        "BASE-LOGDB-02",
+        "BASE-LOGDB-03",
+        "BASE-LOGDB-04",
+        "BASE-LOGDB-05",
+        "BASE-LOGDB-06"
+      ],
+      "pack": "agent/packs/T-BASE-LOGDB-4.md",
+      "status": "blocked",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 889
+    },
+    {
+      "id": "T-BASE-MAC-4.1",
+      "module": "BASE-MAC",
+      "spec": "docs/software/basic/hardening/02_mac.md",
+      "spec_hash": "b3d679d530f16f83",
+      "group": "4.1",
+      "title": "Mandatory Access Control (AppArmor) – Framework",
+      "phase": 6,
+      "risk": "medium",
+      "human_gate": false,
+      "depends_on_modules": [
+        "BASE-INIT"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-MAC-01",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-MAC-02",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-MAC-03",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device",
+        "rootfs"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-MAC-4.1.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending",
+        "rootfs": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 534
+    },
+    {
+      "id": "T-BASE-MAC-4.2",
+      "module": "BASE-MAC",
+      "spec": "docs/software/basic/hardening/02_mac.md",
+      "spec_hash": "b3d679d530f16f83",
+      "group": "4.2",
+      "title": "Mandatory Access Control (AppArmor) – Profiles",
+      "phase": 6,
+      "risk": "medium",
+      "human_gate": false,
+      "depends_on_modules": [
+        "BASE-INIT"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-MAC-10",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-MAC-11",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-MAC-12",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-MAC-13",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-MAC-4.2.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 854
+    },
+    {
+      "id": "T-BASE-MAC-4.3",
+      "module": "BASE-MAC",
+      "spec": "docs/software/basic/hardening/02_mac.md",
+      "spec_hash": "b3d679d530f16f83",
+      "group": "4.3",
+      "title": "Mandatory Access Control (AppArmor) – Modes",
+      "phase": 6,
+      "risk": "medium",
+      "human_gate": false,
+      "depends_on_modules": [
+        "BASE-INIT"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-MAC-20",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-MAC-21",
+          "level": "MAY"
+        },
+        {
+          "id": "BASE-MAC-22",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-MAC-4.3.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 726
+    },
+    {
+      "id": "T-BASE-MAC-4.4",
+      "module": "BASE-MAC",
+      "spec": "docs/software/basic/hardening/02_mac.md",
+      "spec_hash": "b3d679d530f16f83",
+      "group": "4.4",
+      "title": "Mandatory Access Control (AppArmor) – Logging",
+      "phase": 6,
+      "risk": "medium",
+      "human_gate": false,
+      "depends_on_modules": [
+        "BASE-INIT"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-MAC-30",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-MAC-4.4.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 249
+    }
+  ]
+}

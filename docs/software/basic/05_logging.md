@@ -4,7 +4,7 @@
 | :-- | :-- |
 | **Module ID** | `BASE-LOG` |
 | **Stack** | `basic` |
-| **Status** | `draft` |
+| **Spec status** | `draft` |
 | **Depends on** | `BASE-INIT`, `BASE-TIME` |
 | **Hardware reference** | — |
 | **Risk** | `low` |

@@ -4,7 +4,7 @@
 | :-- | :-- |
 | **Module ID** | `BASE-BLE` |
 | **Stack** | `basic` |
-| **Status** | `draft` |
+| **Spec status** | `draft` |
 | **Depends on** | `BASE-INIT` |
 | **Hardware reference** | [M40804W_MAX.md](../../../hardware/M40804W_MAX.md) – CM4 Bluetooth (BCM43455) |
 | **Risk** | `medium` |

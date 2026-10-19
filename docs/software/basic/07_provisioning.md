@@ -4,7 +4,7 @@
 | :-- | :-- |
 | **Module ID** | `BASE-PROV` |
 | **Stack** | `basic` |
-| **Status** | `draft` |
+| **Spec status** | `draft` |
 | **Depends on** | `BASE-INIT`, `BASE-TPM`, `BASE-FWP`, `BASE-SSH` |
 | **Hardware reference** | [M40804W_MAX.md](../../hardware/M40804W_MAX.md) – section 3.1 (EEPROM AT24CS01) |
 | **Risk** | `high` |

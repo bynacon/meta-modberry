@@ -4,7 +4,7 @@
 | :-- | :-- |
 | **Module ID** | `BASE-USBG` |
 | **Stack** | `basic` |
-| **Status** | `draft` |
+| **Spec status** | `draft` |
 | **Depends on** | `BASE-INIT`, `BASE-NETD`, `BASE-FWP`, `BASE-DNS` |
 | **Hardware reference** | [M40804W_MAX.md](../../../hardware/M40804W_MAX.md) – section 5 (USB) |
 | **Risk** | `high` |

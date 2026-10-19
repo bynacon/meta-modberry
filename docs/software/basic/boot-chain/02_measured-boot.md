@@ -4,7 +4,7 @@
 | :-- | :-- |
 | **Module ID** | `BASE-MBOOT` |
 | **Stack** | `basic` |
-| **Status** | `draft` |
+| **Spec status** | `draft` |
 | **Depends on** | `BASE-TPM`, `BASE-VBOOT` |
 | **Hardware reference** | [M40804W_MAX.md](../../../hardware/M40804W_MAX.md) – section 3.2 (SPI0, TPM) |
 | **Risk** | `high` |

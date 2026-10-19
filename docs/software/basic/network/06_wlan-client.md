@@ -4,7 +4,7 @@
 | :-- | :-- |
 | **Module ID** | `BASE-WCLI` |
 | **Stack** | `basic` |
-| **Status** | `draft` |
+| **Spec status** | `draft` |
 | **Depends on** | `BASE-INIT`, `BASE-NETD` |
 | **Hardware reference** | [M40804W_MAX.md](../../../hardware/M40804W_MAX.md) – CM4 WLAN (BCM43455) |
 | **Risk** | `low` |

@@ -4,7 +4,7 @@
 | :-- | :-- |
 | **Module ID** | `BASE-BUILD` |
 | **Stack** | `basic` |
-| **Status** | `draft` |
+| **Spec status** | `draft` |
 | **Depends on** | `BASE-INIT` |
 | **Hardware reference** | — |
 | **Risk** | `medium` |

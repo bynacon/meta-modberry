@@ -4,7 +4,7 @@
 | :-- | :-- |
 | **Module ID** | `BASE-SSH` |
 | **Stack** | `basic` |
-| **Status** | `draft` |
+| **Spec status** | `draft` |
 | **Depends on** | `BASE-INIT`, `BASE-FWP`, `BASE-PROV` |
 | **Hardware reference** | — |
 | **Risk** | `high` |

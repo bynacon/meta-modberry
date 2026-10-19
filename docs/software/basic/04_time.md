@@ -4,7 +4,7 @@
 | :-- | :-- |
 | **Module ID** | `BASE-TIME` |
 | **Stack** | `basic` |
-| **Status** | `draft` |
+| **Spec status** | `draft` |
 | **Depends on** | `BASE-INIT`, `BASE-NETD` |
 | **Hardware reference** | [M40804W_MAX.md](../../hardware/M40804W_MAX.md) – section 3.1 (RTC MCP79412) |
 | **Risk** | `low` |

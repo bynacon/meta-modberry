@@ -4,7 +4,7 @@
 | :-- | :-- |
 | **Module ID** | `BASE-LUKS` |
 | **Stack** | `basic` |
-| **Status** | `draft` |
+| **Spec status** | `draft` |
 | **Depends on** | `BASE-TPM`, `BASE-MBOOT`, `BASE-ROOTFS` |
 | **Hardware reference** | — |
 | **Risk** | `high` |

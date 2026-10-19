@@ -4,7 +4,7 @@
 | :-- | :-- |
 | **Module ID** | `BASE-WEB` |
 | **Stack** | `basic` |
-| **Status** | `draft` |
+| **Spec status** | `draft` |
 | **Depends on** | `BASE-INIT`, `BASE-FWP`, `BASE-TPM`, `BASE-TIME`, `BASE-PROV` |
 | **Hardware reference** | — |
 | **Risk** | `medium` |

@@ -4,7 +4,7 @@
 | :-- | :-- |
 | **Module ID** | `BASE-DNS` |
 | **Stack** | `basic` |
-| **Status** | `draft` |
+| **Spec status** | `draft` |
 | **Depends on** | `BASE-INIT`, `BASE-NETD`, `BASE-FW` |
 | **Hardware reference** | — |
 | **Risk** | `low` |

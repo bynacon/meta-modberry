@@ -4,7 +4,7 @@
 | :-- | :-- |
 | **Module ID** | `BASE-FW` |
 | **Stack** | `basic` |
-| **Status** | `draft` |
+| **Spec status** | `draft` |
 | **Depends on** | `BASE-INIT`, `BASE-NETD` |
 | **Hardware reference** | — |
 | **Risk** | `high` |

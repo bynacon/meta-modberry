@@ -4,7 +4,7 @@
 | :-- | :-- |
 | **Module ID** | `BASE-VBOOT` |
 | **Stack** | `basic` |
-| **Status** | `draft` |
+| **Spec status** | `draft` |
 | **Depends on** | `BASE-INIT` |
 | **Hardware reference** | [M40804W_MAX.md](../../../hardware/M40804W_MAX.md) – section 1 (CM4) |
 | **Risk** | `high` |

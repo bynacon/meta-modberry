@@ -16,7 +16,8 @@ Device-specific values (UART paths, GPIO numbers, I2C addresses) are defined onl
 - **Requirement levels:** `MUST` (part of the Definition of Done), `SHOULD` (implement unless a reason is documented), `MAY`.
 - **Verification levels:** `build`, `manifest`, `rootfs` (no hardware needed), `device` (real hardware).
 - **Traceability:** every row in *Configuration* and *Verification* names the requirement IDs it belongs to, so that tasks can be generated per requirement group (section `4.x`).
-- **Module status:** `planned` (file empty) → `draft` → `review` → `approved`. Only `approved` modules are handed over for implementation.
+- **Spec status:** `planned` (file empty) → `draft` → `review` → `approved`. It describes the maturity of the specification, not its implementation. Only `approved` modules are handed over for implementation.
+- **Implementation status:** is not kept in the specifications. It is kept per task in `agent/tasks/basic.json` (updated by the agents) and shown in the generated [`STATUS.md`](STATUS.md). Agents never edit the specifications.
 - **Open points:** each open point ends as **Decided** (requirement updated) or **Deferred** (with reason). A deferred point that needs a measurement or test on the device becomes a verification task; a requirement affected by a deferred point is blocked until it is resolved.
 - **Image composition:** the image contains only packages that a module lists under *Components*. Packages that no module lists are removed or added to a module.
 - **OTA:** this layer contains no OTA-specific configuration. OTA machine configurations, OTA packages and OTA accounts are defined device-specifically in `meta-ota`. `meta-ota` extends this layer only through the extension points of the modules (e.g. `/etc/nftables.d/`, `/etc/dnsmasq.d/`, image bbappend) and must meet their requirements (e.g. `BASE-INIT-46`).
@@ -25,7 +26,7 @@ Device-specific values (UART paths, GPIO numbers, I2C addresses) are defined onl
 
 ## 2. Module Overview
 
-| Module ID | File | Purpose | Depends on | Risk | Status |
+| Module ID | File | Purpose | Depends on | Risk | Spec status |
 | :-- | :-- | :-- | :-- | :-- | :-- |
 | `BASE-INIT` | [01_init.md](01_init.md) | systemd, image variants, accounts, service sandboxing | — | medium | `draft` |
 | `BASE-HWT` | [02_hw-tooling.md](02_hw-tooling.md) | CAN/I2C/UART tools, fuser, udev rules, group `fieldbus` | INIT | low | `draft` |

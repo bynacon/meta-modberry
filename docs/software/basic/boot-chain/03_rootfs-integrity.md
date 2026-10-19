@@ -4,7 +4,7 @@
 | :-- | :-- |
 | **Module ID** | `BASE-ROOTFS` |
 | **Stack** | `basic` |
-| **Status** | `draft` |
+| **Spec status** | `draft` |
 | **Depends on** | `BASE-VBOOT`, `BASE-MBOOT` |
 | **Hardware reference** | — |
 | **Risk** | `high` |

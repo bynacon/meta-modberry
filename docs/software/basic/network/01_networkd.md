@@ -4,7 +4,7 @@
 | :-- | :-- |
 | **Module ID** | `BASE-NETD` |
 | **Stack** | `basic` |
-| **Status** | `draft` |
+| **Spec status** | `draft` |
 | **Depends on** | `BASE-INIT` |
 | **Hardware reference** | [M40804W_MAX.md](../../../hardware/M40804W_MAX.md) – section 5 (Ethernet), section 3.2 (CAN) |
 | **Risk** | `medium` |

@@ -4,7 +4,7 @@
 | :-- | :-- |
 | **Module ID** | `BASE-LOGDB` |
 | **Stack** | `basic` |
-| **Status** | `draft` |
+| **Spec status** | `draft` |
 | **Depends on** | `BASE-LOG`, `BASE-ROOTFS`, `BASE-LUKS`, PostgreSQL (not yet specified) |
 | **Hardware reference** | — |
 | **Risk** | `low` |

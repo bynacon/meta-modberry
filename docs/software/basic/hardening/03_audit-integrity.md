@@ -4,7 +4,7 @@
 | :-- | :-- |
 | **Module ID** | `BASE-AUDIT` |
 | **Stack** | `basic` |
-| **Status** | `draft` |
+| **Spec status** | `draft` |
 | **Depends on** | `BASE-INIT`, `BASE-HWT`, `BASE-TPM`, `BASE-LOG` |
 | **Hardware reference** | [M40804W_MAX.md](../../../hardware/M40804W_MAX.md) – sections 3.2 (SPI0, TPM), 3.3 (UART) |
 | **Risk** | `low` |

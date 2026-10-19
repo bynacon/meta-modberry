@@ -4,7 +4,7 @@
 | :-- | :-- |
 | **Module ID** | `BASE-CONT` |
 | **Stack** | `basic` |
-| **Status** | `draft` |
+| **Spec status** | `draft` |
 | **Depends on** | `BASE-INIT`, `BASE-FW`, `BASE-FWP`, `BASE-ROOTFS`, `BASE-MAC` |
 | **Hardware reference** | — |
 | **Risk** | `high` |

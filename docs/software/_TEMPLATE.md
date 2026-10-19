@@ -12,7 +12,7 @@
 | :-- | :-- |
 | **Module ID** | `<STACK>-<MODULE>` <!-- e.g. BASE-FW, BASE-VBOOT, THREAD-OTBR --> |
 | **Stack** | `basic` \| `thread` \| … |
-| **Status** | `draft` \| `review` \| `approved` |
+| **Spec status** | `draft` \| `review` \| `approved` |
 | **Depends on** | `<MODULE-ID>`, `<MODULE-ID>` <!-- modules that must be implemented first --> |
 | **Hardware reference** | [M40804W_MAX.md](../../hardware/M40804W_MAX.md) – section <n> <!-- only if device-specific values are needed --> |
 | **Risk** | `low` \| `medium` \| `high` <!-- high = can brick the device or lock out access → human gate --> |

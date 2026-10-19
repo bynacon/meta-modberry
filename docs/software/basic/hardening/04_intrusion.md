@@ -4,7 +4,7 @@
 | :-- | :-- |
 | **Module ID** | `BASE-IDS` |
 | **Stack** | `basic` |
-| **Status** | `draft` |
+| **Spec status** | `draft` |
 | **Depends on** | `BASE-INIT`, `BASE-FW`, `BASE-WAP`, `BASE-LOG` |
 | **Hardware reference** | — |
 | **Risk** | `medium` |

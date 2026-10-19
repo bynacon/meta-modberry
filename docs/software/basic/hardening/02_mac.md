@@ -4,7 +4,7 @@
 | :-- | :-- |
 | **Module ID** | `BASE-MAC` |
 | **Stack** | `basic` |
-| **Status** | `draft` |
+| **Spec status** | `draft` |
 | **Depends on** | `BASE-INIT`, and every module whose services it confines |
 | **Hardware reference** | — |
 | **Risk** | `medium` |

@@ -4,7 +4,7 @@
 | :-- | :-- |
 | **Module ID** | `BASE-FWP` |
 | **Stack** | `basic` |
-| **Status** | `draft` |
+| **Spec status** | `draft` |
 | **Depends on** | `BASE-FW`, `BASE-NETD`, `BASE-PROV` |
 | **Hardware reference** | — |
 | **Risk** | `high` |
@@ -169,7 +169,7 @@ Segments: **LAN0** = `lan0`, **IoT** = `br-iot` (`172.30.10.0/24`), **Guest** = 
 
 | # | Question | Affects | Decision |
 | :-- | :-- | :-- | :-- |
-| 1 | Further outbound destinations of the device (cloud, package feeds)? | `BASE-FWP-20` | **Deferred:** application layer. |
+| 1 | Further outbound destinations of the device (cloud, package feeds)? | `BASE-FWP-20` | **Decided:** the destinations of section 5.3 are implemented now; further destinations are added by the application layer or `meta-ota` in own files in `/etc/nftables.d/` (`BASE-FW-60`). |
 | 2 | ESP32 OTA source. | `BASE-FWP-01`, `BASE-FWP-14` | **Decided:** the device caches the firmware (via the OTA system) and serves it locally. |
 | 3 | Allowed flows between segments. | `BASE-FWP-10` … `BASE-FWP-14` | **Decided:** guest → internet only; LAN0 → IoT and management only from `service_nets`; IoT isolated. |
 | 4 | Factory subnet after provisioning. | `BASE-FWP-03` | **Decided:** active only while unprovisioned. |

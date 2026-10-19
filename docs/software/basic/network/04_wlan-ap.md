@@ -4,7 +4,7 @@
 | :-- | :-- |
 | **Module ID** | `BASE-WAP` |
 | **Stack** | `basic` |
-| **Status** | `draft` |
+| **Spec status** | `draft` |
 | **Depends on** | `BASE-INIT`, `BASE-NETD`, `BASE-FW`, `BASE-PROV` |
 | **Hardware reference** | [M40804W_MAX.md](../../../hardware/M40804W_MAX.md) – CM4 WLAN (BCM43455) |
 | **Risk** | `medium` |
