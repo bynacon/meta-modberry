@@ -20,25 +20,18 @@
 
 Dieses README beschreibt den Inhalt des Layers `meta-modberry`, seine Spezifikationen und wie die Spezifikationen mit dem Agent-System umgesetzt werden.
 
-<!-- TABLE OF CONTENTS -->
-<details>
-  <summary>Inhaltsverzeichnis</summary>
-  <ol>
-    <li><a href="#1-überblick">Überblick</a></li>
-    <li><a href="#2-abhängigkeiten-dependencies">Abhängigkeiten (Dependencies)</a></li>
-    <li><a href="#3-layer-zum-build-hinzufügen">Layer zum Build hinzufügen</a></li>
-    <li><a href="#4-repository-struktur">Repository-Struktur</a></li>
-    <li><a href="#5-hardware-dokumentation">Hardware-Dokumentation</a></li>
-    <li><a href="#6-software-spezifikation">Software-Spezifikation</a></li>
-    <li><a href="#7-umsetzung-mit-dem-agent-system">Umsetzung mit dem Agent-System</a></li>
-    <li><a href="#8-patches">Patches</a></li>
-    <li><a href="#9-release-notes-modberry">Release Notes Modberry</a>
-      <ul>
-        <li><a href="#release-note-nummerierung">Release Note Nummerierung</a></li>
-      </ul>
-    </li>
-  </ol>
-</details>
+## Inhaltsverzeichnis
+
+1. [Überblick](#1-überblick)
+2. [Abhängigkeiten (Dependencies)](#2-abhängigkeiten-dependencies)
+3. [Layer zum Build hinzufügen](#3-layer-zum-build-hinzufügen)
+4. [Repository-Struktur](#4-repository-struktur)
+5. [Hardware-Dokumentation](#5-hardware-dokumentation)
+6. [Software-Spezifikation](#6-software-spezifikation)
+7. [Umsetzung mit dem Agent-System](#7-umsetzung-mit-dem-agent-system)
+8. [Patches](#8-patches)
+9. [Release Notes Modberry](#9-release-notes-modberry)
+   - [Release Note Nummerierung](#release-note-nummerierung)
 
 ---
 
