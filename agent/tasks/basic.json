@@ -1283,7 +1283,7 @@
       "id": "T-BASE-FWP-4.1",
       "module": "BASE-FWP",
       "spec": "docs/software/basic/network/03_firewall-policy.md",
-      "spec_hash": "844f294f1d44728c",
+      "spec_hash": "fdfc78e70783c1cf",
       "group": "4.1",
       "title": "Firewall Policy (port, forward and output matrices) – Input",
       "phase": 2,
@@ -1320,13 +1320,14 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 1008
+      "pack_tokens": 1010,
+      "needs_review": false
     },
     {
       "id": "T-BASE-FWP-4.2",
       "module": "BASE-FWP",
       "spec": "docs/software/basic/network/03_firewall-policy.md",
-      "spec_hash": "844f294f1d44728c",
+      "spec_hash": "fdfc78e70783c1cf",
       "group": "4.2",
       "title": "Firewall Policy (port, forward and output matrices) – Forward & NAT",
       "phase": 2,
@@ -1367,13 +1368,14 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 878
+      "pack_tokens": 878,
+      "needs_review": false
     },
     {
       "id": "T-BASE-FWP-4.3",
       "module": "BASE-FWP",
       "spec": "docs/software/basic/network/03_firewall-policy.md",
-      "spec_hash": "844f294f1d44728c",
+      "spec_hash": "fdfc78e70783c1cf",
       "group": "4.3",
       "title": "Firewall Policy (port, forward and output matrices) – Output",
       "phase": 2,
@@ -1402,13 +1404,14 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 592
+      "pack_tokens": 592,
+      "needs_review": false
     },
     {
       "id": "T-BASE-NETD-4.1",
       "module": "BASE-NETD",
       "spec": "docs/software/basic/network/01_networkd.md",
-      "spec_hash": "a22c171a79e9b1c3",
+      "spec_hash": "5614099ef62baf98",
       "group": "4.1",
       "title": "Network Configuration (systemd-networkd) – Network Daemon",
       "phase": 2,
@@ -1451,13 +1454,14 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 659
+      "pack_tokens": 659,
+      "needs_review": false
     },
     {
       "id": "T-BASE-NETD-4.2",
       "module": "BASE-NETD",
       "spec": "docs/software/basic/network/01_networkd.md",
-      "spec_hash": "a22c171a79e9b1c3",
+      "spec_hash": "5614099ef62baf98",
       "group": "4.2",
       "title": "Network Configuration (systemd-networkd) – Network Segments",
       "phase": 2,
@@ -1500,13 +1504,14 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 967
+      "pack_tokens": 937,
+      "needs_review": false
     },
     {
       "id": "T-BASE-NETD-4.3",
       "module": "BASE-NETD",
       "spec": "docs/software/basic/network/01_networkd.md",
-      "spec_hash": "a22c171a79e9b1c3",
+      "spec_hash": "5614099ef62baf98",
       "group": "4.3",
       "title": "Network Configuration (systemd-networkd) – Naming & Addressing",
       "phase": 2,
@@ -1533,10 +1538,6 @@
           "level": "MUST"
         },
         {
-          "id": "BASE-NETD-24",
-          "level": "MUST"
-        },
-        {
           "id": "BASE-NETD-25",
           "level": "MUST"
         },
@@ -1557,13 +1558,14 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 1371
+      "pack_tokens": 1256,
+      "needs_review": false
     },
     {
       "id": "T-BASE-NETD-4.4",
       "module": "BASE-NETD",
       "spec": "docs/software/basic/network/01_networkd.md",
-      "spec_hash": "a22c171a79e9b1c3",
+      "spec_hash": "5614099ef62baf98",
       "group": "4.4",
       "title": "Network Configuration (systemd-networkd) – Uplink",
       "phase": 2,
@@ -1598,13 +1600,14 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 697
+      "pack_tokens": 618,
+      "needs_review": false
     },
     {
       "id": "T-BASE-NETD-4.5",
       "module": "BASE-NETD",
       "spec": "docs/software/basic/network/01_networkd.md",
-      "spec_hash": "a22c171a79e9b1c3",
+      "spec_hash": "5614099ef62baf98",
       "group": "4.5",
       "title": "Network Configuration (systemd-networkd) – CAN Interface",
       "phase": 2,
@@ -1631,13 +1634,14 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 430
+      "pack_tokens": 430,
+      "needs_review": false
     },
     {
       "id": "T-BASE-WAP-4.1",
       "module": "BASE-WAP",
       "spec": "docs/software/basic/network/04_wlan-ap.md",
-      "spec_hash": "50722c9a20a9a220",
+      "spec_hash": "7382fcbd9431c46a",
       "group": "4.1",
       "title": "WLAN Access Point (hostapd) – Interface & Service",
       "phase": 2,
@@ -1700,14 +1704,14 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 1292,
+      "pack_tokens": 1237,
       "needs_review": false
     },
     {
       "id": "T-BASE-WAP-4.2",
       "module": "BASE-WAP",
       "spec": "docs/software/basic/network/04_wlan-ap.md",
-      "spec_hash": "50722c9a20a9a220",
+      "spec_hash": "7382fcbd9431c46a",
       "group": "4.2",
       "title": "WLAN Access Point (hostapd) – Security",
       "phase": 2,
@@ -1771,14 +1775,14 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 1068,
+      "pack_tokens": 1064,
       "needs_review": false
     },
     {
       "id": "T-BASE-WAP-4.3",
       "module": "BASE-WAP",
       "spec": "docs/software/basic/network/04_wlan-ap.md",
-      "spec_hash": "50722c9a20a9a220",
+      "spec_hash": "7382fcbd9431c46a",
       "group": "4.3",
       "title": "WLAN Access Point (hostapd) – Control Interface",
       "phase": 2,
@@ -1816,7 +1820,7 @@
       "id": "T-BASE-WAP-4.4",
       "module": "BASE-WAP",
       "spec": "docs/software/basic/network/04_wlan-ap.md",
-      "spec_hash": "50722c9a20a9a220",
+      "spec_hash": "7382fcbd9431c46a",
       "group": "4.4",
       "title": "WLAN Access Point (hostapd) – Service AP",
       "phase": 2,
@@ -1894,14 +1898,14 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 1875,
+      "pack_tokens": 1936,
       "needs_review": false
     },
     {
       "id": "V-BASE-WAP-OP5",
       "module": "BASE-WAP",
       "spec": "docs/software/basic/network/04_wlan-ap.md",
-      "spec_hash": "50722c9a20a9a220",
+      "spec_hash": "7382fcbd9431c46a",
       "group": "OP5",
       "title": "Verify: Does `brcmfmac` run the IoT AP with SAE stably, and IoT AP (SAE) + service AP (WPA2-PSK) during service mode?",
       "phase": 2,
@@ -1972,7 +1976,7 @@
       "blocked_by": [],
       "blocked_reqs": [],
       "pack": "agent/packs/T-BASE-WCLI-4.1.md",
-      "status": "todo",
+      "status": "obsolete",
       "verified": {
         "device": "pending",
         "manifest": "pending"
@@ -2015,7 +2019,7 @@
       "blocked_by": [],
       "blocked_reqs": [],
       "pack": "agent/packs/T-BASE-WCLI-4.2.md",
-      "status": "todo",
+      "status": "obsolete",
       "verified": {
         "device": "pending"
       },
@@ -2058,7 +2062,7 @@
       "blocked_by": [],
       "blocked_reqs": [],
       "pack": "agent/packs/T-BASE-WCLI-4.3.md",
-      "status": "todo",
+      "status": "obsolete",
       "verified": {
         "device": "pending",
         "rootfs": "pending"
@@ -2177,7 +2181,7 @@
       "id": "T-BASE-PROV-4.1",
       "module": "BASE-PROV",
       "spec": "docs/software/basic/07_provisioning.md",
-      "spec_hash": "4d07f14dc9961180",
+      "spec_hash": "ba7df3c7446ce4ef",
       "group": "4.1",
       "title": "Factory Provisioning – Access",
       "phase": 3,
@@ -2211,13 +2215,14 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 377
+      "pack_tokens": 377,
+      "needs_review": false
     },
     {
       "id": "T-BASE-PROV-4.2",
       "module": "BASE-PROV",
       "spec": "docs/software/basic/07_provisioning.md",
-      "spec_hash": "4d07f14dc9961180",
+      "spec_hash": "ba7df3c7446ce4ef",
       "group": "4.2",
       "title": "Factory Provisioning – Provisioned Items",
       "phase": 3,
@@ -2268,13 +2273,14 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 911
+      "pack_tokens": 917,
+      "needs_review": false
     },
     {
       "id": "T-BASE-PROV-4.3",
       "module": "BASE-PROV",
       "spec": "docs/software/basic/07_provisioning.md",
-      "spec_hash": "4d07f14dc9961180",
+      "spec_hash": "ba7df3c7446ce4ef",
       "group": "4.3",
       "title": "Factory Provisioning – Storage",
       "phase": 3,
@@ -2318,13 +2324,14 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 570
+      "pack_tokens": 570,
+      "needs_review": false
     },
     {
       "id": "T-BASE-PROV-4.4",
       "module": "BASE-PROV",
       "spec": "docs/software/basic/07_provisioning.md",
-      "spec_hash": "4d07f14dc9961180",
+      "spec_hash": "ba7df3c7446ce4ef",
       "group": "4.4",
       "title": "Factory Provisioning – Behavior",
       "phase": 3,
@@ -2381,13 +2388,14 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 811
+      "pack_tokens": 811,
+      "needs_review": false
     },
     {
       "id": "T-BASE-PROV-4.5",
       "module": "BASE-PROV",
       "spec": "docs/software/basic/07_provisioning.md",
-      "spec_hash": "4d07f14dc9961180",
+      "spec_hash": "ba7df3c7446ce4ef",
       "group": "4.5",
       "title": "Factory Provisioning – Factory Reset & Decommissioning",
       "phase": 3,
@@ -2425,7 +2433,8 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 484
+      "pack_tokens": 484,
+      "needs_review": false
     },
     {
       "id": "T-BASE-SSH-4",
@@ -3312,7 +3321,7 @@
       "id": "T-BASE-KERN-4.1",
       "module": "BASE-KERN",
       "spec": "docs/software/basic/hardening/01_kernel.md",
-      "spec_hash": "774c77c249f481dc",
+      "spec_hash": "63f25b8a1835a7e3",
       "group": "4.1",
       "title": "Kernel Hardening & Watchdog – Kernel Parameters",
       "phase": 4,
@@ -3373,13 +3382,14 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 866
+      "pack_tokens": 912,
+      "needs_review": false
     },
     {
       "id": "T-BASE-KERN-4.2",
       "module": "BASE-KERN",
       "spec": "docs/software/basic/hardening/01_kernel.md",
-      "spec_hash": "774c77c249f481dc",
+      "spec_hash": "63f25b8a1835a7e3",
       "group": "4.2",
       "title": "Kernel Hardening & Watchdog – Hardware Watchdog",
       "phase": 4,
@@ -3418,13 +3428,14 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 731
+      "pack_tokens": 731,
+      "needs_review": false
     },
     {
       "id": "T-BASE-KERN-4.3",
       "module": "BASE-KERN",
       "spec": "docs/software/basic/hardening/01_kernel.md",
-      "spec_hash": "774c77c249f481dc",
+      "spec_hash": "63f25b8a1835a7e3",
       "group": "4.3",
       "title": "Kernel Hardening & Watchdog – Service Watchdogs",
       "phase": 4,
@@ -3459,13 +3470,14 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 581
+      "pack_tokens": 581,
+      "needs_review": false
     },
     {
       "id": "T-BASE-KERN-4.4",
       "module": "BASE-KERN",
       "spec": "docs/software/basic/hardening/01_kernel.md",
-      "spec_hash": "774c77c249f481dc",
+      "spec_hash": "63f25b8a1835a7e3",
       "group": "4.4",
       "title": "Kernel Hardening & Watchdog – Kernel Modules",
       "phase": 4,
@@ -3492,13 +3504,14 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 411
+      "pack_tokens": 411,
+      "needs_review": false
     },
     {
       "id": "T-BASE-USB-4.1",
       "module": "BASE-USB",
       "spec": "docs/software/basic/hardening/05_usb.md",
-      "spec_hash": "606fe5104471560f",
+      "spec_hash": "6a87972ccc8eb85d",
       "group": "4.1",
       "title": "USB Device Control (USBGuard) – Policy",
       "phase": 4,
@@ -3560,13 +3573,14 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 1348
+      "pack_tokens": 1298,
+      "needs_review": false
     },
     {
       "id": "T-BASE-USB-4.2",
       "module": "BASE-USB",
       "spec": "docs/software/basic/hardening/05_usb.md",
-      "spec_hash": "606fe5104471560f",
+      "spec_hash": "6a87972ccc8eb85d",
       "group": "4.2",
       "title": "USB Device Control (USBGuard) – Operation",
       "phase": 4,
@@ -3607,13 +3621,14 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 432
+      "pack_tokens": 432,
+      "needs_review": false
     },
     {
       "id": "V-BASE-USB-OP1",
       "module": "BASE-USB",
       "spec": "docs/software/basic/hardening/05_usb.md",
-      "spec_hash": "606fe5104471560f",
+      "spec_hash": "6a87972ccc8eb85d",
       "group": "OP1",
       "title": "Verify: Read the vendor/product IDs and ports of the internal USB devices on the device (`usbguard generate-policy`).",
       "phase": 4,
@@ -3638,7 +3653,8 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 221
+      "pack_tokens": 221,
+      "needs_review": false
     },
     {
       "id": "T-BASE-USBG-4.1",
@@ -4158,7 +4174,7 @@
       "id": "T-BASE-ROOTFS-4.1",
       "module": "BASE-ROOTFS",
       "spec": "docs/software/basic/boot-chain/03_rootfs-integrity.md",
-      "spec_hash": "89fe3583af107e83",
+      "spec_hash": "5f94d9e368e50ee5",
       "group": "4.1",
       "title": "Root Filesystem Integrity (dm-verity, read-only root, overlay) – Partition Layout",
       "phase": 5,
@@ -4201,13 +4217,14 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 458
+      "pack_tokens": 458,
+      "needs_review": false
     },
     {
       "id": "T-BASE-ROOTFS-4.2",
       "module": "BASE-ROOTFS",
       "spec": "docs/software/basic/boot-chain/03_rootfs-integrity.md",
-      "spec_hash": "89fe3583af107e83",
+      "spec_hash": "5f94d9e368e50ee5",
       "group": "4.2",
       "title": "Root Filesystem Integrity (dm-verity, read-only root, overlay) – dm-verity",
       "phase": 5,
@@ -4249,13 +4266,14 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 768
+      "pack_tokens": 768,
+      "needs_review": false
     },
     {
       "id": "T-BASE-ROOTFS-4.3",
       "module": "BASE-ROOTFS",
       "spec": "docs/software/basic/boot-chain/03_rootfs-integrity.md",
-      "spec_hash": "89fe3583af107e83",
+      "spec_hash": "5f94d9e368e50ee5",
       "group": "4.3",
       "title": "Root Filesystem Integrity (dm-verity, read-only root, overlay) – Writable Paths",
       "phase": 5,
@@ -4295,13 +4313,14 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 988
+      "pack_tokens": 974,
+      "needs_review": false
     },
     {
       "id": "T-BASE-ROOTFS-4.4",
       "module": "BASE-ROOTFS",
       "spec": "docs/software/basic/boot-chain/03_rootfs-integrity.md",
-      "spec_hash": "89fe3583af107e83",
+      "spec_hash": "5f94d9e368e50ee5",
       "group": "4.4",
       "title": "Root Filesystem Integrity (dm-verity, read-only root, overlay) – Boot Process",
       "phase": 5,
@@ -4333,7 +4352,8 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 418
+      "pack_tokens": 418,
+      "needs_review": false
     },
     {
       "id": "T-BASE-VBOOT-4.1",
@@ -5056,7 +5076,7 @@
       "id": "T-BASE-MAC-4.1",
       "module": "BASE-MAC",
       "spec": "docs/software/basic/hardening/02_mac.md",
-      "spec_hash": "b3d679d530f16f83",
+      "spec_hash": "dd5971dc2cae8432",
       "group": "4.1",
       "title": "Mandatory Access Control (AppArmor) – Framework",
       "phase": 6,
@@ -5093,13 +5113,14 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 534
+      "pack_tokens": 534,
+      "needs_review": false
     },
     {
       "id": "T-BASE-MAC-4.2",
       "module": "BASE-MAC",
       "spec": "docs/software/basic/hardening/02_mac.md",
-      "spec_hash": "b3d679d530f16f83",
+      "spec_hash": "dd5971dc2cae8432",
       "group": "4.2",
       "title": "Mandatory Access Control (AppArmor) – Profiles",
       "phase": 6,
@@ -5138,13 +5159,14 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 854
+      "pack_tokens": 839,
+      "needs_review": false
     },
     {
       "id": "T-BASE-MAC-4.3",
       "module": "BASE-MAC",
       "spec": "docs/software/basic/hardening/02_mac.md",
-      "spec_hash": "b3d679d530f16f83",
+      "spec_hash": "dd5971dc2cae8432",
       "group": "4.3",
       "title": "Mandatory Access Control (AppArmor) – Modes",
       "phase": 6,
@@ -5179,13 +5201,14 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 726
+      "pack_tokens": 711,
+      "needs_review": false
     },
     {
       "id": "T-BASE-MAC-4.4",
       "module": "BASE-MAC",
       "spec": "docs/software/basic/hardening/02_mac.md",
-      "spec_hash": "b3d679d530f16f83",
+      "spec_hash": "dd5971dc2cae8432",
       "group": "4.4",
       "title": "Mandatory Access Control (AppArmor) – Logging",
       "phase": 6,
@@ -5212,7 +5235,8 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 249
+      "pack_tokens": 249,
+      "needs_review": false
     }
   ]
 }

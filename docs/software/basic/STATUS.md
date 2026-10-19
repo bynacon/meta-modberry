@@ -13,9 +13,9 @@ Generated: 2026-10-19. Source of the state: `agent/tasks/basic.json`.
 | 2 | [`BASE-DNS`](network/05_dhcp-dns.md) | draft | 1 | 6 | 1 | 0 | 0 | 0 | 0 | 0 |
 | 2 | [`BASE-FW`](network/02_firewall.md) | draft | 5 | 18 | 5 | 0 | 0 | 0 | 0 | 0 |
 | 2 | [`BASE-FWP`](network/03_firewall-policy.md) | draft | 3 | 8 | 3 | 0 | 0 | 0 | 0 | 0 |
-| 2 | [`BASE-NETD`](network/01_networkd.md) | draft | 5 | 20 | 5 | 0 | 0 | 0 | 0 | 0 |
+| 2 | [`BASE-NETD`](network/01_networkd.md) | draft | 5 | 19 | 5 | 0 | 0 | 0 | 0 | 0 |
 | 2 | [`BASE-WAP`](network/04_wlan-ap.md) | draft | 5 | 27 | 5 | 0 | 0 | 0 | 0 | 0 |
-| 2 | [`BASE-WCLI`](network/06_wlan-client.md) | draft | 3 | 10 | 3 | 0 | 0 | 0 | 0 | 0 |
+| – | [`BASE-WCLI`]() |  | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | 3 | [`BASE-LOG`](05_logging.md) | draft | 2 | 10 | 2 | 0 | 0 | 0 | 0 | 0 |
 | 3 | [`BASE-PROV`](07_provisioning.md) | draft | 5 | 17 | 5 | 0 | 0 | 0 | 0 | 0 |
 | 3 | [`BASE-SSH`](network/08_ssh.md) | draft | 1 | 7 | 1 | 0 | 0 | 0 | 0 | 0 |

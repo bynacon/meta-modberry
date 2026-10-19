@@ -85,7 +85,6 @@ This module confines the network-facing and privileged services of the device wi
 | `dnsmasq` | `BASE-DNS` | UDP 53/67, `/etc/dnsmasq.conf`, `/etc/dnsmasq.d/`, lease file |
 | `chronyd` | `BASE-TIME` | UDP 123, TCP 4460 out, `/dev/rtc0`, `/var/lib/chrony/` |
 | `syslog-ng` | `BASE-LOG` | journal read, `/etc/syslog-ng/`, own log files, PostgreSQL socket (`BASE-LOGDB`) |
-| `iwd` | `BASE-WCLI` | nl80211 netlink, `/var/lib/iwd/` |
 | `fail2ban-server` | `BASE-IDS` | journal read, `nft` with the ban sets only |
 | provisioning helper | `BASE-PROV` | `/data/provisioning/`, TPM, `cryptsetup` (recovery key) |
 | `bluetoothd` | `BASE-BLE` | HCI socket, D-Bus, `/var/lib/bluetooth/` |

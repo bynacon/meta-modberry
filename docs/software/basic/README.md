@@ -41,7 +41,6 @@ Device-specific values (UART paths, GPIO numbers, I2C addresses) are defined onl
 | `BASE-FWP` | [network/03_firewall-policy.md](network/03_firewall-policy.md) | Port/forward/output matrices, `service_nets`, NAT | FW, NETD, PROV | high | `draft` |
 | `BASE-WAP` | [network/04_wlan-ap.md](network/04_wlan-ap.md) | hostapd: IoT WLAN (`bynacon-iot`), service AP in service mode, WPA3 | INIT, HWT, NETD, FW, PROV | medium | `draft` |
 | `BASE-DNS` | [network/05_dhcp-dns.md](network/05_dhcp-dns.md) | dnsmasq for the IoT and service segments | INIT, NETD, FW | low | `draft` |
-| `BASE-WCLI` | [network/06_wlan-client.md](network/06_wlan-client.md) | iwd (fallback uplink) | INIT, NETD | low | `draft` |
 | `BASE-VPN` | [network/07_vpn.md](network/07_vpn.md) | WireGuard client to the Bynacon VPN server | INIT, NETD, FWP, PROV | high | `draft` |
 | `BASE-SSH` | [network/08_ssh.md](network/08_ssh.md) | OpenSSH, key-only, Bynacon service key | INIT, FWP, PROV | high | `draft` |
 | `BASE-WEB` | [network/09_web-proxy.md](network/09_web-proxy.md) | nginx TLS proxy, TPM key, Bynacon CA | INIT, FWP, TPM, TIME, PROV | medium | `draft` |
@@ -83,7 +82,6 @@ flowchart TD
         FWP[BASE-FWP<br/>firewall policy]
         WAP[BASE-WAP<br/>WLAN AP]
         DNS[BASE-DNS<br/>dnsmasq]
-        WCLI[BASE-WCLI<br/>WLAN client]
         BLE[BASE-BLE<br/>Bluetooth LE]
     end
 
@@ -115,7 +113,7 @@ flowchart TD
     PG[(PostgreSQL<br/>not specified)]
 
     INIT --> HWT & TPM & KERN & USB & BUILD & NETD & VBOOT & BLE
-    NETD --> FW & WCLI & TIME
+    NETD --> FW & TIME
     FW --> FWP & WAP & DNS
     NETD --> FWP
     FWP --> VPN & SSH & WEB
@@ -125,7 +123,7 @@ flowchart TD
     TPM --> PROV
     FWP --> PROV
     SSH --> PROV
-    PROV --> WAP & WCLI & VPN & WEB
+    PROV --> WAP & VPN & WEB
 
     VBOOT --> MBOOT
     TPM --> MBOOT
@@ -167,7 +165,7 @@ The order follows the dependency graph and the risk. Low-risk modules that can b
 | :-- | :-- | :-- | :-- |
 | **0 – Cleanup** | — | Create the distro conf `conf/distro/modberry.conf`. Define the production and debug image variants. Remove legacy components that conflict with the specification: `dhcpcd`, `init-ifupdown`, `ifplugd`, `iptables`, `wpa-supplicant`, `systemd-timesyncd`, `hostapddeamon`, `dropbear`. Change the WLAN credentials and the AP passphrase that are in the Git history. Add the layers `meta-security` and `meta-webserver` to the build script and `LAYERDEPENDS`. Decide the LTS migration (`BASE-BUILD` open point 1). Build and verify the board device tree patch. | Image builds and boots, all devices of the hardware spec present |
 | **1 – Foundation** | `BASE-INIT`, `BASE-BUILD`, `BASE-HWT`, `BASE-TPM` | systemd-only image, hardened build, bus access, working TPM | `systemctl --failed` empty, `/dev/tpmrm0` present, CVE report produced |
-| **2 – Network** | `BASE-NETD`, `BASE-FW`, `BASE-FWP`, `BASE-DNS`, `BASE-WCLI`, `BASE-WAP` | All interfaces via networkd, firewall with matrices | **Human gate:** firewall tested with console access |
+| **2 – Network** | `BASE-NETD`, `BASE-FW`, `BASE-FWP`, `BASE-DNS`, `BASE-WAP` | All interfaces via networkd, firewall with matrices | **Human gate:** firewall tested with console access |
 | **3 – Services** | `BASE-TIME`, `BASE-LOG`, `BASE-SSH`, `BASE-VPN`, `BASE-WEB`, `BASE-PROV` | Correct time, local logging, secured remote access, factory provisioning | **Human gate:** service-key login and provisioning work before password login is disabled and the first production image is flashed |
 | **4 – Hardening & interfaces** | `BASE-KERN`, `BASE-USB`, `BASE-IDS`, `BASE-BLE` | Kernel hardening, USB allow list, intrusion detection, BLE | **Human gate:** USB allow list tested with console access (`lan1` is a USB device) |
 | **5 – Boot chain** | `BASE-VBOOT` → `BASE-MBOOT` → `BASE-ROOTFS` → `BASE-LUKS` | Chain of trust from bootloader to data partition | **Human gate** for each module; recovery procedure documented and tested |
@@ -186,7 +184,7 @@ Each shared resource has exactly one owner module. Other modules use it and neve
 | systemd, unit integration and sandboxing rules | `BASE-INIT` | all modules |
 | Distro conf `modberry`, image variants, accounts | `BASE-INIT` | all modules |
 | Interface names, address plan, `.network` / `.netdev` convention | `BASE-NETD` | `BASE-FW`, `BASE-FWP`, `BASE-WAP`, `BASE-DNS`, `BASE-TIME`, `BASE-VPN`, `THREAD-*` |
-| `.network` / `.netdev` file of an interface | module that owns the interface: `BASE-NETD` (`lan0`, `lan1`, `br-iot`, `wlan1_sta`, `can0`), `BASE-WAP` (`wlan0_iot`, `wlan0_svc`), `BASE-VPN` (`wg0`) | — |
+| `.network` / `.netdev` file of an interface | module that owns the interface: `BASE-NETD` (`lan0`, `lan1`, `br-iot`, `can0`), `BASE-WAP` (`wlan0_iot`, `wlan0_svc`), `BASE-VPN` (`wg0`) | — |
 | nftables table `inet filter`, ban sets, `/etc/nftables.d/` | `BASE-FW` | `BASE-FWP`, `BASE-IDS`, `BASE-CONT`, `THREAD-NAT64`, `meta-ota` |
 | Port, forward and output matrix, allow list `service_nets`, NAT table | `BASE-FWP` | all modules with network services, `BASE-WEB`, `BASE-IDS` |
 | dnsmasq, `/etc/dnsmasq.d/` | `BASE-DNS` | `THREAD-NAT64` (DNS64), application layer |
@@ -197,7 +195,7 @@ Each shared resource has exactly one owner module. Other modules use it and neve
 | System time, `time-sync.target` | `BASE-TIME` | `BASE-WEB`, `BASE-VPN`, `BASE-LOG` |
 | Persistent data partition, persistent paths | `BASE-ROOTFS` / `BASE-LUKS` | `BASE-LOG`, `BASE-LOGDB`, `BASE-AUDIT`, `BASE-CONT`, application layer |
 | Journal, syslog-ng source and `conf.d` | `BASE-LOG` | `BASE-LOGDB`, `BASE-IDS`, `BASE-AUDIT` |
-| Provisioned per-device data `/data/provisioning/` | `BASE-PROV` | `BASE-WAP`, `BASE-WCLI`, `BASE-FWP`, `BASE-SSH`, `BASE-VPN`, `BASE-WEB`, `BASE-TPM` |
+| Provisioned per-device data `/data/provisioning/` | `BASE-PROV` | `BASE-WAP`, `BASE-BLE`, `BASE-FWP`, `BASE-SSH`, `BASE-VPN`, `BASE-WEB`, `BASE-TPM` |
 | Bynacon service key | `BASE-SSH` | `BASE-PROV` |
 | Container runtime | `BASE-CONT` | application layer |
 | Build hardening, CVE report, SBOM | `BASE-BUILD` | release process, OTA layer |
@@ -214,7 +212,7 @@ Each shared resource has exactly one owner module. Other modules use it and neve
 | 4 | Hardware spec: GPIO05 is the interrupt line of both the TPM and the DS2482S. | `BASE-TPM` | **Decided:** GPIO05 is the TPM interrupt; the DS2482S has no interrupt line (hardware spec updated). |
 | 5 | U-Boot signing keys "stored in the TPM" (source spec). | `BASE-VBOOT` | **Decided:** private key on the build host, public key in U-Boot. |
 | 6 | Production and debug image variants. | `BASE-INIT-40`, all modules | **Decided:** one image recipe, switch `MODBERRY_DEBUG = "1"` (`BASE-INIT-42` … `BASE-INIT-44`). |
-| 7 | WLAN credentials and the AP passphrase are in the Git history. | `BASE-WAP`, `BASE-WCLI` | **Interim done:** values moved to the non-versioned `secrets_kirkstone.conf`. **Decided:** factory provisioning (`BASE-PROV`). Open: change the old values. |
+| 7 | WLAN credentials and the AP passphrase are in the Git history. | `BASE-WAP` | **Interim done:** values moved to the non-versioned `secrets_kirkstone.conf`. **Decided:** factory provisioning (`BASE-PROV`). Open: change the old values. |
 | 8 | Value of the placeholder `VPN_ENDPOINT` (port, VPN subnet). | `BASE-FWP`, `BASE-VPN` | **Deferred:** infrastructure information. |
 | 9 | An LTE modem is allowed as USB device (`BASE-USB-05`). Uplink role, priority and firewall rules of an LTE uplink are not yet specified. | `BASE-NETD`, `BASE-FWP` | **Deferred:** specified when the modem model is chosen. |
 | 10 | **Kirkstone is end of life since April 2026.** Migration to a supported LTS release affects every module (recipe versions, U-Boot, systemd, OpenSSL). | all modules | See `BASE-BUILD` open point 1. |

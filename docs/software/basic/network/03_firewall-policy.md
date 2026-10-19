@@ -67,7 +67,7 @@ This module defines which services of the device are reachable from which segmen
 
 ### 5.1 Port Matrix (input)
 
-Segments: **LAN0** = `lan0`, **IoT** = `br-iot` (`172.30.10.0/24`), **SVC** = `wlan0_svc` (service AP, service mode only, `BASE-WAP-40`), **VPN** = `wg0`, **Uplink** = `lan0`, `wlan1_sta`. "SN" = only from sources in `service_nets`.
+Segments: **LAN0** = `lan0`, **IoT** = `br-iot` (`172.30.10.0/24`), **SVC** = `wlan0_svc` (service AP, service mode only, `BASE-WAP-40`), **VPN** = `wg0`, **Uplink** = `lan0`. "SN" = only from sources in `service_nets`.
 
 | Service | Port | LAN0 | IoT | SVC | VPN | Owner |
 | :-- | :-- | :-: | :-: | :-: | :-: | :-- |
@@ -110,7 +110,7 @@ Segments: **LAN0** = `lan0`, **IoT** = `br-iot` (`172.30.10.0/24`), **SVC** = `w
 | Target path | Key settings | Req. |
 | :-- | :-- | :-- |
 | `/etc/nftables.d/20-input.nft` | rules of section 5.1 per interface | `BASE-FWP-01` |
-| `/etc/nftables.d/10-sets.nft` | sets `uplinks = { "lan0", "wlan1_sta" }`, `service_nets_v4` (`type ipv4_addr; flags interval`), `service_nets_v6`, empty | `BASE-FWP-02` |
+| `/etc/nftables.d/10-sets.nft` | sets `uplinks = { "lan0" }` (set kept for a later LTE uplink), `service_nets_v4` (`type ipv4_addr; flags interval`), `service_nets_v6`, empty | `BASE-FWP-02` |
 | `/etc/nftables.d/05-factory.nft` | `add element inet filter service_nets_v4 { 10.99.0.0/24 }`; loaded only if `/data/provisioning/provisioned` is absent | `BASE-FWP-03` |
 | `/data/provisioning/firewall/service_nets.nft` | site elements of `service_nets_v4` / `service_nets_v6`, loaded after the base ruleset | `BASE-FWP-03` |
 | `/etc/nftables.d/30-forward.nft` | rules of section 5.2 | `BASE-FWP-10`, `BASE-FWP-13`, `BASE-FWP-14` |

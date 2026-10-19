@@ -92,7 +92,7 @@ This module defines how a device that runs the production image gets its per-dev
 | AP passphrase IoT WLAN (per installation) | device registry, per installation | `wlan/iot.psk` | `BASE-WAP-14` |
 | Service AP secret | factory script (random, per device) | `wlan/service.secret` | `BASE-WAP-41` |
 | WLAN country code (default `CH`) | factory script | `wlan/country` | `BASE-WAP-15` |
-| WLAN client credentials (optional) | factory script | iwd network file | `BASE-WCLI-21` |
+| WLAN channel (per installation, default 6) | device registry, per installation | `wlan/channel` | `BASE-WAP-48` |
 | Site entries of `service_nets` | factory script | `firewall/service_nets.nft` | `BASE-FWP-03` |
 | nginx TLS key | in the TPM | TPM persistent handle (reference in `tls/`) | `BASE-WEB-06`, `BASE-TPM-33` |
 | nginx TLS certificate | Bynacon CA from CSR | `tls/server.crt` | `BASE-WEB-07` |
@@ -117,7 +117,7 @@ This module defines how a device that runs the production image gets its per-dev
 
 ### Provides
 
-- Provisioned items of section 5.1 – used by `BASE-WAP`, `BASE-WCLI`, `BASE-FWP`, `BASE-SSH`, `BASE-VPN`, `BASE-WEB`, `BASE-TPM`.
+- Provisioned items of section 5.1 – used by `BASE-WAP`, `BASE-FWP`, `BASE-SSH`, `BASE-VPN`, `BASE-WEB`, `BASE-TPM`, `BASE-BLE`.
 - Marker `/data/provisioning/provisioned` – used by all services with per-device data.
 
 ### Consumes
@@ -154,7 +154,7 @@ This module defines how a device that runs the production image gets its per-dev
 
 - **Human gate:** a production image is only accessible over SSH with the service key. If provisioning or the service key fails, the device can only be recovered by reflashing.
 - `/data` does not exist yet (`BASE-ROOTFS`). Until then, `/data/provisioning/` is a directory on the writable root filesystem and is not encrypted.
-- **Interim:** the AP passphrase and WLAN client credentials still come from `secrets_kirkstone.conf` at build time. They move to provisioning together with this module (`BASE-WAP-14`, `BASE-WCLI-20`).
+- **Interim:** the AP passphrase still comes from `secrets_kirkstone.conf` at build time. It moves to provisioning together with this module (`BASE-WAP-14`). The WLAN client credentials (`WIFI_SSID`, `WIFI_PASSKEY`) are no longer needed and are removed from the build.
 - The factory script, the Bynacon CA and the device registry are not part of this layer. Their location and security (CA key protection) must be defined separately.
 - The EEPROM (AT24CS01) is not yet implemented in the device tree (hardware specification, section 8). `BASE-PROV-33` needs the `at24` driver.
 - Moving private keys out of the device is not allowed (`BASE-PROV-11`). A replaced device therefore gets new keys; peers (VPN server) must be updated.

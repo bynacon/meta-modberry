@@ -33,7 +33,6 @@ This module provides the IoT WLAN with hostapd. It connects sensors and actuator
 - hostapd event scripts and MAC bans → `BASE-IDS`
 - Firewall rules and isolation between segments → `BASE-FWP`
 - Segments, bridge `br-iot`, subnets → `BASE-NETD`
-- WLAN client uplink (USB WLAN adapter) → `BASE-WCLI`
 
 ---
 
@@ -57,7 +56,7 @@ This module provides the IoT WLAN with hostapd. It connects sensors and actuator
 - `BASE-WAP-04` **MUST** The device provides one WLAN network, the IoT WLAN, with the SSID `bynacon-iot`. The SSID is the same on all devices, so that clients roam between devices.
 - `BASE-WAP-05` **MUST** `wlan0_iot` is a member of the bridge `br-iot`.
 - `BASE-WAP-06` **MUST** The on-board radio (BCM43455) runs exactly one interface, the IoT AP. Only during service mode it runs a second interface, the service AP (`BASE-WAP-40`). It never runs a client or mesh interface.
-- `BASE-WAP-07` **MUST** Further WLAN roles (client uplink, mesh) use a separate USB WLAN adapter (`BASE-USB-05`), never the on-board radio. The service AP always runs on the on-board radio.
+- `BASE-WAP-07` **MUST** The device has no WLAN client and no WLAN mesh. The on-board radio never runs a client or mesh interface.
 - `BASE-WAP-08` **MUST** The image uses a fixed, tested version of the BCM43455 firmware (`linux-firmware-rpidistro-bcm43455`); a firmware update requires the verification of open point 5 again.
 
 ### 4.2 Security
@@ -83,7 +82,7 @@ This module provides the IoT WLAN with hostapd. It connects sensors and actuator
 - `BASE-WAP-45` **MUST** If the system time is not synchronized and the RTC time is invalid, the service AP does not start; the reason is logged.
 - `BASE-WAP-46` **MUST** Every start and stop of the service AP and every client association is logged to the journal.
 - `BASE-WAP-47` **MUST** The IoT AP has priority. While the service AP runs, a watchdog checks the IoT AP (hostapd state, `nl80211` errors such as `MLME command failed`, sudden loss of most associated stations). At the first sign of a problem it stops the service AP, so that the radio returns to one interface, and logs the reason.
-- `BASE-WAP-48` **MUST** Both APs use the same fixed channel with 20 MHz bandwidth; automatic channel selection and DFS channels are not used, and Wi-Fi power save is off on the on-board radio.
+- `BASE-WAP-48` **MUST** Both APs use the same fixed channel with 20 MHz bandwidth: 1, 6 or 11, provisioned per installation (`BASE-PROV`), default 6. Automatic channel selection and DFS channels are not used, and Wi-Fi power save is off on the on-board radio.
 - `BASE-WAP-49` **MUST** The service AP runs as a separate hostapd instance and starts only when the IoT AP reports state `ENABLED`. A failure of the service AP instance does not affect the IoT AP instance.
 
 ---
@@ -105,7 +104,7 @@ This module provides the IoT WLAN with hostapd. It connects sensors and actuator
 | `modberry-service-ap.service` | `WantedBy=` / `PartOf=modberry-service-mode.target`; generates `/run/hostapd-svc.conf` and starts a second hostapd instance on `wlan0_svc` | `BASE-WAP-40`, `BASE-WAP-44` |
 | `/run/hostapd-svc.conf` | `ssid=bynacon-service-<serial>`, `wpa=2`, `wpa_key_mgmt=WPA-PSK-SHA256`, `rsn_pairwise=CCMP`, `ieee80211w=2`, `max_num_sta=1`, `wpa_psk_file=/run/hostapd-svc.psk` | `BASE-WAP-41`, `BASE-WAP-43` |
 | `/run/hostapd-svc.psk` | two lines `00:00:00:00:00:00 <passkey>` (current and previous window), mode `0600`, rewritten at each window change | `BASE-WAP-42` |
-| `/etc/hostapd.conf`, `/run/hostapd-svc.conf` | same `channel=<fixed>`, `ht_capab` 20 MHz, no `acs`; `iw dev wlan0_iot set power_save off` | `BASE-WAP-48` |
+| `/etc/hostapd.conf`, `/run/hostapd-svc.conf` | same `channel=` from `/data/provisioning/wlan/channel` (1, 6 or 11; default 6), `ht_capab` 20 MHz, no `acs`; `iw dev wlan0_iot set power_save off` | `BASE-WAP-48` |
 | `modberry-service-ap-watchdog.service` | `PartOf=modberry-service-mode.target`; watches `hostapd_cli -i wlan0_iot status` and the kernel log; stops `modberry-service-ap.service` on errors | `BASE-WAP-47` |
 | Build: machine/distro conf | `PREFERRED_VERSION_linux-firmware-rpidistro` fixed to the tested version | `BASE-WAP-08` |
 | `/data/provisioning/wlan/service.secret` | per-device secret, mode `0600` | `BASE-WAP-41` |
@@ -141,7 +140,7 @@ This module provides the IoT WLAN with hostapd. It connects sensors and actuator
 | `BASE-WAP-04` | `device` | Scan from a phone near two devices | one SSID `bynacon-iot` |
 | `BASE-WAP-05` | `device` | `bridge link` | `wlan0_iot` is a port of `br-iot` |
 | `BASE-WAP-06` | `device` | `iw dev` | exactly one interface on `phy0` |
-| `BASE-WAP-07` | `rootfs` | `.netdev` / iwd configuration of the image | no client or mesh interface on `phy0` |
+| `BASE-WAP-07` | `rootfs` | `.netdev` files and packages of the image | no client or mesh interface; no `iwd`, no `wpa-supplicant` |
 | `BASE-WAP-08` | `build` | `bitbake -e <image> \| grep PREFERRED_VERSION_linux-firmware-rpidistro` | fixed version |
 | `BASE-WAP-10` | `device` | Connect a WPA3 client; `hostapd_cli -i wlan0_iot all_sta`; connect a WPA2-only client | `AKMSuiteSelector=000fac-8`; WPA2 refused |
 | `BASE-WAP-11` | `rootfs` | `grep ieee80211w <rootfs>/etc/hostapd.conf` | `2` |
@@ -168,10 +167,9 @@ This module provides the IoT WLAN with hostapd. It connects sensors and actuator
 - `BASE-WAP-02`: `hostapddeamon` starts hostapd via `systemctl start` from a oneshot unit; it is removed.
 - `BASE-WAP-04`, `BASE-WAP-14`: all installations use the SSID `bynacon-iot` with different passphrases. A client near two installations may try the wrong one; with SAE it fails to authenticate and retries.
 - `BASE-WAP-06`: `brcmfmac` is a FullMAC driver; the firmware supports at most two virtual interfaces, and SAE is offloaded to the firmware. With parallel virtual interfaces, firmware crashes and missing authentication answers (`nl80211: MLME command failed`) are known. One interface is the most stable configuration.
-- `BASE-WAP-07`: `brcmfmac` does not support mesh point mode (802.11s). A mesh needs a USB WLAN adapter with a `mac80211` driver that supports mesh point and software SAE (e.g. `mt76`).
 - `BASE-WAP-10`: SAE in AP mode with `brcmfmac` must be tested on the device (open point 5). All ESP32 devices need ESP-IDF ≥ 4.3 with WPA3 SAE enabled.
 - `BASE-WAP-14`: **interim** – until `BASE-PROV` is implemented, the passphrase comes from the non-versioned `secrets_kirkstone.conf` and is written into the image (`/etc/hostapd.conf`, mode `0600`). The old passphrase is in the Git history and must be changed.
-- `BASE-WAP-15`: today's config uses `country_code=DE`, the WLAN client config `country=CH`.
+- `BASE-WAP-15`: today's config uses `country_code=DE`; the default is `CH`.
 - `BASE-WAP-40`, `BASE-WAP-43`: during service mode, the on-board radio runs two virtual interfaces. SAE (with firmware offload) runs only on the IoT AP; the service AP uses WPA2-PSK. This avoids the known SAE offload problems with parallel interfaces, but does not remove every risk of the second interface. `BASE-WAP-47` protects the IoT AP; adding the interface can interrupt beaconing briefly, so sensors may reconnect once.
 - `BASE-WAP-41`, `BASE-WAP-45`: the passkey depends on correct time on both sides. Without a battery-backed RTC (`BASE-TIME` open point 4) and without uplink, the device cannot compute the passkey after a power loss.
 - `BASE-WAP-41`: the service secret must never leave the device registry except into the Bynacon service tool; a leaked secret allows passkeys for that device only.
@@ -189,7 +187,8 @@ This module provides the IoT WLAN with hostapd. It connects sensors and actuator
 | 4 | WLAN networks of the device. | `BASE-WAP-04` | **Decided:** IoT WLAN only; no guest WLAN. |
 | 5 | Does `brcmfmac` run the IoT AP with SAE stably, and IoT AP (SAE) + service AP (WPA2-PSK) during service mode? | `BASE-WAP-10`, `BASE-WAP-40` | **Deferred:** test on the device → verification task. |
 | 6 | SSID name. | `BASE-WAP-04` | **Decided:** `bynacon-iot`. |
-| 7 | Use of the on-board radio. | `BASE-WAP-06`, `BASE-WAP-07` | **Decided:** only the IoT AP; client uplink and mesh only with a USB WLAN adapter. |
-| 8 | WLAN mesh between devices (802.11s or batman-adv over a USB adapter): scope, adapter model, backhaul? | Scope | **Deferred:** specified when the USB WLAN adapter is chosen. |
+| 7 | Use of the on-board radio. | `BASE-WAP-06`, `BASE-WAP-07` | **Decided:** only the IoT AP, and the service AP in service mode; no WLAN client, no mesh. |
+| 8 | WLAN mesh between devices. | Scope | **Decided:** not planned. The same SSID on all devices serves roaming. |
 | 9 | Local service access over WLAN. | `BASE-WAP-40` … `BASE-WAP-46` | **Decided:** service AP on the on-board radio in service mode, TOTP-like passkey; replaces the USB service port. |
 | 10 | Security and radio of the service AP. | `BASE-WAP-07`, `BASE-WAP-43` | **Decided:** always on the on-board radio; WPA2-PSK (SHA-256) with PMF; stabilized by `BASE-WAP-47` … `BASE-WAP-49`. |
+| 11 | WLAN channel. | `BASE-WAP-48` | **Decided:** fixed channel 1, 6 or 11, provisioned per installation, default 6. |
