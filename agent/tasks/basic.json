@@ -1637,7 +1637,7 @@
       "id": "T-BASE-WAP-4.1",
       "module": "BASE-WAP",
       "spec": "docs/software/basic/network/04_wlan-ap.md",
-      "spec_hash": "f1fa2f6c5b3c47b4",
+      "spec_hash": "50722c9a20a9a220",
       "group": "4.1",
       "title": "WLAN Access Point (hostapd) – Interface & Service",
       "phase": 2,
@@ -1678,9 +1678,14 @@
         {
           "id": "BASE-WAP-07",
           "level": "MUST"
+        },
+        {
+          "id": "BASE-WAP-08",
+          "level": "MUST"
         }
       ],
       "verify_levels": [
+        "build",
         "device",
         "manifest",
         "rootfs"
@@ -1695,14 +1700,14 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 1121,
+      "pack_tokens": 1292,
       "needs_review": false
     },
     {
       "id": "T-BASE-WAP-4.2",
       "module": "BASE-WAP",
       "spec": "docs/software/basic/network/04_wlan-ap.md",
-      "spec_hash": "f1fa2f6c5b3c47b4",
+      "spec_hash": "50722c9a20a9a220",
       "group": "4.2",
       "title": "WLAN Access Point (hostapd) – Security",
       "phase": 2,
@@ -1748,7 +1753,7 @@
       "blocked_by": [
         {
           "open_point": "5",
-          "question": "Does `brcmfmac` run the IoT AP with SAE stably, and IoT AP + service AP with SAE during service mode?",
+          "question": "Does `brcmfmac` run the IoT AP with SAE stably, and IoT AP (SAE) + service AP (WPA2-PSK) during service mode?",
           "decision": "**Deferred:** test on the device → verification task.",
           "reqs": [
             "BASE-WAP-10"
@@ -1766,14 +1771,14 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 1066,
+      "pack_tokens": 1068,
       "needs_review": false
     },
     {
       "id": "T-BASE-WAP-4.3",
       "module": "BASE-WAP",
       "spec": "docs/software/basic/network/04_wlan-ap.md",
-      "spec_hash": "f1fa2f6c5b3c47b4",
+      "spec_hash": "50722c9a20a9a220",
       "group": "4.3",
       "title": "WLAN Access Point (hostapd) – Control Interface",
       "phase": 2,
@@ -1811,7 +1816,7 @@
       "id": "T-BASE-WAP-4.4",
       "module": "BASE-WAP",
       "spec": "docs/software/basic/network/04_wlan-ap.md",
-      "spec_hash": "f1fa2f6c5b3c47b4",
+      "spec_hash": "50722c9a20a9a220",
       "group": "4.4",
       "title": "WLAN Access Point (hostapd) – Service AP",
       "phase": 2,
@@ -1852,6 +1857,18 @@
         {
           "id": "BASE-WAP-46",
           "level": "MUST"
+        },
+        {
+          "id": "BASE-WAP-47",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-WAP-48",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-WAP-49",
+          "level": "MUST"
         }
       ],
       "verify_levels": [
@@ -1860,7 +1877,7 @@
       "blocked_by": [
         {
           "open_point": "5",
-          "question": "Does `brcmfmac` run the IoT AP with SAE stably, and IoT AP + service AP with SAE during service mode?",
+          "question": "Does `brcmfmac` run the IoT AP with SAE stably, and IoT AP (SAE) + service AP (WPA2-PSK) during service mode?",
           "decision": "**Deferred:** test on the device → verification task.",
           "reqs": [
             "BASE-WAP-40"
@@ -1877,16 +1894,16 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 1277,
+      "pack_tokens": 1875,
       "needs_review": false
     },
     {
       "id": "V-BASE-WAP-OP5",
       "module": "BASE-WAP",
       "spec": "docs/software/basic/network/04_wlan-ap.md",
-      "spec_hash": "f1fa2f6c5b3c47b4",
+      "spec_hash": "50722c9a20a9a220",
       "group": "OP5",
-      "title": "Verify: Does `brcmfmac` run the IoT AP with SAE stably, and IoT AP + service AP with SAE during service mode?",
+      "title": "Verify: Does `brcmfmac` run the IoT AP with SAE stably, and IoT AP (SAE) + service AP (WPA2-PSK) during service mode?",
       "phase": 2,
       "risk": "medium",
       "human_gate": true,
@@ -1913,7 +1930,7 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 239,
+      "pack_tokens": 243,
       "needs_review": false
     },
     {
