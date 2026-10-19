@@ -212,7 +212,7 @@ Each shared resource has exactly one owner module. Other modules use it and neve
 | 1 | PostgreSQL is used by `BASE-LOGDB` but not specified. Which module or stack owns it? | `BASE-LOGDB` | **Deferred:** application layer. |
 | 2 | The layer has no distro configuration. Create `conf/distro/modberry.conf`? | `BASE-INIT`, all modules | **Decided:** distro conf in this layer (`BASE-INIT-02`). |
 | 3 | `LAYERDEPENDS` of the layer. | all modules | **Decided:** `core raspberrypi openembedded-layer meta-python networking-layer webserver security tpm-layer virtualization-layer`; `README.md` lists the same layers. The build script must also add `meta-security` and `meta-webserver`. |
-| 4 | Hardware spec: GPIO05 is the interrupt line of both the TPM and the DS2482S. | `BASE-TPM` | **Deferred:** needs the schematic → verification task. |
+| 4 | Hardware spec: GPIO05 is the interrupt line of both the TPM and the DS2482S. | `BASE-TPM` | **Decided:** GPIO05 is the TPM interrupt; the DS2482S has no interrupt line (hardware spec updated). |
 | 5 | U-Boot signing keys "stored in the TPM" (source spec). | `BASE-VBOOT` | **Decided:** private key on the build host, public key in U-Boot. |
 | 6 | Production and debug image variants. | `BASE-INIT-40`, all modules | **Decided:** one image recipe, switch `MODBERRY_DEBUG = "1"` (`BASE-INIT-42` … `BASE-INIT-44`). |
 | 7 | WLAN credentials and the AP passphrase are in the Git history. | `BASE-WAP`, `BASE-WCLI` | **Interim done:** values moved to the non-versioned `secrets_kirkstone.conf`. **Decided:** factory provisioning (`BASE-PROV`). Open: change the old values. |

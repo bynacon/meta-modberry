@@ -91,7 +91,7 @@ This module makes the hardware TPM available to the operating system and to appl
 | Target path | Key settings | Req. |
 | :-- | :-- | :-- |
 | Kernel config fragment `9670.cfg` | `CONFIG_TCG_TIS_SPI`, `CONFIG_HW_RANDOM_TPM` | `BASE-TPM-01`, `BASE-TPM-04` |
-| Device tree overlay `slb9670-tpm` | chip select and interrupt per hardware spec | `BASE-TPM-01`, `BASE-TPM-03` |
+| Device tree overlay `slb9670-tpm` | `reg = <1>` (CS1), `interrupt-parent = <&gpio>`, `interrupts = <5 …>` (GPIO05) | `BASE-TPM-01`, `BASE-TPM-03` |
 | Build: machine conf | `KERNEL_MODULE_AUTOLOAD:rpi += " tpm_tis_spi"` → `/etc/modules-load.d/tpm_tis_spi.conf` | `BASE-TPM-02` |
 | Build: `recipes-security/tpm2-tss/tpm2-tss_%.bbappend` | `PACKAGECONFIG:append = " fapi"` (disabled by default in kirkstone) | `BASE-TPM-10`, `BASE-TPM-12` |
 | Build: distro conf `modberry` | `DISTRO_FEATURES:append = " tpm2"`, `MACHINE_FEATURES:append = " tpm2"` (today in `local_kirkstone.conf`) | `BASE-TPM-10` |
@@ -151,8 +151,8 @@ This module makes the hardware TPM available to the operating system and to appl
 - `DISTRO_FEATURES tpm2` and `MACHINE_FEATURES tpm2` are set in `scripts/Yocto/local_kirkstone.conf` today. They move into the distro conf of this layer together with `BASE-INIT-02`.
 - **Fixed:** `9670.cfg` and the board device tree patch were applied only for the override `modberry-m40804w-max-m`. This was the name of a machine conf that was renamed in commit `3192f4a`. The machine conf now sets `MACHINEOVERRIDES =. "modberry-m40804w-max:"`, and the kernel bbappend uses this override. **Not yet built:** the board patch (CAN, SC16IS740, MCP23008, MCP3424) is now applied for the first time since the rename and must be verified with a build and on the device.
 - **Fixed:** the machine conf comments for the chip selects were swapped. They now match the hardware specification and the overlays (TPM CS1, CAN CS0).
-- The hardware specification assigns GPIO05 as the interrupt line to both the TPM (section 3.2) and the DS2482S 1-wire bridge (section 3.1). The conflict is marked as open in the hardware specification. `BASE-TPM-03` is blocked until it is resolved.
-- The current overlay `slb9670-tpm-overlay.dts` has no `interrupts` property. The TPM runs in polling mode today.
+- `BASE-TPM-03`: the TPM interrupt is GPIO05 (hardware specification, section 2). The DS2482S has no interrupt line.
+- `BASE-TPM-03`: the current overlay `slb9670-tpm-overlay.dts` has no `interrupts` property; the TPM runs in polling mode today. The overlay needs `interrupt-parent = <&gpio>` and `interrupts = <5 IRQ_TYPE_LEVEL_LOW>` (trigger type per SLB9670 datasheet).
 - Provisioning operations such as `tpm2_clear`, setting the owner hierarchy auth, or creating the device identity key cannot be undone without losing sealed data. They need a human gate and are not part of the image build.
 - `tpm2-abrmd` and `tpm2-pkcs11` are still in `IMAGE_INSTALL` of the machine conf and are removed with this module.
 
@@ -167,4 +167,4 @@ This module makes the hardware TPM available to the operating system and to appl
 | 3 | Is `tpm2-pkcs11` (currently installed) needed, e.g. for WireGuard or SSH keys in the TPM? | Components | **Decided:** not needed; removed. |
 | 4 | Which keys are TPM-resident: device identity only, or also the TLS server keys of nginx and the WireGuard private key? (WireGuard cannot use TPM keys directly.) | `BASE-TPM-32` | **Decided:** device identity and nginx TLS key (`BASE-TPM-33`); WireGuard key is a file. |
 | 5 | When and by whom is the device identity key created (factory provisioning, first boot)? | `BASE-TPM-32` | **Decided:** at factory provisioning (`BASE-PROV`). |
-| 6 | GPIO05 conflict between TPM and DS2482S (hardware spec). To be verified against the schematic. | `BASE-TPM-03` | **Deferred:** needs the schematic → verification task. |
+| 6 | GPIO05 conflict between TPM and DS2482S (hardware spec). | `BASE-TPM-03` | **Decided:** GPIO05 is the TPM interrupt; the DS2482S has no interrupt line. |

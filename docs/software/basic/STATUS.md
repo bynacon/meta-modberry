@@ -9,7 +9,7 @@ Generated: 2026-10-19. Source of the state: `agent/tasks/basic.json`.
 | 1 | [`BASE-BUILD`](hardening/06_build.md) | draft | 4 | 11 | 4 | 0 | 0 | 0 | 0 | 0 |
 | 1 | [`BASE-HWT`](02_hw-tooling.md) | draft | 3 | 16 | 3 | 0 | 0 | 0 | 0 | 0 |
 | 1 | [`BASE-INIT`](01_init.md) | draft | 6 | 28 | 6 | 0 | 0 | 0 | 0 | 0 |
-| 1 | [`BASE-TPM`](03_tpm.md) | draft | 6 | 16 | 6 | 0 | 0 | 0 | 0 | 0 |
+| 1 | [`BASE-TPM`](03_tpm.md) | draft | 5 | 15 | 5 | 0 | 0 | 0 | 0 | 0 |
 | 2 | [`BASE-DNS`](network/05_dhcp-dns.md) | draft | 1 | 6 | 1 | 0 | 0 | 0 | 0 | 0 |
 | 2 | [`BASE-FW`](network/02_firewall.md) | draft | 5 | 18 | 5 | 0 | 0 | 0 | 0 | 0 |
 | 2 | [`BASE-FWP`](network/03_firewall-policy.md) | draft | 3 | 9 | 3 | 0 | 0 | 0 | 0 | 0 |
@@ -43,7 +43,6 @@ A task is `blocked` only if all its requirements are blocked; otherwise the bloc
 | Task | Status | Blocked requirements | Open point |
 | :-- | :-- | :-- | :-- |
 | `T-BASE-BUILD-4.4` | todo | BASE-BUILD-30, BASE-BUILD-31, BASE-BUILD-32 | 1: Kirkstone is end of life since April 2026: migrate to scarthgap (LTS until April 2028) or the next LTS release, or stay on kirkstone with own backports?; 2: Where are CVE reports and SBOMs stored, and who reviews them per release? |
-| `T-BASE-TPM-4.1` | todo | BASE-TPM-03 | 6: GPIO05 conflict between TPM and DS2482S (hardware spec). To be verified against the schematic. |
 | `T-BASE-WAP-4.1` | todo | BASE-WAP-04, BASE-WAP-06 | 2: SSID scheme (per device or fixed)?; 5: Can `brcmfmac` run two APs plus a client, and SAE in AP mode? |
 | `T-BASE-WAP-4.2` | todo | BASE-WAP-10 | 5: Can `brcmfmac` run two APs plus a client, and SAE in AP mode? |
 | `T-BASE-PROV-4.2` | todo | BASE-PROV-12 | 1: Where does the factory script live, and where are the Bynacon CA and the device registry operated? |
@@ -70,7 +69,6 @@ A task is `blocked` only if all its requirements are blocked; otherwise the bloc
 
 | Task | Status | Question |
 | :-- | :-- | :-- |
-| `V-BASE-TPM-OP6` | todo | GPIO05 conflict between TPM and DS2482S (hardware spec). To be verified against the schematic. |
 | `V-BASE-WAP-OP5` | todo | Can `brcmfmac` run two APs plus a client, and SAE in AP mode? |
 | `V-BASE-TIME-OP4` | todo | Is the MCP79412 battery-backed on this device? The hardware spec does not say. Without a battery, `BASE-TIME-20` cannot be met after power loss. |
 | `V-BASE-IDS-OP3` | todo | Does `brcmfmac` report deauthentication and authentication failure events to hostapd? If not, `BASE-IDS-31` cannot be met with the on-board radio. |
