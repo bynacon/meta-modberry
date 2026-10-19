@@ -204,7 +204,7 @@
       "id": "T-BASE-HWT-4.1",
       "module": "BASE-HWT",
       "spec": "docs/software/basic/02_hw-tooling.md",
-      "spec_hash": "5a413ef7a222f5ea",
+      "spec_hash": "24ea25f660f95e00",
       "group": "4.1",
       "title": "Hardware Interface Tooling – Tools",
       "phase": 1,
@@ -260,7 +260,7 @@
       "id": "T-BASE-HWT-4.2",
       "module": "BASE-HWT",
       "spec": "docs/software/basic/02_hw-tooling.md",
-      "spec_hash": "5a413ef7a222f5ea",
+      "spec_hash": "24ea25f660f95e00",
       "group": "4.2",
       "title": "Hardware Interface Tooling – Kernel Support",
       "phase": 1,
@@ -312,7 +312,7 @@
       "id": "T-BASE-HWT-4.3",
       "module": "BASE-HWT",
       "spec": "docs/software/basic/02_hw-tooling.md",
-      "spec_hash": "5a413ef7a222f5ea",
+      "spec_hash": "24ea25f660f95e00",
       "group": "4.3",
       "title": "Hardware Interface Tooling – udev Rules",
       "phase": 1,
@@ -345,6 +345,10 @@
         {
           "id": "BASE-HWT-25",
           "level": "MUST"
+        },
+        {
+          "id": "BASE-HWT-26",
+          "level": "MUST"
         }
       ],
       "verify_levels": [
@@ -353,9 +357,9 @@
       ],
       "blocked_by": [
         {
-          "open_point": "7",
-          "question": "How are the UARTs switched between RS-232 and RS-485 (jumper, GPIO, expander pin)?",
-          "decision": "open",
+          "open_point": "9",
+          "question": "Does the kirkstone kernel (5.15) support RS-485 mode (`TIOCSRS485`) on the PL011 UART (`ttyAMA0`)? If not: backport of the driver change, or kernel update.",
+          "decision": "**Deferred:** check on the device → verification task.",
           "reqs": [
             "BASE-HWT-25"
           ]
@@ -372,14 +376,14 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 1065,
+      "pack_tokens": 1439,
       "needs_review": false
     },
     {
       "id": "T-BASE-HWT-4.4",
       "module": "BASE-HWT",
       "spec": "docs/software/basic/02_hw-tooling.md",
-      "spec_hash": "5a413ef7a222f5ea",
+      "spec_hash": "24ea25f660f95e00",
       "group": "4.4",
       "title": "Hardware Interface Tooling – Service Port",
       "phase": 1,
@@ -421,19 +425,8 @@
       "verify_levels": [
         "device"
       ],
-      "blocked_by": [
-        {
-          "open_point": "6",
-          "question": "How long does the service port stay on after pressing the user button?",
-          "decision": "open",
-          "reqs": [
-            "BASE-HWT-33"
-          ]
-        }
-      ],
-      "blocked_reqs": [
-        "BASE-HWT-33"
-      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
       "pack": "agent/packs/T-BASE-HWT-4.4.md",
       "status": "todo",
       "verified": {
@@ -441,7 +434,40 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 1328
+      "pack_tokens": 1311,
+      "needs_review": false
+    },
+    {
+      "id": "V-BASE-HWT-OP9",
+      "module": "BASE-HWT",
+      "spec": "docs/software/basic/02_hw-tooling.md",
+      "spec_hash": "24ea25f660f95e00",
+      "group": "OP9",
+      "title": "Verify: Does the kirkstone kernel (5.15) support RS-485 mode (`TIOCSRS485`) on the PL011 UART (`ttyAMA0`)? If not: backport of the driver change, or kernel update.",
+      "phase": 1,
+      "risk": "low",
+      "human_gate": true,
+      "depends_on_modules": [],
+      "reqs": [
+        {
+          "id": "BASE-HWT-25",
+          "level": "—"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/V-BASE-HWT-OP9.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 252,
+      "needs_review": false
     },
     {
       "id": "T-BASE-INIT-4.1",
@@ -486,8 +512,7 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 644,
-      "needs_review": false
+      "pack_tokens": 644
     },
     {
       "id": "T-BASE-INIT-4.2",
@@ -528,8 +553,7 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 421,
-      "needs_review": false
+      "pack_tokens": 421
     },
     {
       "id": "T-BASE-INIT-4.3",
@@ -582,8 +606,7 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 858,
-      "needs_review": false
+      "pack_tokens": 858
     },
     {
       "id": "T-BASE-INIT-4.4",
@@ -622,8 +645,7 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 478,
-      "needs_review": false
+      "pack_tokens": 478
     },
     {
       "id": "T-BASE-INIT-4.5",
@@ -692,8 +714,7 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 1392,
-      "needs_review": false
+      "pack_tokens": 1392
     },
     {
       "id": "T-BASE-INIT-4.6",
@@ -736,8 +757,7 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 555,
-      "needs_review": false
+      "pack_tokens": 555
     },
     {
       "id": "T-BASE-TPM-4.1",
