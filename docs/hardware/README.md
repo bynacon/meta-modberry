@@ -2,21 +2,19 @@
 
 This directory contains the overarching hardware specifications and documentation for the Modberry device family used in the project. It serves as the single source of truth for driver and kernel development.
 
-## 1. Allgemeine Modberry Architektur
+## 1. General Modberry Architecture
 
-Die Modberry-Geräte basieren primär auf dem Raspberry Pi Compute Module (z. B. CM4) und werden auf dem Carrier-Board durch dedizierte industrielle Schnittstellen erweitert (CAN, RS485, TPM, DIO).
+The Modberry devices are based primarily on the Raspberry Pi Compute Module (e.g. CM4). The carrier board extends them with dedicated industrial interfaces (CAN, RS485, TPM, DIO).
 
-## 2. Spezifische Hardware-Modelle
+## 2. Specific Hardware Models
 
-Die exakten Pinouts, Interfaces und Konfigurationen unterscheiden sich je nach Modell. 
+The exact pinouts, interfaces and configurations differ per model.
 
-Die detaillierten Spezifikationen, Code-Beispiele und Implementierungshinweise findest du in den jeweiligen Modellspezifischen Markdown-Dateien in diesem Verzeichnis:
+The detailed specifications, code examples and implementation notes are in the model-specific Markdown files in this directory:
 
-- `M40804W_MAX.md` (Detailed pinout and implementation TODOs)
-- `Raspberry_Pi_CM4-datasheet.pdf` (Official CM4 Datasheet)
-- `SLB9670-datasheet.pdf` (TPM Datasheet)
+- [M40804W_MAX.md](M40804W_MAX.md) (detailed pinout and implementation notes)
+- [datasheets/CM4.pdf](datasheets/CM4.pdf) (official CM4 datasheet) and [datasheets/CM4.md](datasheets/CM4.md) (Markdown version)
 
-## 3. Allgemeine Elektrische Charakteristika
+## 3. General Electrical Characteristics
 
-- **Power Supply:** 9-30V DC
-- ...
+- **Power supply:** 9–30 V DC
