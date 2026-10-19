@@ -123,7 +123,7 @@ This module blocks unauthorized USB devices. USBGuard allows only the USB device
 - **The second Ethernet port (`lan1`) is a USB device** (LAN9514). A missing or wrong rule disables `lan1` and the USB host port. Every policy change is tested with console access (human gate).
 - `via-port` values depend on the USB topology of the board. They must be read on the device (`usbguard generate-policy`) and are then fixed for this hardware variant.
 - With `usbcore.authorized_default=0`, `lan1` and the USB port work only after USBGuard has started.
-- An LTE modem is a further uplink. It is not yet specified in `BASE-NETD` and `BASE-FW` (see `README.md`, open points).
+- An LTE modem is a further uplink. It is not yet specified in `BASE-NETD` and `BASE-FWP` (see `README.md`, open points).
 - USBGuard blocks at the authorization level of the kernel. A device that is blocked is still powered and visible in `lsusb`, but no driver binds to it.
 - If USBGuard fails to start, the kernel default (authorize all) applies. `BASE-INIT-23` (restart) and `BASE-KERN-21` (reboot after start limit) limit this window.
 

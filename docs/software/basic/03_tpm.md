@@ -33,7 +33,7 @@ This module makes the hardware TPM available to the operating system and to appl
 - PCR measurement policy of the boot stages → `BASE-MBOOT`
 - dm-verity root hash storage → `BASE-ROOTFS`
 - LUKS key sealing and unsealing → `BASE-LUKS`
-- TLS configuration of individual services (nginx, MQTT, WireGuard) → `BASE-RACC` and application layer
+- TLS configuration of individual services → `BASE-WEB` (nginx), `BASE-VPN` (WireGuard), application layer (MQTT)
 - Audit monitoring of the SPI TPM interface → `BASE-AUDIT`
 
 ---
@@ -77,7 +77,7 @@ This module makes the hardware TPM available to the operating system and to appl
 - `BASE-TPM-30` **MUST** OpenSSL is the TLS library for all encrypted connections of the base system (HTTPS, MQTT-TLS, VPN handshake).
 - `BASE-TPM-31` **MUST** OpenSSL can use private keys that are stored in the TPM.
 - `BASE-TPM-32` **MUST** The private key of the device identity is generated in the TPM and cannot be exported.
-- `BASE-TPM-33` **MUST** The private TLS key of nginx is a TPM key (`BASE-RACC-25`). The WireGuard key stays a file, because WireGuard cannot use TPM keys.
+- `BASE-TPM-33` **MUST** The private TLS key of nginx is a TPM key (`BASE-WEB-06`). The WireGuard key stays a file, because WireGuard cannot use TPM keys.
 
 ### 4.5 Access Control
 
@@ -107,8 +107,8 @@ This module makes the hardware TPM available to the operating system and to appl
 
 - `/dev/tpmrm0` and the TSS2 libraries – used by `BASE-MBOOT`, `BASE-ROOTFS`, `BASE-LUKS`.
 - `tpm2-tools` for sealing and PCR operations – used by `BASE-LUKS` (unseal at boot) and `BASE-MBOOT`.
-- OpenSSL with TPM key support – used by `BASE-RACC` (nginx, WireGuard handshake) and the application layer (MQTT-TLS).
-- Device identity key in the TPM – used by `BASE-RACC` and the application layer.
+- OpenSSL with TPM key support – used by `BASE-WEB` (nginx) and the application layer (MQTT-TLS).
+- Device identity key in the TPM – used by `BASE-PROV`, `BASE-MBOOT` (attestation) and the application layer.
 - Group `tss` – used by `BASE-MAC` (AppArmor profiles of TPM consumers).
 
 ### Consumes

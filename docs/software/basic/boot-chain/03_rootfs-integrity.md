@@ -88,10 +88,10 @@ This module makes the root filesystem read-only and verifies every block that is
 | `/data/audit/`, `/data/aide/` | themselves | `BASE-AUDIT` |
 | `/var/lib/iwd/` | `/data/lib/iwd/` | `BASE-WCLI-22` |
 | `/var/lib/chrony/` | `/data/lib/chrony/` | `BASE-TIME` (NTS cookies, drift) |
-| `/etc/ssh/ssh_host_*` | via `/etc` overlay | `BASE-RACC-13` |
-| `/var/lib/misc/` (dnsmasq leases) | `/data/lib/misc/` | `BASE-WAP` |
+| `/etc/ssh/ssh_host_*` | via `/etc` overlay | `BASE-SSH-04` |
+| `/var/lib/misc/` (dnsmasq leases) | `/data/lib/misc/` | `BASE-DNS` |
 | syslog-ng disk buffer | `/data/lib/syslog-ng/` | `BASE-LOGDB-06` |
-| application data (database, Docker) | `/data/app/` | application layer |
+| application data (database, Docker) | `/data/app/` | application layer, `BASE-CONT` (`/data/app/docker`) |
 
 ### 5.2 Files
 
@@ -109,7 +109,7 @@ This module makes the root filesystem read-only and verifies every block that is
 
 ### Provides
 
-- Persistent data partition `/data` and the path list of section 5.1 – used by `BASE-PROV`, `BASE-LOG`, `BASE-LOGDB`, `BASE-AUDIT`, `BASE-WCLI`, `BASE-TIME`, `BASE-WAP`, `BASE-RACC`, application layer.
+- Persistent data partition `/data` and the path list of section 5.1 – used by `BASE-PROV`, `BASE-LOG`, `BASE-LOGDB`, `BASE-AUDIT`, `BASE-WCLI`, `BASE-TIME`, `BASE-DNS`, `BASE-SSH`, `BASE-CONT`, application layer.
 - Read-only, verified root filesystem – baseline for `BASE-AUDIT` (AIDE scope).
 - Partition layout – used by `BASE-LUKS` (data partition) and the OTA layer.
 

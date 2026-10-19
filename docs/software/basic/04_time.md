@@ -31,7 +31,7 @@ This module keeps the system time correct. A correct time is required for TLS ce
 
 - RTC device tree overlay and driver → hardware specification, section 8
 - Network interfaces on which time is served → `BASE-NETD`
-- Firewall rules for NTP and NTS-KE → `BASE-FW`
+- Firewall rules for NTP and NTS-KE → `BASE-FWP`
 - Time zone and locale → not yet specified
 
 ---
@@ -101,14 +101,14 @@ This module keeps the system time correct. A correct time is required for TLS ce
 
 ### Provides
 
-- Correct system time and `time-sync.target` – used by `BASE-RACC` (TLS), `BASE-LOG` (timestamps), `BASE-TPM` consumers.
+- Correct system time and `time-sync.target` – used by `BASE-WEB`, `BASE-VPN` (TLS / handshake), `BASE-LOG` (timestamps), `BASE-TPM` consumers.
 - NTP service on UDP 123 for the local networks – used by devices on the sensor/actuator network.
 
 ### Consumes
 
 - `/dev/rtc0` (MCP79412) – owned by the hardware specification.
 - Network interfaces and network names – owned by `BASE-NETD`.
-- Firewall rules – owned by `BASE-FW`: outbound UDP 123 and TCP 4460 (NTS-KE) to the sources, inbound UDP 123 from the served networks.
+- Firewall rules – owned by `BASE-FWP`: outbound UDP 123 and TCP 4460 (NTS-KE) to the sources, inbound UDP 123 from the served networks.
 - Service integration rules – owned by `BASE-INIT`.
 
 ---

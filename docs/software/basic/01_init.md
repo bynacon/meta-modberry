@@ -33,7 +33,7 @@ This module defines systemd as the init system and service manager of the base i
 - Time synchronization (replaces `systemd-timesyncd`) → `BASE-TIME`
 - Journal configuration (`systemd-journald`) → `BASE-LOG`
 - Hardware watchdog integration → `BASE-KERN`
-- SSH access and authentication → `BASE-RACC`
+- SSH access and authentication → `BASE-SSH`
 
 ---
 
@@ -78,7 +78,7 @@ This module defines systemd as the init system and service manager of the base i
 
 ### 4.5 Image Variants & Serial Console
 
-- `BASE-INIT-40` **MUST** The production image has no login prompt on any serial interface.
+- `BASE-INIT-40` **MUST** The production image has no login prompt on any console: serial interfaces, HDMI/`tty1` and virtual terminals.
 - `BASE-INIT-41` **MAY** The debug image provides a login on the service serial port via `systemd-serialgetty`.
 - `BASE-INIT-42` **MUST** One image recipe builds both variants. The variable `MODBERRY_DEBUG = "1"` in `local.conf` selects the debug variant; without it, the production variant is built.
 - `BASE-INIT-43` **MUST** The production variant contains no `debug-tweaks` and no account with an empty password.
@@ -86,6 +86,14 @@ This module defines systemd as the init system and service manager of the base i
 - `BASE-INIT-45` **MUST** The production variant of this layer has the account `user` with a locked password; it logs in only via SSH key. `root` is locked.
 - `BASE-INIT-46` **MUST** Accounts that other layers add (e.g. the OTA layer) also meet `BASE-INIT-43` and `BASE-INIT-45`.
 - `BASE-INIT-47` **MUST** `user` has password-less `sudo` (its password is locked, so `sudo` cannot ask for one).
+- `BASE-INIT-48` **MUST** No human account is member of a group that grants root-equivalent access other than through `sudo` (in particular `docker`, `disk`).
+
+### 4.6 Service Sandboxing
+
+- `BASE-INIT-50` **MUST** Every long-running service of this layer runs as its own system user unless it needs root; the reason for root is documented in the module.
+- `BASE-INIT-51` **MUST** Every long-running service of this layer sets at least `NoNewPrivileges=yes`, `PrivateTmp=yes`, `ProtectSystem=strict` (with explicit `ReadWritePaths=`), `ProtectHome=yes`, `ProtectKernelTunables=yes`, `ProtectKernelModules=yes`, `ProtectControlGroups=yes`, `RestrictSUIDSGID=yes`, unless the module documents an exception.
+- `BASE-INIT-52` **MUST** Services limit their capabilities with `CapabilityBoundingSet=` to the capabilities they need.
+- `BASE-INIT-53` **SHOULD** Upstream services get the same settings through drop-ins, and `systemd-analyze security` rates every long-running service at most `MEDIUM`.
 
 ---
 
@@ -104,6 +112,8 @@ This module defines systemd as the init system and service manager of the base i
 | Build: image recipe `rpi-cm4.bb` | `IMAGE_NAME_SUFFIX`/`IMAGE_BASENAME` and `os-release` `VARIANT_ID` per variant | `BASE-INIT-44` |
 | Build: image recipe `rpi-cm4.bb` | production: `useradd -p '!'` for `user`; `usermod -L root` (instead of `-p ''`) | `BASE-INIT-45` |
 | `/etc/sudoers.d/10-user` | `user ALL=(ALL) NOPASSWD: ALL`, mode `0440` | `BASE-INIT-47` |
+| `cmdline.txt` / kernel command line | no `console=tty1` in production; `getty@tty1.service` masked | `BASE-INIT-40` |
+| `<service>.service.d/50-sandbox.conf` | settings of `BASE-INIT-51`, `CapabilityBoundingSet=`, `User=` | `BASE-INIT-50` … `BASE-INIT-53` |
 
 ---
 
@@ -144,13 +154,16 @@ This module defines systemd as the init system and service manager of the base i
 | `BASE-INIT-30` | `device` | `systemctl list-sockets` | command works, lists sockets |
 | `BASE-INIT-31` | `device` | `systemctl list-sockets` | one `.socket` unit per own listening service |
 | `BASE-INIT-40` | `manifest` | `systemd-serialgetty` in production image manifest | absent |
-| `BASE-INIT-40` | `device` | Connect to every serial interface of the production image | no login prompt |
+| `BASE-INIT-40` | `device` | Connect to every serial interface and to HDMI with a keyboard (production image) | no login prompt |
 | `BASE-INIT-42` | `build` | `bitbake -e rpi-cm4 \| grep -E '^(IMAGE_FEATURES\|EXTRA_IMAGE_FEATURES)='` with and without `MODBERRY_DEBUG` | `debug-tweaks` only with `MODBERRY_DEBUG = "1"` |
 | `BASE-INIT-43` | `rootfs` | `awk -F: '$2==""' <rootfs>/etc/shadow` of the production image | no output |
 | `BASE-INIT-44` | `rootfs` | `grep VARIANT_ID <rootfs>/etc/os-release`; image file name | `debug` / `-debug` only for the debug variant |
 | `BASE-INIT-45` | `rootfs` | `cut -d: -f1,2 <rootfs>/etc/shadow` of the production image | `root`, `user` start with `!` or `*` |
 | `BASE-INIT-46` | `rootfs` | `awk -F: '$2==""' <rootfs>/etc/shadow` of the production image with all layers | no output |
 | `BASE-INIT-47` | `device` | `sudo -n true` as `user` | exit code 0 |
+| `BASE-INIT-48` | `device` | `getent group docker disk` | no human member |
+| `BASE-INIT-50` … `-52` | `device` | `systemctl show -p User,NoNewPrivileges,ProtectSystem,CapabilityBoundingSet <service>` | values of `BASE-INIT-51`, `-52` |
+| `BASE-INIT-53` | `device` | `systemd-analyze security` | every long-running service `MEDIUM` or better |
 
 ---
 
@@ -162,7 +175,7 @@ This module defines systemd as the init system and service manager of the base i
 - `BASE-INIT-24` covers the error that the former `slb9670-rpi.service` had: `Restart=always` on a command that exits at once. The recipe has been removed (see `BASE-TPM`).
 - Several recipes use `${systemd_unitdir}/system` instead of `${systemd_system_unitdir}` (`BASE-INIT-22`). The target path is the same, so this is a consistency issue only.
 - `local_kirkstone.conf` currently enables `debug-tweaks` for every build (`EXTRA_IMAGE_FEATURES`), and `rpi-cm4.bb` sets empty passwords for `root` and `user` (`EXTRA_USERS_PARAMS`). Every image built today is a debug image in the sense of `BASE-INIT-43`.
-- **Human gate:** a production image without empty passwords and without serial login is only accessible via SSH keys (`BASE-RACC`). Key provisioning must work before the first production image is flashed.
+- **Human gate:** a production image without empty passwords and without serial login is only accessible via SSH keys (`BASE-SSH`). Key provisioning must work before the first production image is flashed.
 - Both variants have the same recipe and, without `BASE-INIT-44`, the same file name. The suffix is required so that a debug image is not shipped by mistake.
 
 ---

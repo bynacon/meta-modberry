@@ -116,7 +116,7 @@ This module encrypts the data partition with LUKS2. The key is sealed in the TPM
 ## 8. Constraints & Risks
 
 - **Human gate:** a wrong PCR policy or a missing reseal before an update locks the data partition on every device that installs the update. Without the recovery key, the data is lost.
-- `BASE-LUKS-12` keeps the device reachable when unlocking fails (SSH via the service key, `BASE-RACC-14`). This requires that SSH host keys and authorized keys are available without `/data`; with the `/etc` overlay on `/data` (`BASE-ROOTFS-20`), this needs a fallback (open point 4).
+- `BASE-LUKS-12` keeps the device reachable when unlocking fails (SSH via the service key, `BASE-SSH-05`). This requires that SSH host keys and authorized keys are available without `/data`; with the `/etc` overlay on `/data` (`BASE-ROOTFS-20`), this needs a fallback (open point 4).
 - The source specification names `tpm2-tools` for unsealing. `systemd-cryptenroll` / `systemd-cryptsetup` (systemd 250, kirkstone) do the same with less own code. See open point 1.
 - The BCM2711 (Cortex-A72) has no ARMv8 crypto extensions, so there are no hardware AES instructions. AES-XTS runs in NEON software and costs CPU time; throughput on the eMMC must be measured. Adiantum (`xchacha12,aes-adiantum-plain64`) is designed for CPUs without AES instructions and is usually faster (open point 5).
 - Until `BASE-MBOOT` exists, sealing against PCRs gives no protection. This module is implemented after `BASE-MBOOT`.
@@ -130,5 +130,5 @@ This module encrypts the data partition with LUKS2. The key is sealed in the TPM
 | 1 | `systemd-cryptenroll` / `systemd-cryptsetup` (recommended), or own unseal scripts with `tpm2-tools` as in the source specification? | `BASE-LUKS-10`, `BASE-LUKS-11` | **Decided:** `systemd-cryptenroll` / `systemd-cryptsetup`. |
 | 2 | Which PCRs are part of the policy? More PCRs = more protection, but every change of these components needs a reseal. | `BASE-LUKS-10`, `BASE-LUKS-20` | **Decided:** PCRs 4, 5, 8, 9, 11. |
 | 3 | TPM PIN in addition to the PCR policy? Requires input at boot – not possible for an unattended device. | `BASE-LUKS-13` | **Decided:** no PIN (`BASE-LUKS-13`). |
-| 4 | Where are SSH host keys and authorized keys stored, so that the device stays reachable when `/data` is locked? | `BASE-LUKS-12`, `BASE-RACC-13` | **Decided:** temporary host keys in `/run` when `/data` is locked (`BASE-RACC-16`). |
+| 4 | Where are SSH host keys and authorized keys stored, so that the device stays reachable when `/data` is locked? | `BASE-LUKS-12`, `BASE-SSH-04` | **Decided:** temporary host keys in `/run` when `/data` is locked (`BASE-SSH-07`). |
 | 5 | Cipher: `aes-xts-plain64` (as in `BASE-LUKS-01`) or Adiantum? Decide after a throughput measurement on the device. | `BASE-LUKS-01` | **Deferred:** throughput measurement on the device → verification task. |

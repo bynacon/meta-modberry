@@ -79,15 +79,17 @@ This module confines the network-facing and privileged services of the device wi
 
 | Service | Owner module | Main permissions |
 | :-- | :-- | :-- |
-| `sshd` | `BASE-RACC` | TCP 22, `/etc/ssh/`, authorized keys, PTY, spawning the login shell (unconfined child) |
-| `nginx` | `BASE-RACC` | TCP 80/443, TLS key and certificate in `/data/provisioning/tls/`, upstream socket |
+| `sshd` | `BASE-SSH` | TCP 22, `/etc/ssh/`, authorized keys, PTY, spawning the login shell (unconfined child) |
+| `nginx` | `BASE-WEB` | TCP 80/443, TLS key and certificate in `/data/provisioning/tls/`, upstream socket |
 | `hostapd` | `BASE-WAP` | nl80211 netlink, `/etc/hostapd.conf`, passphrases in `/data/provisioning/wlan/`, `/run/hostapd/` |
-| `dnsmasq` | `BASE-WAP` | UDP 53/67, `/etc/dnsmasq.conf`, `/etc/dnsmasq.d/`, lease file |
+| `dnsmasq` | `BASE-DNS` | UDP 53/67, `/etc/dnsmasq.conf`, `/etc/dnsmasq.d/`, lease file |
 | `chronyd` | `BASE-TIME` | UDP 123, TCP 4460 out, `/dev/rtc0`, `/var/lib/chrony/` |
 | `syslog-ng` | `BASE-LOG` | journal read, `/etc/syslog-ng/`, own log files, PostgreSQL socket (`BASE-LOGDB`) |
 | `iwd` | `BASE-WCLI` | nl80211 netlink, `/var/lib/iwd/` |
 | `fail2ban-server` | `BASE-IDS` | journal read, `nft` with the ban sets only |
 | provisioning helper | `BASE-PROV` | `/data/provisioning/`, TPM, `cryptsetup` (recovery key) |
+| `bluetoothd` | `BASE-BLE` | HCI socket, D-Bus, `/var/lib/bluetooth/` |
+| `dockerd` (daemon only) | `BASE-CONT` | `/data/app/docker`, `/run/docker.sock`, containerd socket |
 
 ### 5.2 Files
 

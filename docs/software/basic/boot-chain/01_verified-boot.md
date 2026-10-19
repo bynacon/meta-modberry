@@ -72,6 +72,11 @@ This module makes U-Boot boot only a kernel, device tree and initramfs that are 
 - `BASE-VBOOT-31` **MUST** The build reads the key from a path outside the repositories (`UBOOT_SIGN_KEYDIR`), set in the non-versioned build configuration.
 - `BASE-VBOOT-32` **SHOULD** Production images are signed with a production key; development builds use a separate development key.
 
+### 4.5 Anti-Rollback
+
+- `BASE-VBOOT-40` **MUST** Every production FIT image carries a security version. The boot refuses a FIT whose security version is lower than the minimum version stored on the device.
+- `BASE-VBOOT-41` **MUST** The minimum version is stored in a TPM NV index that can only be increased (monotonic), and is increased only after a new image has booted successfully.
+
 ---
 
 ## 5. Configuration
@@ -84,6 +89,7 @@ This module makes U-Boot boot only a kernel, device tree and initramfs that are 
 | U-Boot config fragment (`u-boot_%.bbappend`) | `CONFIG_FIT_SIGNATURE=y`, `CONFIG_RSA=y`, `CONFIG_BOOTDELAY=-2`, `CONFIG_ENV_IS_NOWHERE=y` (or restricted env) | `BASE-VBOOT-11`, `BASE-VBOOT-20`, `BASE-VBOOT-21` |
 | U-Boot `CONFIG_BOOTCOMMAND` | load FIT from the boot partition, `bootm` with the default configuration | `BASE-VBOOT-11`, `BASE-VBOOT-12` |
 | `config.txt` | `kernel=u-boot.bin`, no `initramfs` / `device_tree` lines for the Linux kernel | `BASE-VBOOT-12` |
+| FIT configuration / initramfs | security version (e.g. property in the signed configuration); check against TPM NV index in the initramfs or U-Boot | `BASE-VBOOT-40`, `BASE-VBOOT-41` |
 
 ---
 
@@ -115,6 +121,8 @@ This module makes U-Boot boot only a kernel, device tree and initramfs that are 
 | `BASE-VBOOT-20` | `device` | Press keys on the serial console during boot (production image) | no U-Boot prompt |
 | `BASE-VBOOT-21` | `device` | Write `bootcmd` into the environment storage, reboot | boot command unchanged |
 | `BASE-VBOOT-30` | `rootfs` | Search image and repositories for the private key | not found |
+| `BASE-VBOOT-40` | `device` | Flash a correctly signed FIT with a lower security version (lab) | boot refused |
+| `BASE-VBOOT-41` | `device` | `tpm2_nvread` of the index before and after an update | value increased only after a successful boot |
 
 ---
 
@@ -125,6 +133,7 @@ This module makes U-Boot boot only a kernel, device tree and initramfs that are 
 - Without Raspberry Pi secure boot, U-Boot itself and `config.txt` are not verified (see `README.md`, section 3). Measured boot (`BASE-MBOOT`) detects their modification.
 - Today, device tree overlays are loaded by the GPU firmware from `config.txt`. With a FIT image, the kernel device tree and overlays must be applied in U-Boot or merged at build time, otherwise the hardware of the board is missing.
 - The OTA layer needs U-Boot environment variables to switch between root partitions. `BASE-VBOOT-21` must leave exactly these variables writable.
+- `BASE-VBOOT-40`: U-Boot 2022.01 has no built-in rollback check for FIT images. The check is done in the initramfs (with the TPM) or by a U-Boot extension; the OTA layer must increase the minimum version only after a confirmed update.
 - `PCI` is disabled in the U-Boot config (`0001-configs-rpi-cm4-enable-pci.patch`). This is unrelated, but the U-Boot bbappend is extended by this module and must keep it.
 
 ---

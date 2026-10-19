@@ -52,7 +52,7 @@ This module detects attacks from the network and blocks the attackers for a limi
 ### 4.1 General
 
 - `BASE-IDS-01` **MUST** All bans are entries with timeout in the ban sets of `BASE-FW` (`ban_ipv4`, `ban_ipv6`, `ban_mac`). This module creates no own tables, chains or sets (`BASE-FW-42`).
-- `BASE-IDS-02` **MUST** Addresses in `service_nets` (`BASE-FW-14`) and the VPN subnet are never banned.
+- `BASE-IDS-02` **MUST** Addresses in `service_nets` (`BASE-FWP-02`) and the VPN subnet are never banned.
 - `BASE-IDS-03` **MUST** Every ban and every unban is logged to the journal with address, reason and duration.
 - `BASE-IDS-04` **MUST** Bans do not survive a reboot.
 
@@ -112,9 +112,9 @@ This module detects attacks from the network and blocks the attackers for a limi
 
 ### Consumes
 
-- Ban sets, drop log prefixes, `service_nets` – owned by `BASE-FW`.
+- Ban sets and drop log prefixes – owned by `BASE-FW`; `service_nets` – owned by `BASE-FWP`.
 - hostapd control interface and AP interfaces – owned by `BASE-WAP`.
-- sshd authentication log – owned by `BASE-RACC`.
+- sshd authentication log – owned by `BASE-SSH`.
 - Journal – owned by `BASE-LOG`.
 
 ---

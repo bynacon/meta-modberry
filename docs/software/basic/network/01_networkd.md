@@ -30,10 +30,11 @@ This module configures all network interfaces of the device with systemd-network
 ### Out of scope
 
 - WLAN AP interfaces (`wlan0_iot`, `wlan0_guest`) and their `.netdev` / `.network` files → `BASE-WAP`
-- WireGuard interface and its `.network` / `.netdev` files → `BASE-RACC`
+- WireGuard interface and its `.network` / `.netdev` files → `BASE-VPN`
+- USB service interface `usb0` → `BASE-USBG`
 - WLAN client authentication (iwd) → `BASE-WCLI`
-- Packet filtering, forwarding and NAT → `BASE-FW`
-- DHCP server and DNS forwarder for the IoT and guest segments → `BASE-WAP`
+- Packet filtering → `BASE-FW`; forwarding and NAT rules → `BASE-FWP`
+- DHCP server and DNS forwarder for the local segments → `BASE-DNS`
 - Thread interface `wpan0` → `THREAD-OTD`
 
 ---
@@ -65,7 +66,7 @@ This module configures all network interfaces of the device with systemd-network
 - `BASE-NETD-11` **MUST** The IoT segment is one bridge `br-iot`. Its members are the LAN1 Ethernet port and the IoT WLAN interface (`wlan0_iot`, owned by `BASE-WAP`).
 - `BASE-NETD-12` **MUST** No interface of one segment is a member of another segment. LAN0 and the guest network are never bridged.
 - `BASE-NETD-13` **MUST** Bridges are defined as systemd-networkd `.netdev` files.
-- `BASE-NETD-14` **MUST** IP forwarding is enabled only on interfaces whose traffic is routed by the `forward` chain of `BASE-FW`.
+- `BASE-NETD-14` **MUST** IP forwarding is enabled only on interfaces whose traffic is routed by the forward matrix of `BASE-FWP`.
 
 ### 4.3 Naming & Addressing
 
@@ -99,7 +100,8 @@ This module configures all network interfaces of the device with systemd-network
 | IoT – sensors & actuators | `br-iot` (`lan1` + `wlan0_iot`) | LAN9514 port (`smsc95xx`) + IoT SSID | `172.30.10.0/24` | `172.30.10.1` | decided |
 | Guest | `wlan0_guest` | guest SSID | `172.30.20.0/24` | `172.30.20.1` | decided |
 | Uplink fallback | `wlan0_sta` | WLAN client | DHCP | DHCP | decided |
-| VPN | `wg0` | WireGuard | per `BASE-RACC` | per `BASE-RACC` | open |
+| VPN | `wg0` | WireGuard | per `BASE-VPN` | per `BASE-VPN` | open |
+| USB service | `usb0` | USB gadget | `172.30.30.0/29` | `172.30.30.1` | decided (`BASE-USBG`) |
 | CAN | `can0` | MCP2515 | — | — | 125 kbit/s |
 
 ### 5.2 Files
@@ -110,7 +112,7 @@ This module configures all network interfaces of the device with systemd-network
 | `/etc/systemd/network/10-lan1.link` | `[Match] Driver=smsc95xx`, `[Link] Name=lan1` | `BASE-NETD-20` |
 | `/etc/systemd/network/20-lan0.network` | `DHCP=yes`, `[DHCPv4] RouteMetric=100` | `BASE-NETD-22`, `BASE-NETD-31` |
 | `/etc/systemd/network/30-br-iot.netdev` | `Kind=bridge`, `Name=br-iot` | `BASE-NETD-11`, `BASE-NETD-13` |
-| `/etc/systemd/network/30-br-iot.network` | `Address=172.30.10.1/24`, `IPForward=` per `BASE-FW` | `BASE-NETD-21`, `BASE-NETD-14` |
+| `/etc/systemd/network/30-br-iot.network` | `Address=172.30.10.1/24`, `IPForward=` per `BASE-FWP` | `BASE-NETD-21`, `BASE-NETD-14` |
 | `/etc/systemd/network/30-lan1.network` | `Bridge=br-iot` | `BASE-NETD-11` |
 | `/etc/systemd/network/40-wlan0_sta.network` | `DHCP=yes`, `[DHCPv4] RouteMetric=600` | `BASE-NETD-24`, `BASE-NETD-31` |
 | `/etc/systemd/network/50-can0.network` | `[CAN] BitRate=125000` | `BASE-NETD-40` |
@@ -125,11 +127,11 @@ This module configures all network interfaces of the device with systemd-network
 
 ### Provides
 
-- Interface names, segments and address plan – used by `BASE-FW`, `BASE-WAP`, `BASE-TIME`, `BASE-RACC`, `THREAD-*`.
+- Interface names, segments and address plan – used by `BASE-FW`, `BASE-FWP`, `BASE-WAP`, `BASE-DNS`, `BASE-TIME`, `BASE-VPN`, `BASE-USBG`, `THREAD-*`.
 - Bridge `br-iot` – used by `BASE-WAP` (hostapd adds `wlan0_iot` with `bridge=br-iot`).
-- Convention for `.link` / `.network` / `.netdev` files (`BASE-NETD-02`) – binding for `BASE-WAP` and `BASE-RACC`.
-- Uplink interfaces `lan0`, `wlan0_sta` – used by `BASE-FW` (NAT for the guest segment, output rules).
-- DNS stub resolver `127.0.0.53` – used by `BASE-WAP` (dnsmasq upstream) and all services of the device.
+- Convention for `.link` / `.network` / `.netdev` files (`BASE-NETD-02`) – binding for `BASE-WAP`, `BASE-VPN` and `BASE-USBG`.
+- Uplink interfaces `lan0`, `wlan0_sta` – used by `BASE-FWP` (NAT for the guest segment, output rules).
+- DNS stub resolver `127.0.0.53` – used by `BASE-DNS` (dnsmasq upstream) and all services of the device.
 - `can0` up at boot – used by the application layer.
 
 ### Consumes
@@ -187,7 +189,7 @@ This module configures all network interfaces of the device with systemd-network
 | :-- | :-- | :-- | :-- |
 | 1 | Which physical port is LAN0 and which is LAN1? | `BASE-NETD-20` | **Decided:** LAN0 = CM4 Gigabit port (`bcmgenet`), LAN1 = LAN9514 port (`smsc95xx`). |
 | 2 | IPv4 subnets of the IoT and guest segments? | `BASE-NETD-21` | **Decided:** IoT `172.30.10.0/24` (device `.1`), guest `172.30.20.0/24` (device `.1`). |
-| 3 | Direct service access on LAN0, and restriction of LAN0 → IoT. | `BASE-NETD-22`, `BASE-FW-14`, `BASE-FW-24` | **Decided:** no direct access (no static service address); access from LAN0 only from the allow list `service_nets` of `BASE-FW`. |
+| 3 | Direct service access on LAN0, and restriction of LAN0 → IoT. | `BASE-NETD-22`, `BASE-FWP-02`, `BASE-FWP-13` | **Decided:** no direct access (no static service address); access from LAN0 only from the allow list `service_nets` of `BASE-FW`. |
 | 4 | CAN bitrate? | `BASE-NETD-40` | **Decided:** 125 kbit/s. |
 | 5 | DNS resolver of the device. | `BASE-NETD-25`, `BASE-NETD-26` | **Decided:** `systemd-resolved`. |
 | 6 | LAN0 and LAN1 as separate ports. | `BASE-NETD-10` | **Decided:** two physical ports (LAN9514 and CM4 Gigabit PHY). |
