@@ -14,7 +14,7 @@
 | **Stack** | `basic` \| `thread` \| … |
 | **Spec status** | `draft` \| `review` \| `approved` |
 | **Depends on** | `<MODULE-ID>`, `<MODULE-ID>` <!-- modules that must be implemented first --> |
-| **Hardware reference** | [M40804W_MAX.md](../../hardware/M40804W_MAX.md) – section <n> <!-- only if device-specific values are needed --> |
+| **Hardware reference** | `docs/hardware/M40804W_MAX.md` (as relative link from the module file) – section <n> <!-- only if device-specific values are needed --> |
 | **Risk** | `low` \| `medium` \| `high` <!-- high = can brick the device or lock out access → human gate --> |
 
 ---

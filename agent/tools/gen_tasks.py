@@ -379,6 +379,8 @@ def write_status(tasks, modules):
     order = sorted(by_mod, key=lambda m: ((by_mod[m][0].get("phase") or 99), m))
     for m in order:
         ts = [t for t in by_mod[m] if t["status"] != "obsolete"]
+        if not ts:            # module removed from the specifications
+            continue
         c = {s: sum(1 for t in ts if t["status"] == s) for s in STATUSES}
         mod = modules.get(m, {})
         link = Path(mod.get("rel", "")).relative_to(SPEC_DIR.relative_to(ROOT)).as_posix() if mod.get("rel") else ""
@@ -408,7 +410,7 @@ def main():
     index = repo_index()
 
     PACK_DIR.mkdir(parents=True, exist_ok=True)
-    for old_pack in PACK_DIR.glob("T-*.md"):
+    for old_pack in list(PACK_DIR.glob("T-*.md")) + list(PACK_DIR.glob("V-*.md")):
         old_pack.unlink()
     tasks = []
     for m in modules.values():

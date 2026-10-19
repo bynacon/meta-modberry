@@ -186,5 +186,5 @@ This module configures all network interfaces of the device with systemd-network
 | 4 | CAN bitrate? | `BASE-NETD-40` | **Decided:** 125 kbit/s. |
 | 5 | DNS resolver of the device. | `BASE-NETD-25`, `BASE-NETD-26` | **Decided:** `systemd-resolved`. |
 | 6 | LAN0 and LAN1 as separate ports. | `BASE-NETD-10` | **Decided:** two physical ports (LAN9514 and CM4 Gigabit PHY). |
-| 7 | Uplink. | `BASE-NETD-30` | **Decided:** `lan0` only; no WLAN client (`BASE-WCLI` removed). |
+| 7 | Uplink. | `BASE-NETD-30` | **Decided:** `lan0` only; no WLAN client (the WLAN client module was removed). |
 | 8 | Network segments. | `BASE-NETD-10`, `BASE-NETD-11` | **Decided:** LAN0 (service & uplink), IoT (LAN1 + IoT WLAN), service segment of the service AP; no guest WLAN. |

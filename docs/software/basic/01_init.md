@@ -176,6 +176,7 @@ This module defines systemd as the init system and service manager of the base i
 - Several recipes use `${systemd_unitdir}/system` instead of `${systemd_system_unitdir}` (`BASE-INIT-22`). The target path is the same, so this is a consistency issue only.
 - `local_kirkstone.conf` currently enables `debug-tweaks` for every build (`EXTRA_IMAGE_FEATURES`), and `rpi-cm4.bb` sets empty passwords for `root` and `user` (`EXTRA_USERS_PARAMS`). Every image built today is a debug image in the sense of `BASE-INIT-43`.
 - **Human gate:** a production image without empty passwords and without serial login is only accessible via SSH keys (`BASE-SSH`). Key provisioning must work before the first production image is flashed.
+- `BASE-INIT-47`: `recipes-extended/sudo/sudo_%.bbappend` sets `IMAGE_INSTALL` and `ROOTFS_POSTPROCESS_COMMAND` in a package recipe, where they have no effect: `update_sudoers` never runs. The installed `/etc/sudoers.d/0001_BynaconToSudo` (`%bynacon ALL=(ALL) ALL`, mode `0644`) requires a password, which `BASE-INIT-45` locks. Both are replaced by `/etc/sudoers.d/10-user` (mode `0440`); `sudo` is added to the image recipe.
 - Both variants have the same recipe and, without `BASE-INIT-44`, the same file name. The suffix is required so that a debug image is not shipped by mistake.
 
 ---

@@ -631,7 +631,7 @@
       "id": "T-BASE-INIT-4.1",
       "module": "BASE-INIT",
       "spec": "docs/software/basic/01_init.md",
-      "spec_hash": "6ed2bbb2188102bd",
+      "spec_hash": "3c9f8abe382a43a9",
       "group": "4.1",
       "title": "Init System & Service Management – Init System",
       "phase": 1,
@@ -670,13 +670,14 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 644
+      "pack_tokens": 644,
+      "needs_review": false
     },
     {
       "id": "T-BASE-INIT-4.2",
       "module": "BASE-INIT",
       "spec": "docs/software/basic/01_init.md",
-      "spec_hash": "6ed2bbb2188102bd",
+      "spec_hash": "3c9f8abe382a43a9",
       "group": "4.2",
       "title": "Init System & Service Management – Boot Sequence",
       "phase": 1,
@@ -711,13 +712,14 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 421
+      "pack_tokens": 421,
+      "needs_review": false
     },
     {
       "id": "T-BASE-INIT-4.3",
       "module": "BASE-INIT",
       "spec": "docs/software/basic/01_init.md",
-      "spec_hash": "6ed2bbb2188102bd",
+      "spec_hash": "3c9f8abe382a43a9",
       "group": "4.3",
       "title": "Init System & Service Management – Service Lifecycle",
       "phase": 1,
@@ -764,13 +766,14 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 858
+      "pack_tokens": 858,
+      "needs_review": false
     },
     {
       "id": "T-BASE-INIT-4.4",
       "module": "BASE-INIT",
       "spec": "docs/software/basic/01_init.md",
-      "spec_hash": "6ed2bbb2188102bd",
+      "spec_hash": "3c9f8abe382a43a9",
       "group": "4.4",
       "title": "Init System & Service Management – Socket Activation",
       "phase": 1,
@@ -803,13 +806,14 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 478
+      "pack_tokens": 478,
+      "needs_review": false
     },
     {
       "id": "T-BASE-INIT-4.5",
       "module": "BASE-INIT",
       "spec": "docs/software/basic/01_init.md",
-      "spec_hash": "6ed2bbb2188102bd",
+      "spec_hash": "3c9f8abe382a43a9",
       "group": "4.5",
       "title": "Init System & Service Management – Image Variants & Serial Console",
       "phase": 1,
@@ -872,13 +876,14 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 1392
+      "pack_tokens": 1498,
+      "needs_review": false
     },
     {
       "id": "T-BASE-INIT-4.6",
       "module": "BASE-INIT",
       "spec": "docs/software/basic/01_init.md",
-      "spec_hash": "6ed2bbb2188102bd",
+      "spec_hash": "3c9f8abe382a43a9",
       "group": "4.6",
       "title": "Init System & Service Management – Service Sandboxing",
       "phase": 1,
@@ -915,7 +920,8 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 555
+      "pack_tokens": 555,
+      "needs_review": false
     },
     {
       "id": "T-BASE-TPM-4.1",
@@ -1571,7 +1577,7 @@
       "id": "T-BASE-NETD-4.1",
       "module": "BASE-NETD",
       "spec": "docs/software/basic/network/01_networkd.md",
-      "spec_hash": "5614099ef62baf98",
+      "spec_hash": "8012e99e56df65ce",
       "group": "4.1",
       "title": "Network Configuration (systemd-networkd) – Network Daemon",
       "phase": 2,
@@ -1620,7 +1626,7 @@
       "id": "T-BASE-NETD-4.2",
       "module": "BASE-NETD",
       "spec": "docs/software/basic/network/01_networkd.md",
-      "spec_hash": "5614099ef62baf98",
+      "spec_hash": "8012e99e56df65ce",
       "group": "4.2",
       "title": "Network Configuration (systemd-networkd) – Network Segments",
       "phase": 2,
@@ -1669,7 +1675,7 @@
       "id": "T-BASE-NETD-4.3",
       "module": "BASE-NETD",
       "spec": "docs/software/basic/network/01_networkd.md",
-      "spec_hash": "5614099ef62baf98",
+      "spec_hash": "8012e99e56df65ce",
       "group": "4.3",
       "title": "Network Configuration (systemd-networkd) – Naming & Addressing",
       "phase": 2,
@@ -1722,7 +1728,7 @@
       "id": "T-BASE-NETD-4.4",
       "module": "BASE-NETD",
       "spec": "docs/software/basic/network/01_networkd.md",
-      "spec_hash": "5614099ef62baf98",
+      "spec_hash": "8012e99e56df65ce",
       "group": "4.4",
       "title": "Network Configuration (systemd-networkd) – Uplink",
       "phase": 2,
@@ -1757,13 +1763,13 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 618
+      "pack_tokens": 622
     },
     {
       "id": "T-BASE-NETD-4.5",
       "module": "BASE-NETD",
       "spec": "docs/software/basic/network/01_networkd.md",
-      "spec_hash": "5614099ef62baf98",
+      "spec_hash": "8012e99e56df65ce",
       "group": "4.5",
       "title": "Network Configuration (systemd-networkd) – CAN Interface",
       "phase": 2,

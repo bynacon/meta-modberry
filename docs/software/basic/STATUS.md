@@ -16,7 +16,6 @@ Generated: 2026-10-19. Source of the state: `agent/tasks/basic.json`.
 | 2 | [`BASE-FWP`](network/03_firewall-policy.md) | draft | 3 | 8 | 3 | 0 | 0 | 0 | 0 | 0 |
 | 2 | [`BASE-NETD`](network/01_networkd.md) | draft | 5 | 19 | 5 | 0 | 0 | 0 | 0 | 0 |
 | 2 | [`BASE-WAP`](network/04_wlan-ap.md) | draft | 5 | 27 | 5 | 0 | 0 | 0 | 0 | 0 |
-| – | [`BASE-WCLI`]() |  | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | 3 | [`BASE-LOG`](05_logging.md) | draft | 2 | 10 | 2 | 0 | 0 | 0 | 0 | 0 |
 | 3 | [`BASE-PROV`](07_provisioning.md) | draft | 5 | 17 | 5 | 0 | 0 | 0 | 0 | 0 |
 | 3 | [`BASE-SSH`](network/08_ssh.md) | draft | 1 | 7 | 1 | 0 | 0 | 0 | 0 | 0 |
@@ -27,7 +26,6 @@ Generated: 2026-10-19. Source of the state: `agent/tasks/basic.json`.
 | 4 | [`BASE-IDS`](hardening/04_intrusion.md) | draft | 5 | 16 | 5 | 0 | 0 | 0 | 0 | 0 |
 | 4 | [`BASE-KERN`](hardening/01_kernel.md) | draft | 4 | 17 | 4 | 0 | 0 | 0 | 0 | 0 |
 | 4 | [`BASE-USB`](hardening/05_usb.md) | draft | 3 | 12 | 3 | 0 | 0 | 0 | 0 | 0 |
-| – | [`BASE-USBG`]() |  | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | 5 | [`BASE-LUKS`](boot-chain/04_data-encryption.md) | draft | 4 | 10 | 4 | 0 | 0 | 0 | 0 | 0 |
 | 5 | [`BASE-MBOOT`](boot-chain/02_measured-boot.md) | draft | 4 | 10 | 4 | 0 | 0 | 0 | 0 | 0 |
 | 5 | [`BASE-ROOTFS`](boot-chain/03_rootfs-integrity.md) | draft | 4 | 12 | 4 | 0 | 0 | 0 | 0 | 0 |
