@@ -33,7 +33,7 @@ Generated: 2026-10-19. Source of the state: `agent/tasks/basic.json`.
 | 5 | [`BASE-ROOTFS`](boot-chain/03_rootfs-integrity.md) | draft | 4 | 12 | 4 | 0 | 0 | 0 | 0 | 0 |
 | 5 | [`BASE-VBOOT`](boot-chain/01_verified-boot.md) | draft | 5 | 14 | 4 | 0 | 0 | 0 | 1 | 0 |
 | 6 | [`BASE-AUDIT`](hardening/03_audit-integrity.md) | draft | 3 | 14 | 3 | 0 | 0 | 0 | 0 | 0 |
-| 6 | [`BASE-CONT`](08_container.md) | draft | 4 | 15 | 4 | 0 | 0 | 0 | 0 | 1 |
+| 6 | [`BASE-CONT`](08_container.md) | draft | 4 | 15 | 4 | 0 | 0 | 0 | 0 | 0 |
 | 6 | [`BASE-LOGDB`](06_log-database.md) | draft | 1 | 6 | 0 | 0 | 0 | 0 | 1 | 0 |
 | 6 | [`BASE-MAC`](hardening/02_mac.md) | draft | 4 | 11 | 4 | 0 | 0 | 0 | 0 | 0 |
 
@@ -43,7 +43,6 @@ A task is `blocked` only if all its requirements are blocked; otherwise the bloc
 
 | Task | Status | Blocked requirements | Open point |
 | :-- | :-- | :-- | :-- |
-| `T-BASE-BSP-4.2` | todo | BASE-BSP-15, BASE-BSP-16 | 1: Which MCP23008 (0x21) pins are LED1, LED2 (if not GPIO27), buzzer and the PCI/power/reset lines exactly? The hardware specification names only LED1 = GP1 and buzzer = GP5. |
 | `T-BASE-BUILD-4.4` | todo | BASE-BUILD-30, BASE-BUILD-32, BASE-BUILD-34, BASE-BUILD-35 | 1: Kirkstone is end of life since April 2026: migrate to scarthgap (LTS until April 2028) or the next LTS release, or stay on kirkstone with own backports?; 3: Which CI/CD system and which vulnerability management tool (e.g. GitHub Actions / GitLab CI, Dependency-Track)? |
 | `T-BASE-HWT-4.3` | todo | BASE-HWT-25 | 9: Does the kirkstone kernel (5.15) support RS-485 mode (`TIOCSRS485`) on the PL011 UART (`ttyAMA0`)? If not: backport of the driver change, or kernel update. |
 | `T-BASE-WAP-4.2` | todo | BASE-WAP-10 | 5: Does `brcmfmac` run the IoT AP with SAE stably, and IoT AP (SAE) + service AP (WPA2-PSK) during service mode? |

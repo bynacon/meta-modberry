@@ -60,8 +60,8 @@ This module makes all devices of the Modberry M40804W MAX board available in Lin
 - `BASE-BSP-12` **MUST** The ADC MCP3424 (I2C0 0x6c) is bound by the `mcp3422` IIO driver; the four 0–10 VDC inputs are readable through IIO.
 - `BASE-BSP-13` **MUST** The 1-Wire bridge DS2482S-100+ (I2C0 0x18) is bound by the `ds2482` driver; the 1-Wire bus is available.
 - `BASE-BSP-14` **MUST** The DIO expander MCP23008 (I2C0 0x20) is a GPIO chip with interrupt support on GPIO06.
-- `BASE-BSP-15` **MUST** LED1 (function block MCP23008 0x21), LED2 (GPIO27) and the buzzer are available through the LED subsystem (`/sys/class/leds/`).
-- `BASE-BSP-16` **MUST** The PCI/power/reset lines of the function block are not accessible to user space.
+- `BASE-BSP-15` **MUST** LED1 (MCP23008 0x21 GP1, red), LED2 (CM4 GPIO27, green/blue) and the buzzer (MCP23008 0x21 GP5) are available through the LED subsystem (`/sys/class/leds/`).
+- `BASE-BSP-16` **MUST** The remaining pins of the function block MCP23008 0x21 (GP0, GP2–GP4, GP6, GP7: PCI/power/reset) are not accessible to user space: they are claimed by the kernel (`gpio-hog` or driver) or have no line name and are excluded by the udev rule of `BASE-BSP-22`.
 
 ### 4.3 Digital I/O
 
@@ -117,7 +117,7 @@ This module makes all devices of the Modberry M40804W MAX board available in Lin
 | `BASE-BSP-13` | `device` | `ls /sys/bus/w1/devices/` | `w1_bus_master1` present |
 | `BASE-BSP-14` | `device` | `gpioinfo` | a gpiochip for the MCP23008 at 0x20 |
 | `BASE-BSP-15` | `device` | `ls /sys/class/leds/` | `LED1`, `LED2`, `buzzer` |
-| `BASE-BSP-16` | `device` | `gpioinfo` for the function block chip | PCI/power/reset lines `used` by the kernel or not exported |
+| `BASE-BSP-16` | `device` | `gpioinfo` for the 0x21 chip; `gpioset` on GP0 as member of `fieldbus` | GP1/GP5 used by `leds-gpio`; GP0, GP2–GP4, GP6, GP7 `used` by the kernel; `gpioset` refused |
 | `BASE-BSP-20`, `-21` | `device` | `gpioget $(gpiofind DI1)`; `gpioset $(gpiofind DO1)=1` | works with names |
 | `BASE-BSP-22` | `device` | `stat -c '%G %a' /dev/gpiochip*` | `fieldbus 660` |
 | `BASE-BSP-23` | `device` | Cold boot, measure DO1–DO4 | all off |
@@ -129,6 +129,7 @@ This module makes all devices of the Modberry M40804W MAX board available in Lin
 
 - `BASE-BSP-01`: the board patch was applied only for the override `modberry-m40804w-max-m` until the override fix (commit `fix(bsp): …`). The former hardware status table marked "Base Pinmuxing", "I2C0 Bus Mapping" and "RTC" as implemented; these states are not verified for the current machines and are tracked as tasks again.
 - `BASE-BSP-12`: the `mcp3422` driver reports raw values of the ADC input; the scaling to 0–10 VDC (input divider) is done by the application.
+- `BASE-BSP-16`: which of the remaining 0x21 pins is PCI, power or reset is not documented. Claiming all of them for the kernel is safe; a later function that needs one of them (e.g. a controlled reset) needs a new requirement.
 - `BASE-BSP-20`: the sysfs numbers in the hardware specification (e.g. 496–503 for the MCP23008) depend on the kernel GPIO base and change between kernels. Named lines (`BASE-BSP-21`) avoid this.
 - `BASE-BSP-24`: disabling sysfs GPIO breaks the examples of the hardware specification (section 7) and the diagnostics with `echo … > /sys/class/gpio/export`; diagnostics use `libgpiod-tools` instead.
 
@@ -138,5 +139,5 @@ This module makes all devices of the Modberry M40804W MAX board available in Lin
 
 | # | Question | Affects | Decision |
 | :-- | :-- | :-- | :-- |
-| 1 | Which MCP23008 (0x21) pins are LED1, LED2 (if not GPIO27), buzzer and the PCI/power/reset lines exactly? The hardware specification names only LED1 = GP1 and buzzer = GP5. | `BASE-BSP-15`, `BASE-BSP-16` | |
+| 1 | Which MCP23008 (0x21) pins are LED1, LED2 (if not GPIO27), buzzer and the PCI/power/reset lines exactly? | `BASE-BSP-15`, `BASE-BSP-16` | **Decided:** LED1 = 0x21 GP1, LED2 = GPIO27, buzzer = 0x21 GP5; all other 0x21 pins (PCI/power/reset) are not accessible to user space. User button = GPIO13. |
 | 2 | Origin of the implementation status. | all | **Decided:** the former status table of the hardware specification (section 8) is replaced by tasks of this module; status in `STATUS.md`. |
