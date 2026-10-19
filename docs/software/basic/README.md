@@ -39,14 +39,13 @@ Device-specific values (UART paths, GPIO numbers, I2C addresses) are defined onl
 | `BASE-NETD` | [network/01_networkd.md](network/01_networkd.md) | systemd-networkd, segments, uplink fallback, resolved | INIT | medium | `draft` |
 | `BASE-FW` | [network/02_firewall.md](network/02_firewall.md) | nftables framework: chains, policies, ban sets, logging | INIT, NETD | high | `draft` |
 | `BASE-FWP` | [network/03_firewall-policy.md](network/03_firewall-policy.md) | Port/forward/output matrices, `service_nets`, NAT | FW, NETD, PROV | high | `draft` |
-| `BASE-WAP` | [network/04_wlan-ap.md](network/04_wlan-ap.md) | hostapd: IoT WLAN (`bynacon-iot`), WPA3, on-board radio only | INIT, NETD, FW, PROV | medium | `draft` |
-| `BASE-DNS` | [network/05_dhcp-dns.md](network/05_dhcp-dns.md) | dnsmasq for the IoT and USB service segments | INIT, NETD, FW | low | `draft` |
+| `BASE-WAP` | [network/04_wlan-ap.md](network/04_wlan-ap.md) | hostapd: IoT WLAN (`bynacon-iot`), service AP in service mode, WPA3 | INIT, HWT, NETD, FW, PROV | medium | `draft` |
+| `BASE-DNS` | [network/05_dhcp-dns.md](network/05_dhcp-dns.md) | dnsmasq for the IoT and service segments | INIT, NETD, FW | low | `draft` |
 | `BASE-WCLI` | [network/06_wlan-client.md](network/06_wlan-client.md) | iwd (fallback uplink) | INIT, NETD | low | `draft` |
 | `BASE-VPN` | [network/07_vpn.md](network/07_vpn.md) | WireGuard client to the Bynacon VPN server | INIT, NETD, FWP, PROV | high | `draft` |
 | `BASE-SSH` | [network/08_ssh.md](network/08_ssh.md) | OpenSSH, key-only, Bynacon service key | INIT, FWP, PROV | high | `draft` |
 | `BASE-WEB` | [network/09_web-proxy.md](network/09_web-proxy.md) | nginx TLS proxy, TPM key, Bynacon CA | INIT, FWP, TPM, TIME, PROV | medium | `draft` |
 | `BASE-BLE` | [network/10_bluetooth.md](network/10_bluetooth.md) | BlueZ LE-only for sensors | INIT | medium | `draft` |
-| `BASE-USBG` | [network/11_usb-gadget.md](network/11_usb-gadget.md) | USB service port (NCM gadget) | INIT, NETD, FWP, DNS | high | `draft` |
 | `BASE-VBOOT` | [boot-chain/01_verified-boot.md](boot-chain/01_verified-boot.md) | U-Boot verified boot (signed FIT), anti-rollback | INIT | high | `draft` |
 | `BASE-MBOOT` | [boot-chain/02_measured-boot.md](boot-chain/02_measured-boot.md) | TPM measured boot | TPM, VBOOT | high | `draft` |
 | `BASE-ROOTFS` | [boot-chain/03_rootfs-integrity.md](boot-chain/03_rootfs-integrity.md) | dm-verity, read-only rootfs, overlay, partition layout | VBOOT, MBOOT | high | `draft` |
@@ -55,7 +54,7 @@ Device-specific values (UART paths, GPIO numbers, I2C addresses) are defined onl
 | `BASE-MAC` | [hardening/02_mac.md](hardening/02_mac.md) | AppArmor profiles | INIT, all service modules | medium | `draft` |
 | `BASE-AUDIT` | [hardening/03_audit-integrity.md](hardening/03_audit-integrity.md) | auditd, AIDE | INIT, HWT, TPM, LOG | low | `draft` |
 | `BASE-IDS` | [hardening/04_intrusion.md](hardening/04_intrusion.md) | Fail2Ban (SSH, WLAN, port scans), hostapd event scripts | INIT, FW, WAP, LOG | medium | `draft` |
-| `BASE-USB` | [hardening/05_usb.md](hardening/05_usb.md) | USBGuard, kernel default deny | INIT | high | `draft` |
+| `BASE-USB` | [hardening/05_usb.md](hardening/05_usb.md) | USBGuard, kernel default deny, host mode only | INIT | high | `draft` |
 | `BASE-BUILD` | [hardening/06_build.md](hardening/06_build.md) | Compiler/kernel hardening, image content, CVE check, SBOM, pinned layers | INIT | medium | `draft` |
 
 Risk `high` means that an error can make the device unbootable or lock out remote access. These modules need a human gate before they are deployed on hardware.
@@ -86,7 +85,6 @@ flowchart TD
         DNS[BASE-DNS<br/>dnsmasq]
         WCLI[BASE-WCLI<br/>WLAN client]
         BLE[BASE-BLE<br/>Bluetooth LE]
-        USBG[BASE-USBG<br/>USB service port]
     end
 
     subgraph Access[Remote access]
@@ -120,8 +118,8 @@ flowchart TD
     NETD --> FW & WCLI & TIME
     FW --> FWP & WAP & DNS
     NETD --> FWP
-    FWP --> VPN & SSH & WEB & USBG
-    DNS --> USBG
+    FWP --> VPN & SSH & WEB
+    HWT --> WAP & BLE
     TPM --> WEB
     TIME --> WEB
     TPM --> PROV
@@ -171,7 +169,7 @@ The order follows the dependency graph and the risk. Low-risk modules that can b
 | **1 – Foundation** | `BASE-INIT`, `BASE-BUILD`, `BASE-HWT`, `BASE-TPM` | systemd-only image, hardened build, bus access, working TPM | `systemctl --failed` empty, `/dev/tpmrm0` present, CVE report produced |
 | **2 – Network** | `BASE-NETD`, `BASE-FW`, `BASE-FWP`, `BASE-DNS`, `BASE-WCLI`, `BASE-WAP` | All interfaces via networkd, firewall with matrices | **Human gate:** firewall tested with console access |
 | **3 – Services** | `BASE-TIME`, `BASE-LOG`, `BASE-SSH`, `BASE-VPN`, `BASE-WEB`, `BASE-PROV` | Correct time, local logging, secured remote access, factory provisioning | **Human gate:** service-key login and provisioning work before password login is disabled and the first production image is flashed |
-| **4 – Hardening & interfaces** | `BASE-KERN`, `BASE-USB`, `BASE-IDS`, `BASE-BLE`, `BASE-USBG` | Kernel hardening, USB allow list, intrusion detection, BLE, USB service port | **Human gate:** USB allow list and USB service port tested with console access (`lan1` is a USB device) |
+| **4 – Hardening & interfaces** | `BASE-KERN`, `BASE-USB`, `BASE-IDS`, `BASE-BLE` | Kernel hardening, USB allow list, intrusion detection, BLE | **Human gate:** USB allow list tested with console access (`lan1` is a USB device) |
 | **5 – Boot chain** | `BASE-VBOOT` → `BASE-MBOOT` → `BASE-ROOTFS` → `BASE-LUKS` | Chain of trust from bootloader to data partition | **Human gate** for each module; recovery procedure documented and tested |
 | **6 – Platform & monitoring** | `BASE-CONT`, `BASE-LOGDB`, `BASE-AUDIT`, `BASE-MAC` | Container runtime on `/data`, logs in the database, audit, AppArmor | AppArmor first in complain mode, then enforce |
 
@@ -187,12 +185,13 @@ Each shared resource has exactly one owner module. Other modules use it and neve
 | :-- | :-- | :-- |
 | systemd, unit integration and sandboxing rules | `BASE-INIT` | all modules |
 | Distro conf `modberry`, image variants, accounts | `BASE-INIT` | all modules |
-| Interface names, address plan, `.network` / `.netdev` convention | `BASE-NETD` | `BASE-FW`, `BASE-FWP`, `BASE-WAP`, `BASE-DNS`, `BASE-TIME`, `BASE-VPN`, `BASE-USBG`, `THREAD-*` |
-| `.network` / `.netdev` file of an interface | module that owns the interface: `BASE-NETD` (`lan0`, `lan1`, `br-iot`, `wlan1_sta`, `can0`), `BASE-WAP` (`wlan0_iot`), `BASE-VPN` (`wg0`), `BASE-USBG` (`usb0`) | — |
+| Interface names, address plan, `.network` / `.netdev` convention | `BASE-NETD` | `BASE-FW`, `BASE-FWP`, `BASE-WAP`, `BASE-DNS`, `BASE-TIME`, `BASE-VPN`, `THREAD-*` |
+| `.network` / `.netdev` file of an interface | module that owns the interface: `BASE-NETD` (`lan0`, `lan1`, `br-iot`, `wlan1_sta`, `can0`), `BASE-WAP` (`wlan0_iot`, `wlan0_svc`), `BASE-VPN` (`wg0`) | — |
 | nftables table `inet filter`, ban sets, `/etc/nftables.d/` | `BASE-FW` | `BASE-FWP`, `BASE-IDS`, `BASE-CONT`, `THREAD-NAT64`, `meta-ota` |
 | Port, forward and output matrix, allow list `service_nets`, NAT table | `BASE-FWP` | all modules with network services, `BASE-WEB`, `BASE-IDS` |
-| dnsmasq, `/etc/dnsmasq.d/` | `BASE-DNS` | `BASE-USBG`, `THREAD-NAT64` (DNS64) |
-| hostapd control interface | `BASE-WAP` | `BASE-IDS` |
+| dnsmasq, `/etc/dnsmasq.d/` | `BASE-DNS` | `THREAD-NAT64` (DNS64), application layer |
+| hostapd control interface, service AP | `BASE-WAP` | `BASE-IDS`, `BASE-FWP`, `BASE-WEB` |
+| Service mode (user button, 30 min) | `BASE-HWT` | `BASE-WAP`, `BASE-BLE` |
 | `/dev/tpmrm0`, TSS2, OpenSSL TPM provider | `BASE-TPM` | `BASE-MBOOT`, `BASE-ROOTFS`, `BASE-LUKS`, `BASE-WEB`, `BASE-PROV` |
 | Persistent device names (serial, CAN), group `fieldbus` | `BASE-HWT` | `BASE-AUDIT`, `BASE-MAC`, application layer |
 | System time, `time-sync.target` | `BASE-TIME` | `BASE-WEB`, `BASE-VPN`, `BASE-LOG` |
@@ -219,4 +218,4 @@ Each shared resource has exactly one owner module. Other modules use it and neve
 | 8 | Value of the placeholder `VPN_ENDPOINT` (port, VPN subnet). | `BASE-FWP`, `BASE-VPN` | **Deferred:** infrastructure information. |
 | 9 | An LTE modem is allowed as USB device (`BASE-USB-05`). Uplink role, priority and firewall rules of an LTE uplink are not yet specified. | `BASE-NETD`, `BASE-FWP` | **Deferred:** specified when the modem model is chosen. |
 | 10 | **Kirkstone is end of life since April 2026.** Migration to a supported LTS release affects every module (recipe versions, U-Boot, systemd, OpenSSL). | all modules | See `BASE-BUILD` open point 1. |
-| 11 | USB service port and LAN9514 share the only USB controller of the CM4. | `BASE-USBG`, `BASE-NETD` | **Deferred:** needs the schematic (`BASE-USBG` open point 2). |
+| 11 | USB service port and LAN9514 share the only USB controller of the CM4. | `BASE-USB` | **Decided:** no USB service port; local service access via the service AP (`BASE-WAP-40`); USB controller in host mode only (`BASE-USB-07`). |

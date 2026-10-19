@@ -67,7 +67,7 @@ This module defines which services of the device are reachable from which segmen
 
 ### 5.1 Port Matrix (input)
 
-Segments: **LAN0** = `lan0`, **IoT** = `br-iot` (`172.30.10.0/24`), **SVC** = `usb0` (USB service port, `BASE-USBG`), **VPN** = `wg0`, **Uplink** = `lan0`, `wlan1_sta`. "SN" = only from sources in `service_nets`.
+Segments: **LAN0** = `lan0`, **IoT** = `br-iot` (`172.30.10.0/24`), **SVC** = `wlan0_svc` (service AP, service mode only, `BASE-WAP-40`), **VPN** = `wg0`, **Uplink** = `lan0`, `wlan1_sta`. "SN" = only from sources in `service_nets`.
 
 | Service | Port | LAN0 | IoT | SVC | VPN | Owner |
 | :-- | :-- | :-: | :-: | :-: | :-: | :-- |
@@ -77,7 +77,7 @@ Segments: **LAN0** = `lan0`, **IoT** = `br-iot` (`172.30.10.0/24`), **SVC** = `u
 | MQTT-TLS | 8883/tcp | — | ✅ | — | — | application layer |
 | ESP32 OTA (local server) | per application layer | — | ✅ | — | — | application layer |
 | Border Router API | per `THREAD-OTBR` | SN | — | ✅ | ✅ | `THREAD-OTBR` |
-| DHCP server | 67/udp | — | ✅ | ✅ | — | `BASE-DNS`, `BASE-USBG` |
+| DHCP server | 67/udp | — | ✅ | ✅ | — | `BASE-DNS` |
 | DNS | 53/udp, 53/tcp | — | ✅ | — | — | `BASE-DNS` |
 | NTP server | 123/udp | — | ✅ | — | — | `BASE-TIME` |
 | DHCP client replies | 68/udp | Uplink | — | — | — | `BASE-NETD` |
@@ -88,7 +88,7 @@ Segments: **LAN0** = `lan0`, **IoT** = `br-iot` (`172.30.10.0/24`), **SVC** = `u
 | :-- | :-- | :-- | :-- |
 | LAN0 (`service_nets` only) | IoT | ✅ | service technician accesses sensors and actuators |
 | VPN | IoT | ✅ | remote service access |
-| SVC | IoT | ✅ | local service access via USB |
+| SVC | IoT | ✅ | local service access via the service AP |
 | IoT | Uplink, LAN0, SVC | ❌ | sensors/actuators are isolated; OTA comes from the device |
 | Container networks | per `BASE-CONT` | per `BASE-CONT` | container rules in their own include file |
 | any other combination | | ❌ | `BASE-FW-20` |
@@ -123,7 +123,7 @@ Segments: **LAN0** = `lan0`, **IoT** = `br-iot` (`172.30.10.0/24`), **SVC** = `u
 
 ### Provides
 
-- Port openings for `BASE-SSH`, `BASE-WEB`, `BASE-VPN`, `BASE-DNS`, `BASE-TIME`, `BASE-USBG`, `THREAD-OTBR` and the application layer.
+- Port openings for `BASE-SSH`, `BASE-WEB`, `BASE-VPN`, `BASE-DNS`, `BASE-TIME`, `BASE-WAP` (service AP), `THREAD-OTBR` and the application layer.
 - Allow list `service_nets` – used by `BASE-WEB` (nginx `allow`) and `BASE-IDS` (never banned).
 - Table `inet nat` – used by `BASE-CONT` and `THREAD-NAT64` (own rules via include).
 
@@ -167,6 +167,6 @@ Segments: **LAN0** = `lan0`, **IoT** = `br-iot` (`172.30.10.0/24`), **SVC** = `u
 | :-- | :-- | :-- | :-- |
 | 1 | Further outbound destinations of the device (cloud, package feeds)? | `BASE-FWP-20` | **Decided:** the destinations of section 5.3 are implemented now; further destinations are added by the application layer or `meta-ota` in own files in `/etc/nftables.d/` (`BASE-FW-60`). |
 | 2 | ESP32 OTA source. | `BASE-FWP-01`, `BASE-FWP-14` | **Decided:** the device caches the firmware (via the OTA system) and serves it locally. |
-| 3 | Allowed flows between segments. | `BASE-FWP-10` … `BASE-FWP-14` | **Decided:** LAN0 → IoT and management only from `service_nets`; VPN and USB service port → IoT; IoT isolated. |
+| 3 | Allowed flows between segments. | `BASE-FWP-10` … `BASE-FWP-14` | **Decided:** LAN0 → IoT and management only from `service_nets`; VPN and service AP → IoT; IoT isolated. |
 | 4 | Factory subnet after provisioning. | `BASE-FWP-03` | **Decided:** active only while unprovisioned. |
 | 5 | Guest WLAN. | `BASE-FWP-11` | **Decided:** no guest WLAN (`BASE-WAP` open point 4); no NAT of this module. |

@@ -102,7 +102,7 @@ This module provides an encrypted shell with OpenSSH. Login is possible only wit
 - `BASE-SSH-01`: the current image uses `dropbear` (`ssh-server-dropbear` in `local_kirkstone.conf`). `openssh_%.bbappend` adds `file://sshd_config`, which does not exist in the layer, so the poky default is used.
 - `BASE-SSH-02`: **human gate** – password login is disabled only after login with the service key has been verified on the device.
 - `BASE-SSH-02`: `recipes-connectivity/openssh/files/ssh_config` is an unused client configuration with invalid options (`AllowRootLogin Yes`); it is removed.
-- `BASE-SSH-05`: **one service key for all devices** – if its private part is compromised, every device is affected. Keep it on a hardware token; `BASE-SSH-06` allows rotation. SSH is reachable only from `service_nets`, the VPN and the USB service port.
+- `BASE-SSH-05`: **one service key for all devices** – if its private part is compromised, every device is affected. Keep it on a hardware token; `BASE-SSH-06` allows rotation. SSH is reachable only from `service_nets`, the VPN and the service AP.
 
 ---
 

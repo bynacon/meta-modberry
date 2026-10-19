@@ -138,7 +138,7 @@ This module provides the packet filter framework of the device with nftables: on
 - `BASE-FW-03`, `BASE-FW-30`: **human gate** – a wrong ruleset locks out remote access. Every change is tested with console access first.
 - `BASE-FW-04`: the kernel needs the nftables options (`CONFIG_NF_TABLES`, `CONFIG_NF_TABLES_INET`, `CONFIG_NFT_CT`, `CONFIG_NFT_NAT`, `CONFIG_NFT_MASQ`, `CONFIG_NFT_LOG`, `CONFIG_NFT_LIMIT`, sets with timeout). Check the `linux-raspberrypi` defconfig.
 - `BASE-FW-10` … `BASE-FW-30`: **there is no packet filter on the device today.** `iptables` is installed but has no rules.
-- `BASE-FW-40`: MAC bans only work for traffic with an Ethernet header (LAN, WLAN, USB gadget). They have no effect on `wg0` or `wpan0`.
+- `BASE-FW-40`: MAC bans only work for traffic with an Ethernet header (LAN, WLAN). They have no effect on `wg0` or `wpan0`.
 
 ---
 

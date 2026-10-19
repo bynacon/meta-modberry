@@ -204,7 +204,7 @@
       "id": "T-BASE-HWT-4.1",
       "module": "BASE-HWT",
       "spec": "docs/software/basic/02_hw-tooling.md",
-      "spec_hash": "90590b6ec343360a",
+      "spec_hash": "fd28c7256baa2045",
       "group": "4.1",
       "title": "Hardware Interface Tooling – Tools",
       "phase": 1,
@@ -259,7 +259,7 @@
       "id": "T-BASE-HWT-4.2",
       "module": "BASE-HWT",
       "spec": "docs/software/basic/02_hw-tooling.md",
-      "spec_hash": "90590b6ec343360a",
+      "spec_hash": "fd28c7256baa2045",
       "group": "4.2",
       "title": "Hardware Interface Tooling – Kernel Support",
       "phase": 1,
@@ -310,7 +310,7 @@
       "id": "T-BASE-HWT-4.3",
       "module": "BASE-HWT",
       "spec": "docs/software/basic/02_hw-tooling.md",
-      "spec_hash": "90590b6ec343360a",
+      "spec_hash": "fd28c7256baa2045",
       "group": "4.3",
       "title": "Hardware Interface Tooling – udev Rules",
       "phase": 1,
@@ -380,7 +380,7 @@
       "id": "T-BASE-HWT-4.4",
       "module": "BASE-HWT",
       "spec": "docs/software/basic/02_hw-tooling.md",
-      "spec_hash": "90590b6ec343360a",
+      "spec_hash": "fd28c7256baa2045",
       "group": "4.4",
       "title": "Hardware Interface Tooling – Service Port",
       "phase": 1,
@@ -431,13 +431,13 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 1374
+      "pack_tokens": 1375
     },
     {
       "id": "V-BASE-HWT-OP9",
       "module": "BASE-HWT",
       "spec": "docs/software/basic/02_hw-tooling.md",
-      "spec_hash": "90590b6ec343360a",
+      "spec_hash": "fd28c7256baa2045",
       "group": "OP9",
       "title": "Verify: Does the kirkstone kernel (5.15) support RS-485 mode (`TIOCSRS485`) on the PL011 UART (`ttyAMA0`)? If not: backport of the driver change, or kernel update.",
       "phase": 1,
@@ -1002,7 +1002,7 @@
       "id": "T-BASE-DNS-4",
       "module": "BASE-DNS",
       "spec": "docs/software/basic/network/05_dhcp-dns.md",
-      "spec_hash": "81e00e0a61275136",
+      "spec_hash": "18ad6ac8b26253ff",
       "group": "4",
       "title": "DHCP & DNS for Local Segments (dnsmasq) – Requirements",
       "phase": 2,
@@ -1053,13 +1053,13 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 834
+      "pack_tokens": 871
     },
     {
       "id": "T-BASE-FW-4.1",
       "module": "BASE-FW",
       "spec": "docs/software/basic/network/02_firewall.md",
-      "spec_hash": "98d1d2067e1b5aad",
+      "spec_hash": "29b2d191f78cacbd",
       "group": "4.1",
       "title": "Firewall Framework (nftables) – Packet Filter",
       "phase": 2,
@@ -1111,7 +1111,7 @@
       "id": "T-BASE-FW-4.2",
       "module": "BASE-FW",
       "spec": "docs/software/basic/network/02_firewall.md",
-      "spec_hash": "98d1d2067e1b5aad",
+      "spec_hash": "29b2d191f78cacbd",
       "group": "4.2",
       "title": "Firewall Framework (nftables) – Base Chains",
       "phase": 2,
@@ -1165,7 +1165,7 @@
       "id": "T-BASE-FW-4.3",
       "module": "BASE-FW",
       "spec": "docs/software/basic/network/02_firewall.md",
-      "spec_hash": "98d1d2067e1b5aad",
+      "spec_hash": "29b2d191f78cacbd",
       "group": "4.3",
       "title": "Firewall Framework (nftables) – Ban Sets",
       "phase": 2,
@@ -1201,13 +1201,13 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 396
+      "pack_tokens": 393
     },
     {
       "id": "T-BASE-FW-4.4",
       "module": "BASE-FW",
       "spec": "docs/software/basic/network/02_firewall.md",
-      "spec_hash": "98d1d2067e1b5aad",
+      "spec_hash": "29b2d191f78cacbd",
       "group": "4.4",
       "title": "Firewall Framework (nftables) – Logging",
       "phase": 2,
@@ -1245,7 +1245,7 @@
       "id": "T-BASE-FW-4.5",
       "module": "BASE-FW",
       "spec": "docs/software/basic/network/02_firewall.md",
-      "spec_hash": "98d1d2067e1b5aad",
+      "spec_hash": "29b2d191f78cacbd",
       "group": "4.5",
       "title": "Firewall Framework (nftables) – Extension",
       "phase": 2,
@@ -1283,7 +1283,7 @@
       "id": "T-BASE-FWP-4.1",
       "module": "BASE-FWP",
       "spec": "docs/software/basic/network/03_firewall-policy.md",
-      "spec_hash": "b30152e73344ba9a",
+      "spec_hash": "844f294f1d44728c",
       "group": "4.1",
       "title": "Firewall Policy (port, forward and output matrices) – Input",
       "phase": 2,
@@ -1320,13 +1320,13 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 1006
+      "pack_tokens": 1008
     },
     {
       "id": "T-BASE-FWP-4.2",
       "module": "BASE-FWP",
       "spec": "docs/software/basic/network/03_firewall-policy.md",
-      "spec_hash": "b30152e73344ba9a",
+      "spec_hash": "844f294f1d44728c",
       "group": "4.2",
       "title": "Firewall Policy (port, forward and output matrices) – Forward & NAT",
       "phase": 2,
@@ -1367,13 +1367,13 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 877
+      "pack_tokens": 878
     },
     {
       "id": "T-BASE-FWP-4.3",
       "module": "BASE-FWP",
       "spec": "docs/software/basic/network/03_firewall-policy.md",
-      "spec_hash": "b30152e73344ba9a",
+      "spec_hash": "844f294f1d44728c",
       "group": "4.3",
       "title": "Firewall Policy (port, forward and output matrices) – Output",
       "phase": 2,
@@ -1408,7 +1408,7 @@
       "id": "T-BASE-NETD-4.1",
       "module": "BASE-NETD",
       "spec": "docs/software/basic/network/01_networkd.md",
-      "spec_hash": "7f815996a911729c",
+      "spec_hash": "a22c171a79e9b1c3",
       "group": "4.1",
       "title": "Network Configuration (systemd-networkd) – Network Daemon",
       "phase": 2,
@@ -1451,13 +1451,13 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 662
+      "pack_tokens": 659
     },
     {
       "id": "T-BASE-NETD-4.2",
       "module": "BASE-NETD",
       "spec": "docs/software/basic/network/01_networkd.md",
-      "spec_hash": "7f815996a911729c",
+      "spec_hash": "a22c171a79e9b1c3",
       "group": "4.2",
       "title": "Network Configuration (systemd-networkd) – Network Segments",
       "phase": 2,
@@ -1500,13 +1500,13 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 947
+      "pack_tokens": 967
     },
     {
       "id": "T-BASE-NETD-4.3",
       "module": "BASE-NETD",
       "spec": "docs/software/basic/network/01_networkd.md",
-      "spec_hash": "7f815996a911729c",
+      "spec_hash": "a22c171a79e9b1c3",
       "group": "4.3",
       "title": "Network Configuration (systemd-networkd) – Naming & Addressing",
       "phase": 2,
@@ -1557,13 +1557,13 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 1362
+      "pack_tokens": 1371
     },
     {
       "id": "T-BASE-NETD-4.4",
       "module": "BASE-NETD",
       "spec": "docs/software/basic/network/01_networkd.md",
-      "spec_hash": "7f815996a911729c",
+      "spec_hash": "a22c171a79e9b1c3",
       "group": "4.4",
       "title": "Network Configuration (systemd-networkd) – Uplink",
       "phase": 2,
@@ -1604,7 +1604,7 @@
       "id": "T-BASE-NETD-4.5",
       "module": "BASE-NETD",
       "spec": "docs/software/basic/network/01_networkd.md",
-      "spec_hash": "7f815996a911729c",
+      "spec_hash": "a22c171a79e9b1c3",
       "group": "4.5",
       "title": "Network Configuration (systemd-networkd) – CAN Interface",
       "phase": 2,
@@ -1637,7 +1637,7 @@
       "id": "T-BASE-WAP-4.1",
       "module": "BASE-WAP",
       "spec": "docs/software/basic/network/04_wlan-ap.md",
-      "spec_hash": "088f1f50c60720b8",
+      "spec_hash": "f1fa2f6c5b3c47b4",
       "group": "4.1",
       "title": "WLAN Access Point (hostapd) – Interface & Service",
       "phase": 2,
@@ -1645,6 +1645,7 @@
       "human_gate": false,
       "depends_on_modules": [
         "BASE-FW",
+        "BASE-HWT",
         "BASE-INIT",
         "BASE-NETD",
         "BASE-PROV"
@@ -1694,13 +1695,14 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 1100
+      "pack_tokens": 1121,
+      "needs_review": false
     },
     {
       "id": "T-BASE-WAP-4.2",
       "module": "BASE-WAP",
       "spec": "docs/software/basic/network/04_wlan-ap.md",
-      "spec_hash": "088f1f50c60720b8",
+      "spec_hash": "f1fa2f6c5b3c47b4",
       "group": "4.2",
       "title": "WLAN Access Point (hostapd) – Security",
       "phase": 2,
@@ -1708,6 +1710,7 @@
       "human_gate": false,
       "depends_on_modules": [
         "BASE-FW",
+        "BASE-HWT",
         "BASE-INIT",
         "BASE-NETD",
         "BASE-PROV"
@@ -1745,7 +1748,7 @@
       "blocked_by": [
         {
           "open_point": "5",
-          "question": "Does `brcmfmac` run an AP with SAE (WPA3) stably?",
+          "question": "Does `brcmfmac` run the IoT AP with SAE stably, and IoT AP + service AP with SAE during service mode?",
           "decision": "**Deferred:** test on the device → verification task.",
           "reqs": [
             "BASE-WAP-10"
@@ -1763,13 +1766,14 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 1050
+      "pack_tokens": 1066,
+      "needs_review": false
     },
     {
       "id": "T-BASE-WAP-4.3",
       "module": "BASE-WAP",
       "spec": "docs/software/basic/network/04_wlan-ap.md",
-      "spec_hash": "088f1f50c60720b8",
+      "spec_hash": "f1fa2f6c5b3c47b4",
       "group": "4.3",
       "title": "WLAN Access Point (hostapd) – Control Interface",
       "phase": 2,
@@ -1777,6 +1781,7 @@
       "human_gate": false,
       "depends_on_modules": [
         "BASE-FW",
+        "BASE-HWT",
         "BASE-INIT",
         "BASE-NETD",
         "BASE-PROV"
@@ -1799,15 +1804,89 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 350
+      "pack_tokens": 353,
+      "needs_review": false
+    },
+    {
+      "id": "T-BASE-WAP-4.4",
+      "module": "BASE-WAP",
+      "spec": "docs/software/basic/network/04_wlan-ap.md",
+      "spec_hash": "f1fa2f6c5b3c47b4",
+      "group": "4.4",
+      "title": "WLAN Access Point (hostapd) – Service AP",
+      "phase": 2,
+      "risk": "medium",
+      "human_gate": false,
+      "depends_on_modules": [
+        "BASE-FW",
+        "BASE-HWT",
+        "BASE-INIT",
+        "BASE-NETD",
+        "BASE-PROV"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-WAP-40",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-WAP-41",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-WAP-42",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-WAP-43",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-WAP-44",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-WAP-45",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-WAP-46",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [
+        {
+          "open_point": "5",
+          "question": "Does `brcmfmac` run the IoT AP with SAE stably, and IoT AP + service AP with SAE during service mode?",
+          "decision": "**Deferred:** test on the device → verification task.",
+          "reqs": [
+            "BASE-WAP-40"
+          ]
+        }
+      ],
+      "blocked_reqs": [
+        "BASE-WAP-40"
+      ],
+      "pack": "agent/packs/T-BASE-WAP-4.4.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 1277,
+      "needs_review": false
     },
     {
       "id": "V-BASE-WAP-OP5",
       "module": "BASE-WAP",
       "spec": "docs/software/basic/network/04_wlan-ap.md",
-      "spec_hash": "088f1f50c60720b8",
+      "spec_hash": "f1fa2f6c5b3c47b4",
       "group": "OP5",
-      "title": "Verify: Does `brcmfmac` run an AP with SAE (WPA3) stably?",
+      "title": "Verify: Does `brcmfmac` run the IoT AP with SAE stably, and IoT AP + service AP with SAE during service mode?",
       "phase": 2,
       "risk": "medium",
       "human_gate": true,
@@ -1815,6 +1894,10 @@
       "reqs": [
         {
           "id": "BASE-WAP-10",
+          "level": "—"
+        },
+        {
+          "id": "BASE-WAP-40",
           "level": "—"
         }
       ],
@@ -1830,7 +1913,8 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 151
+      "pack_tokens": 239,
+      "needs_review": false
     },
     {
       "id": "T-BASE-WCLI-4.1",
@@ -2076,7 +2160,7 @@
       "id": "T-BASE-PROV-4.1",
       "module": "BASE-PROV",
       "spec": "docs/software/basic/07_provisioning.md",
-      "spec_hash": "01b2f948a765961c",
+      "spec_hash": "4d07f14dc9961180",
       "group": "4.1",
       "title": "Factory Provisioning – Access",
       "phase": 3,
@@ -2116,7 +2200,7 @@
       "id": "T-BASE-PROV-4.2",
       "module": "BASE-PROV",
       "spec": "docs/software/basic/07_provisioning.md",
-      "spec_hash": "01b2f948a765961c",
+      "spec_hash": "4d07f14dc9961180",
       "group": "4.2",
       "title": "Factory Provisioning – Provisioned Items",
       "phase": 3,
@@ -2167,13 +2251,13 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 886
+      "pack_tokens": 911
     },
     {
       "id": "T-BASE-PROV-4.3",
       "module": "BASE-PROV",
       "spec": "docs/software/basic/07_provisioning.md",
-      "spec_hash": "01b2f948a765961c",
+      "spec_hash": "4d07f14dc9961180",
       "group": "4.3",
       "title": "Factory Provisioning – Storage",
       "phase": 3,
@@ -2223,7 +2307,7 @@
       "id": "T-BASE-PROV-4.4",
       "module": "BASE-PROV",
       "spec": "docs/software/basic/07_provisioning.md",
-      "spec_hash": "01b2f948a765961c",
+      "spec_hash": "4d07f14dc9961180",
       "group": "4.4",
       "title": "Factory Provisioning – Behavior",
       "phase": 3,
@@ -2286,7 +2370,7 @@
       "id": "T-BASE-PROV-4.5",
       "module": "BASE-PROV",
       "spec": "docs/software/basic/07_provisioning.md",
-      "spec_hash": "01b2f948a765961c",
+      "spec_hash": "4d07f14dc9961180",
       "group": "4.5",
       "title": "Factory Provisioning – Factory Reset & Decommissioning",
       "phase": 3,
@@ -2330,7 +2414,7 @@
       "id": "T-BASE-SSH-4",
       "module": "BASE-SSH",
       "spec": "docs/software/basic/network/08_ssh.md",
-      "spec_hash": "9e81f820bfd837c6",
+      "spec_hash": "98b1cca57c8e98d1",
       "group": "4",
       "title": "SSH Access (OpenSSH, Bynacon service key) – Requirements",
       "phase": 3,
@@ -2387,7 +2471,7 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 1053
+      "pack_tokens": 1052
     },
     {
       "id": "T-BASE-TIME-4.1",
@@ -2754,7 +2838,7 @@
       "id": "T-BASE-WEB-4",
       "module": "BASE-WEB",
       "spec": "docs/software/basic/network/09_web-proxy.md",
-      "spec_hash": "8dc0fe9b88faa295",
+      "spec_hash": "b516d983c0958c78",
       "group": "4",
       "title": "Web Proxy (nginx) – Requirements",
       "phase": 3,
@@ -2822,7 +2906,7 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 881
+      "pack_tokens": 884
     },
     {
       "id": "T-BASE-BLE-4.1",
@@ -2866,8 +2950,7 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 525,
-      "needs_review": false
+      "pack_tokens": 525
     },
     {
       "id": "T-BASE-BLE-4.2",
@@ -2934,8 +3017,7 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 1315,
-      "needs_review": false
+      "pack_tokens": 1315
     },
     {
       "id": "T-BASE-BLE-4.3",
@@ -2973,14 +3055,13 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 311,
-      "needs_review": false
+      "pack_tokens": 311
     },
     {
       "id": "T-BASE-IDS-4.1",
       "module": "BASE-IDS",
       "spec": "docs/software/basic/hardening/04_intrusion.md",
-      "spec_hash": "93b4f2d7cc6b2037",
+      "spec_hash": "a5a3c8c94bde7a36",
       "group": "4.1",
       "title": "Intrusion Detection & Prevention (Fail2Ban, port scan detection, hostapd events) – General",
       "phase": 4,
@@ -3028,7 +3109,7 @@
       "id": "T-BASE-IDS-4.2",
       "module": "BASE-IDS",
       "spec": "docs/software/basic/hardening/04_intrusion.md",
-      "spec_hash": "93b4f2d7cc6b2037",
+      "spec_hash": "a5a3c8c94bde7a36",
       "group": "4.2",
       "title": "Intrusion Detection & Prevention (Fail2Ban, port scan detection, hostapd events) – Fail2Ban",
       "phase": 4,
@@ -3082,7 +3163,7 @@
       "id": "T-BASE-IDS-4.3",
       "module": "BASE-IDS",
       "spec": "docs/software/basic/hardening/04_intrusion.md",
-      "spec_hash": "93b4f2d7cc6b2037",
+      "spec_hash": "a5a3c8c94bde7a36",
       "group": "4.3",
       "title": "Intrusion Detection & Prevention (Fail2Ban, port scan detection, hostapd events) – Port Scan Detection",
       "phase": 4,
@@ -3122,7 +3203,7 @@
       "id": "T-BASE-IDS-4.4",
       "module": "BASE-IDS",
       "spec": "docs/software/basic/hardening/04_intrusion.md",
-      "spec_hash": "93b4f2d7cc6b2037",
+      "spec_hash": "a5a3c8c94bde7a36",
       "group": "4.4",
       "title": "Intrusion Detection & Prevention (Fail2Ban, port scan detection, hostapd events) – hostapd Events",
       "phase": 4,
@@ -3173,13 +3254,13 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 613
+      "pack_tokens": 618
     },
     {
       "id": "V-BASE-IDS-OP3",
       "module": "BASE-IDS",
       "spec": "docs/software/basic/hardening/04_intrusion.md",
-      "spec_hash": "93b4f2d7cc6b2037",
+      "spec_hash": "a5a3c8c94bde7a36",
       "group": "OP3",
       "title": "Verify: Does `brcmfmac` report deauthentication and authentication failure events to hostapd? If not, `BASE-IDS-31` cannot be met with the on-board radio.",
       "phase": 4,
@@ -3208,7 +3289,7 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 239
+      "pack_tokens": 244
     },
     {
       "id": "T-BASE-KERN-4.1",
@@ -3400,7 +3481,7 @@
       "id": "T-BASE-USB-4.1",
       "module": "BASE-USB",
       "spec": "docs/software/basic/hardening/05_usb.md",
-      "spec_hash": "e35ae3935de948ae",
+      "spec_hash": "606fe5104471560f",
       "group": "4.1",
       "title": "USB Device Control (USBGuard) – Policy",
       "phase": 4,
@@ -3433,6 +3514,10 @@
         {
           "id": "BASE-USB-06",
           "level": "MUST"
+        },
+        {
+          "id": "BASE-USB-07",
+          "level": "MUST"
         }
       ],
       "verify_levels": [
@@ -3458,13 +3543,13 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 1257
+      "pack_tokens": 1348
     },
     {
       "id": "T-BASE-USB-4.2",
       "module": "BASE-USB",
       "spec": "docs/software/basic/hardening/05_usb.md",
-      "spec_hash": "e35ae3935de948ae",
+      "spec_hash": "606fe5104471560f",
       "group": "4.2",
       "title": "USB Device Control (USBGuard) – Operation",
       "phase": 4,
@@ -3511,7 +3596,7 @@
       "id": "V-BASE-USB-OP1",
       "module": "BASE-USB",
       "spec": "docs/software/basic/hardening/05_usb.md",
-      "spec_hash": "e35ae3935de948ae",
+      "spec_hash": "606fe5104471560f",
       "group": "OP1",
       "title": "Verify: Read the vendor/product IDs and ports of the internal USB devices on the device (`usbguard generate-policy`).",
       "phase": 4,
@@ -3590,7 +3675,7 @@
         "BASE-USBG-04"
       ],
       "pack": "agent/packs/T-BASE-USBG-4.1.md",
-      "status": "todo",
+      "status": "obsolete",
       "verified": {
         "device": "pending"
       },
@@ -3635,7 +3720,7 @@
       "blocked_by": [],
       "blocked_reqs": [],
       "pack": "agent/packs/T-BASE-USBG-4.2.md",
-      "status": "todo",
+      "status": "obsolete",
       "verified": {
         "device": "pending"
       },
@@ -3672,7 +3757,7 @@
       "blocked_by": [],
       "blocked_reqs": [],
       "pack": "agent/packs/T-BASE-USBG-4.3.md",
-      "status": "todo",
+      "status": "obsolete",
       "verified": {
         "device": "pending"
       },
@@ -3703,7 +3788,7 @@
       "blocked_by": [],
       "blocked_reqs": [],
       "pack": "agent/packs/V-BASE-USBG-OP2.md",
-      "status": "todo",
+      "status": "obsolete",
       "verified": {
         "device": "pending"
       },

@@ -88,7 +88,7 @@ This module provides user-space access to the hardware buses of the device: CAN,
 - `BASE-HWT-30` **MUST** `ttyAMA0` (COM1/COM4) can be used as service port. When the service port is on, the device writes the kernel log and the journal to `ttyAMA0`. The service port offers no login (`BASE-INIT-40`).
 - `BASE-HWT-31` **MUST** Service port and field bus use of `ttyAMA0` exclude each other. While the service port is on, `ttyAMA0` and `/dev/serial-com14` are not accessible to the group `fieldbus`. While it is off, the device writes nothing to `ttyAMA0`.
 - `BASE-HWT-32` **MUST** root switches the service port on and off with a command (`modberry-serviceport on|off|status`). The state is stored persistently on the data partition and applied at boot.
-- `BASE-HWT-33` **MUST** Holding the user button (GPIO13) for at least 5 seconds starts the **service mode** for 30 minutes: the serial service port and the USB service port (`BASE-USBG`) are on. Shorter presses are ignored. Afterwards the device returns to the stored state.
+- `BASE-HWT-33` **MUST** Holding the user button (GPIO13) for at least 5 seconds starts the **service mode** for 30 minutes: the serial service port and the service AP (`BASE-WAP-40`) are on. Shorter presses are ignored. Afterwards the device returns to the stored state.
 - `BASE-HWT-34` **MUST** In the production image, the service port is off by default.
 - `BASE-HWT-35` **MUST** Every change of the service port state (command, button, timeout) is logged to the journal with the trigger.
 - `BASE-HWT-36` **MAY** In the debug image, the service port is on by default and offers a login (`BASE-INIT-41`).
@@ -118,7 +118,7 @@ This module provides user-space access to the hardware buses of the device: CAN,
 - Persistent CAN interface name – used by `BASE-NETD` (CAN `.network` file) and `BASE-MAC` (AppArmor profiles).
 - Access groups for serial and SPI nodes – used by `BASE-MAC` and the application layer.
 - Service port on `ttyAMA0` – used by service technicians; its state tells the application whether COM1/COM4 is available.
-- Service mode (`modberry-service-mode.target`, started by the user button) – used by `BASE-USBG`.
+- Service mode (`modberry-service-mode.target`, started by the user button) – used by `BASE-WAP` (service AP) and `BASE-BLE` (controlled pairing).
 
 ### Consumes
 
@@ -153,7 +153,7 @@ This module provides user-space access to the hardware buses of the device: CAN,
 | `BASE-HWT-30` | `device` | `modberry-serviceport on`; terminal on COM1 | journal and kernel messages visible; no login prompt |
 | `BASE-HWT-31` | `device` | Service port on: open `/dev/serial-com14` as member of `fieldbus`; service port off: watch COM1 | permission denied; no output |
 | `BASE-HWT-32` | `device` | `modberry-serviceport on`, reboot, `modberry-serviceport status` | `on` after reboot |
-| `BASE-HWT-33` | `device` | Press the user button for 1 s; then hold it for 5 s; wait 30 minutes | 1 s: nothing; 5 s: serial and USB service port on for 30 minutes, then off |
+| `BASE-HWT-33` | `device` | Press the user button for 1 s; then hold it for 5 s; wait 30 minutes | 1 s: nothing; 5 s: serial service port and service AP on for 30 minutes, then off |
 | `BASE-HWT-34` | `device` | Fresh production image, `modberry-serviceport status` | `off` |
 | `BASE-HWT-35` | `device` | Switch by command and by button, `journalctl -t modberry-serviceport` | one entry per change with the trigger |
 

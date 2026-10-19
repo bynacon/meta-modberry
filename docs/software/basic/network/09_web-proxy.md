@@ -46,7 +46,7 @@ nginx is the reverse proxy for the local web interface. It terminates TLS with a
 - `BASE-WEB-01` **MUST** nginx forwards HTTPS requests to the local web application.
 - `BASE-WEB-02` **MUST** nginx terminates TLS with TLS 1.2 or higher only.
 - `BASE-WEB-03` **MUST** HTTP requests on port 80 are answered only with a redirect to HTTPS.
-- `BASE-WEB-04` **MUST** nginx restricts access by source address to `service_nets`, the VPN subnet and the USB service port.
+- `BASE-WEB-04` **MUST** nginx restricts access by source address to `service_nets`, the VPN subnet and the service segment of the service AP.
 - `BASE-WEB-05` **MUST** The local web application listens only on loopback or a Unix socket, so that it is reachable only through nginx.
 - `BASE-WEB-06` **MUST** The TLS private key of nginx is a TPM key (`BASE-TPM-33`); nginx uses it through the OpenSSL TPM provider.
 - `BASE-WEB-07` **MUST** The TLS certificate of nginx is signed by the Bynacon CA and is issued per device during provisioning.
@@ -60,7 +60,7 @@ nginx is the reverse proxy for the local web interface. It terminates TLS with a
 | `/etc/nginx/sites-enabled/webapp.conf` | `listen 443 ssl`, `ssl_protocols TLSv1.2 TLSv1.3`, `proxy_pass http://127.0.0.1:<port>` or `unix:` | `BASE-WEB-01`, `BASE-WEB-02`, `BASE-WEB-05` |
 | `/etc/nginx/sites-enabled/webapp.conf` | `ssl_certificate /data/provisioning/tls/server.crt`, key via TPM provider | `BASE-WEB-06`, `BASE-WEB-07` |
 | `/etc/nginx/sites-enabled/webapp.conf` | `listen 80; return 301 https://$host$request_uri;` | `BASE-WEB-03` |
-| `/etc/nginx/sites-enabled/webapp.conf` | `allow <service_nets>; allow <VPN subnet>; allow <usb0 subnet>; deny all;` | `BASE-WEB-04` |
+| `/etc/nginx/sites-enabled/webapp.conf` | `allow <service_nets>; allow <VPN subnet>; allow 172.30.30.0/29; deny all;` | `BASE-WEB-04` |
 
 ---
 
@@ -73,7 +73,7 @@ nginx is the reverse proxy for the local web interface. It terminates TLS with a
 
 ### Consumes
 
-- `service_nets` – owned by `BASE-FWP`; VPN subnet – owned by `BASE-VPN`; `usb0` subnet – owned by `BASE-USBG`.
+- `service_nets` – owned by `BASE-FWP`; VPN subnet – owned by `BASE-VPN`; service segment – owned by `BASE-WAP` (`BASE-WAP-43`).
 - TPM key and OpenSSL provider – owned by `BASE-TPM`.
 - Certificate – owned by `BASE-PROV`.
 - Correct time – owned by `BASE-TIME` (`time-sync.target`).
@@ -107,4 +107,4 @@ nginx is the reverse proxy for the local web interface. It terminates TLS with a
 | :-- | :-- | :-- | :-- |
 | 1 | Which web application runs behind nginx, and on which port or socket? | `BASE-WEB-01`, `BASE-WEB-05` | **Deferred:** application layer. |
 | 2 | Certificate source. | `BASE-WEB-07` | **Decided:** Bynacon CA, issued at factory provisioning. |
-| 3 | Allowed source networks. | `BASE-WEB-04` | **Decided:** `service_nets`, VPN, USB service port. |
+| 3 | Allowed source networks. | `BASE-WEB-04` | **Decided:** `service_nets`, VPN, service AP. |

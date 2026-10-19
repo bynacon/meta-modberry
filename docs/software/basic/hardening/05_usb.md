@@ -53,6 +53,7 @@ This module blocks unauthorized USB devices. USBGuard allows only the USB device
 - `BASE-USB-04` **MUST** The internal USB devices of the hardware are allowed: the LAN9514 hub and its Ethernet controller. They are matched by vendor/product ID **and** port (`via-port`), so that an external device with the same IDs is not allowed.
 - `BASE-USB-05` **MUST** External devices are allowed only by explicit rules (section 5.1): one defined service USB stick, one defined USB WLAN adapter, one defined LTE modem. Each is matched by vendor/product ID and the external port; the service stick also by serial number.
 - `BASE-USB-06` **MUST** The kernel authorizes no USB device by default (`usbcore.authorized_default=0`); only USBGuard authorizes devices.
+- `BASE-USB-07` **MUST** The USB controller of the CM4 runs in host mode only. USB device (gadget) mode is disabled.
 
 ### 4.2 Operation
 
@@ -86,6 +87,7 @@ This module blocks unauthorized USB devices. USBGuard allows only the USB device
 | `/etc/usbguard/rules.conf` | rules of section 5.1, mode `0600` | `BASE-USB-04`, `BASE-USB-05`, `BASE-USB-11` |
 | `usbguard.service.d/` | `DefaultDependencies=no`, `Before=sysinit.target` (or as early as the unit allows) | `BASE-USB-01` |
 | `cmdline.txt` / kernel command line in the FIT | `usbcore.authorized_default=0` | `BASE-USB-06` |
+| Machine conf / `config.txt` | `ENABLE_DWC2_PERIPHERAL` removed; `dtoverlay=dwc2,dr_mode=host` (or no gadget support) | `BASE-USB-07` |
 
 ---
 
@@ -112,6 +114,7 @@ This module blocks unauthorized USB devices. USBGuard allows only the USB device
 | `BASE-USB-03` | `device` | Boot with an unknown USB stick plugged in | blocked |
 | `BASE-USB-04` | `device` | `usbguard list-devices`; `networkctl status lan1` | hub and Ethernet `allow`; `lan1` works |
 | `BASE-USB-04` | `device` | External device with spoofed LAN9514 IDs on the external port (lab) | blocked |
+| `BASE-USB-07` | `device` | `cat /sys/kernel/config/usb_gadget/` / `ls /sys/class/udc/` | no UDC available |
 | `BASE-USB-10` | `device` | `journalctl -u usbguard` after plugging in an unknown device | entry with IDs, serial, port |
 | `BASE-USB-11` | `rootfs` | `stat -c '%a' <rootfs>/etc/usbguard/rules.conf` | `600` |
 | `BASE-USB-12` | `device` | `usbguard list-devices` as `user` | access denied |
