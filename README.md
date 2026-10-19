@@ -1,22 +1,12 @@
-<p align="center">
-  <a href="https://www.techbase.eu/modberry">
-    <img src="https://www.techbase.eu/wp-content/uploads/2022/03/logo_techbase_blue.svg" alt="Logo" width="200">
-  </a>
-</p>
+# meta-modberry
 
-<h1 align="center">meta-modberry</h1>
+[![Techbase Logo](https://www.techbase.eu/wp-content/uploads/2022/03/logo_techbase_blue.svg)](https://www.techbase.eu/modberry)
 
-<p align="center">
-  Yocto-Layer für den Techbase Modberry Industriecomputer, basierend auf dem Raspberry Pi Compute Module 4.
-  <br />
-  <a href="#9-release-notes-modberry"><strong>Release Notes anzeigen</strong></a>
-</p>
+![Yocto Kirkstone](https://img.shields.io/badge/Yocto-Kirkstone-blue.svg?style=for-the-badge)
+![Raspberry Pi CM4](https://img.shields.io/badge/Raspberry%20Pi-CM4-C51A4A.svg?style=for-the-badge&logo=raspberry-pi)
 
-<!-- PROJECT SHIELDS -->
-<p align="center">
-  <img src="https://img.shields.io/badge/Yocto-Kirkstone-blue.svg?style=for-the-badge" alt="Yocto Kirkstone">
-  <img src="https://img.shields.io/badge/Raspberry%20Pi-CM4-C51A4A.svg?style=for-the-badge&logo=raspberry-pi" alt="Raspberry Pi CM4">
-</p>
+Yocto-Layer für den Techbase Modberry Industriecomputer, basierend auf dem Raspberry Pi Compute Module 4.
+**[Release Notes anzeigen](#9-release-notes-modberry)**
 
 Dieses README beschreibt den Inhalt des Layers `meta-modberry`, seine Spezifikationen und wie die Spezifikationen mit dem Agent-System umgesetzt werden.
 
