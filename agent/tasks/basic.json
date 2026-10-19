@@ -670,8 +670,7 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 644,
-      "needs_review": false
+      "pack_tokens": 644
     },
     {
       "id": "T-BASE-INIT-4.2",
@@ -712,8 +711,7 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 421,
-      "needs_review": false
+      "pack_tokens": 421
     },
     {
       "id": "T-BASE-INIT-4.3",
@@ -766,8 +764,7 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 858,
-      "needs_review": false
+      "pack_tokens": 858
     },
     {
       "id": "T-BASE-INIT-4.4",
@@ -806,8 +803,7 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 478,
-      "needs_review": false
+      "pack_tokens": 478
     },
     {
       "id": "T-BASE-INIT-4.5",
@@ -876,8 +872,7 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 1498,
-      "needs_review": false
+      "pack_tokens": 1498
     },
     {
       "id": "T-BASE-INIT-4.6",
@@ -920,8 +915,7 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 555,
-      "needs_review": false
+      "pack_tokens": 555
     },
     {
       "id": "T-BASE-TPM-4.1",
