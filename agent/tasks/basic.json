@@ -204,7 +204,7 @@
       "id": "T-BASE-HWT-4.1",
       "module": "BASE-HWT",
       "spec": "docs/software/basic/02_hw-tooling.md",
-      "spec_hash": "f98c8cff30902aa2",
+      "spec_hash": "5a413ef7a222f5ea",
       "group": "4.1",
       "title": "Hardware Interface Tooling – Tools",
       "phase": 1,
@@ -253,13 +253,14 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 610
+      "pack_tokens": 660,
+      "needs_review": false
     },
     {
       "id": "T-BASE-HWT-4.2",
       "module": "BASE-HWT",
       "spec": "docs/software/basic/02_hw-tooling.md",
-      "spec_hash": "f98c8cff30902aa2",
+      "spec_hash": "5a413ef7a222f5ea",
       "group": "4.2",
       "title": "Hardware Interface Tooling – Kernel Support",
       "phase": 1,
@@ -304,13 +305,14 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 820
+      "pack_tokens": 870,
+      "needs_review": false
     },
     {
       "id": "T-BASE-HWT-4.3",
       "module": "BASE-HWT",
       "spec": "docs/software/basic/02_hw-tooling.md",
-      "spec_hash": "f98c8cff30902aa2",
+      "spec_hash": "5a413ef7a222f5ea",
       "group": "4.3",
       "title": "Hardware Interface Tooling – udev Rules",
       "phase": 1,
@@ -339,14 +341,29 @@
         {
           "id": "BASE-HWT-24",
           "level": "MUST"
+        },
+        {
+          "id": "BASE-HWT-25",
+          "level": "MUST"
         }
       ],
       "verify_levels": [
         "device",
         "rootfs"
       ],
-      "blocked_by": [],
-      "blocked_reqs": [],
+      "blocked_by": [
+        {
+          "open_point": "7",
+          "question": "How are the UARTs switched between RS-232 and RS-485 (jumper, GPIO, expander pin)?",
+          "decision": "open",
+          "reqs": [
+            "BASE-HWT-25"
+          ]
+        }
+      ],
+      "blocked_reqs": [
+        "BASE-HWT-25"
+      ],
       "pack": "agent/packs/T-BASE-HWT-4.3.md",
       "status": "todo",
       "verified": {
@@ -355,13 +372,82 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 899
+      "pack_tokens": 1065,
+      "needs_review": false
+    },
+    {
+      "id": "T-BASE-HWT-4.4",
+      "module": "BASE-HWT",
+      "spec": "docs/software/basic/02_hw-tooling.md",
+      "spec_hash": "5a413ef7a222f5ea",
+      "group": "4.4",
+      "title": "Hardware Interface Tooling – Service Port",
+      "phase": 1,
+      "risk": "low",
+      "human_gate": false,
+      "depends_on_modules": [
+        "BASE-INIT"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-HWT-30",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-HWT-31",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-HWT-32",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-HWT-33",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-HWT-34",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-HWT-35",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-HWT-36",
+          "level": "MAY"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [
+        {
+          "open_point": "6",
+          "question": "How long does the service port stay on after pressing the user button?",
+          "decision": "open",
+          "reqs": [
+            "BASE-HWT-33"
+          ]
+        }
+      ],
+      "blocked_reqs": [
+        "BASE-HWT-33"
+      ],
+      "pack": "agent/packs/T-BASE-HWT-4.4.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 1328
     },
     {
       "id": "T-BASE-INIT-4.1",
       "module": "BASE-INIT",
       "spec": "docs/software/basic/01_init.md",
-      "spec_hash": "9d1d5344c48d341a",
+      "spec_hash": "6ed2bbb2188102bd",
       "group": "4.1",
       "title": "Init System & Service Management – Init System",
       "phase": 1,
@@ -400,13 +486,14 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 644
+      "pack_tokens": 644,
+      "needs_review": false
     },
     {
       "id": "T-BASE-INIT-4.2",
       "module": "BASE-INIT",
       "spec": "docs/software/basic/01_init.md",
-      "spec_hash": "9d1d5344c48d341a",
+      "spec_hash": "6ed2bbb2188102bd",
       "group": "4.2",
       "title": "Init System & Service Management – Boot Sequence",
       "phase": 1,
@@ -441,13 +528,14 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 421
+      "pack_tokens": 421,
+      "needs_review": false
     },
     {
       "id": "T-BASE-INIT-4.3",
       "module": "BASE-INIT",
       "spec": "docs/software/basic/01_init.md",
-      "spec_hash": "9d1d5344c48d341a",
+      "spec_hash": "6ed2bbb2188102bd",
       "group": "4.3",
       "title": "Init System & Service Management – Service Lifecycle",
       "phase": 1,
@@ -494,13 +582,14 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 858
+      "pack_tokens": 858,
+      "needs_review": false
     },
     {
       "id": "T-BASE-INIT-4.4",
       "module": "BASE-INIT",
       "spec": "docs/software/basic/01_init.md",
-      "spec_hash": "9d1d5344c48d341a",
+      "spec_hash": "6ed2bbb2188102bd",
       "group": "4.4",
       "title": "Init System & Service Management – Socket Activation",
       "phase": 1,
@@ -533,13 +622,14 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 478
+      "pack_tokens": 478,
+      "needs_review": false
     },
     {
       "id": "T-BASE-INIT-4.5",
       "module": "BASE-INIT",
       "spec": "docs/software/basic/01_init.md",
-      "spec_hash": "9d1d5344c48d341a",
+      "spec_hash": "6ed2bbb2188102bd",
       "group": "4.5",
       "title": "Init System & Service Management – Image Variants & Serial Console",
       "phase": 1,
@@ -602,13 +692,14 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 1387
+      "pack_tokens": 1392,
+      "needs_review": false
     },
     {
       "id": "T-BASE-INIT-4.6",
       "module": "BASE-INIT",
       "spec": "docs/software/basic/01_init.md",
-      "spec_hash": "9d1d5344c48d341a",
+      "spec_hash": "6ed2bbb2188102bd",
       "group": "4.6",
       "title": "Init System & Service Management – Service Sandboxing",
       "phase": 1,
@@ -645,7 +736,8 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 555
+      "pack_tokens": 555,
+      "needs_review": false
     },
     {
       "id": "T-BASE-TPM-4.1",
@@ -694,8 +786,7 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 821,
-      "needs_review": false
+      "pack_tokens": 821
     },
     {
       "id": "T-BASE-TPM-4.2",
@@ -742,8 +833,7 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 731,
-      "needs_review": false
+      "pack_tokens": 731
     },
     {
       "id": "T-BASE-TPM-4.3",
@@ -776,8 +866,7 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 322,
-      "needs_review": false
+      "pack_tokens": 322
     },
     {
       "id": "T-BASE-TPM-4.4",
@@ -824,8 +913,7 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 808,
-      "needs_review": false
+      "pack_tokens": 808
     },
     {
       "id": "T-BASE-TPM-4.5",
@@ -862,8 +950,7 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 422,
-      "needs_review": false
+      "pack_tokens": 422
     },
     {
       "id": "V-BASE-TPM-OP6",

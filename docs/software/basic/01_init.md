@@ -79,7 +79,7 @@ This module defines systemd as the init system and service manager of the base i
 ### 4.5 Image Variants & Serial Console
 
 - `BASE-INIT-40` **MUST** The production image has no login prompt on any console: serial interfaces, HDMI/`tty1` and virtual terminals.
-- `BASE-INIT-41` **MAY** The debug image provides a login on the service serial port via `systemd-serialgetty`.
+- `BASE-INIT-41` **MAY** The debug image provides a login on the service port `ttyAMA0` via `systemd-serialgetty` (`BASE-HWT-36`).
 - `BASE-INIT-42` **MUST** One image recipe builds both variants. The variable `MODBERRY_DEBUG = "1"` in `local.conf` selects the debug variant; without it, the production variant is built.
 - `BASE-INIT-43` **MUST** The production variant contains no `debug-tweaks` and no account with an empty password.
 - `BASE-INIT-44` **MUST** A debug image can be identified on the device and by its file name (e.g. `VARIANT_ID=debug` in `/etc/os-release`, image name suffix `-debug`).

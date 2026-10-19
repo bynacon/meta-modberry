@@ -7,7 +7,7 @@ Generated: 2026-10-19. Source of the state: `agent/tasks/basic.json`.
 | Phase | Module | Spec status | Tasks | Reqs | todo | in progress | implemented | verified | blocked | needs review |
 | :-: | :-- | :-- | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
 | 1 | [`BASE-BUILD`](hardening/06_build.md) | draft | 4 | 11 | 4 | 0 | 0 | 0 | 0 | 0 |
-| 1 | [`BASE-HWT`](02_hw-tooling.md) | draft | 3 | 16 | 3 | 0 | 0 | 0 | 0 | 0 |
+| 1 | [`BASE-HWT`](02_hw-tooling.md) | draft | 4 | 24 | 4 | 0 | 0 | 0 | 0 | 0 |
 | 1 | [`BASE-INIT`](01_init.md) | draft | 6 | 28 | 6 | 0 | 0 | 0 | 0 | 0 |
 | 1 | [`BASE-TPM`](03_tpm.md) | draft | 5 | 15 | 5 | 0 | 0 | 0 | 0 | 0 |
 | 2 | [`BASE-DNS`](network/05_dhcp-dns.md) | draft | 1 | 6 | 1 | 0 | 0 | 0 | 0 | 0 |
@@ -43,6 +43,8 @@ A task is `blocked` only if all its requirements are blocked; otherwise the bloc
 | Task | Status | Blocked requirements | Open point |
 | :-- | :-- | :-- | :-- |
 | `T-BASE-BUILD-4.4` | todo | BASE-BUILD-30, BASE-BUILD-31, BASE-BUILD-32 | 1: Kirkstone is end of life since April 2026: migrate to scarthgap (LTS until April 2028) or the next LTS release, or stay on kirkstone with own backports?; 2: Where are CVE reports and SBOMs stored, and who reviews them per release? |
+| `T-BASE-HWT-4.3` | todo | BASE-HWT-25 | 7: How are the UARTs switched between RS-232 and RS-485 (jumper, GPIO, expander pin)? |
+| `T-BASE-HWT-4.4` | todo | BASE-HWT-33 | 6: How long does the service port stay on after pressing the user button? |
 | `T-BASE-WAP-4.1` | todo | BASE-WAP-04, BASE-WAP-06 | 2: SSID scheme (per device or fixed)?; 5: Can `brcmfmac` run two APs plus a client, and SAE in AP mode? |
 | `T-BASE-WAP-4.2` | todo | BASE-WAP-10 | 5: Can `brcmfmac` run two APs plus a client, and SAE in AP mode? |
 | `T-BASE-PROV-4.2` | todo | BASE-PROV-12 | 1: Where does the factory script live, and where are the Bynacon CA and the device registry operated? |
