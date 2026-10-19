@@ -80,8 +80,8 @@ This module configures all network interfaces of the device with systemd-network
 
 ### 4.4 Uplink
 
-- `BASE-NETD-30` **MUST** `lan0` is the preferred uplink. The WLAN client `wlan0_sta` is the fallback uplink.
-- `BASE-NETD-31` **MUST** The default route via `lan0` has a lower metric than the default route via `wlan0_sta`, so that traffic uses `wlan0_sta` only while `lan0` has no carrier or no lease.
+- `BASE-NETD-30` **MUST** `lan0` is the preferred uplink. The WLAN client `wlan1_sta` (USB WLAN adapter, if fitted) is the fallback uplink.
+- `BASE-NETD-31` **MUST** The default route via `lan0` has a lower metric than the default route via `wlan1_sta`, so that traffic uses `wlan1_sta` only while `lan0` has no carrier or no lease.
 - `BASE-NETD-32` **MUST** `systemd-networkd-wait-online` waits for any one of the uplinks, so that the boot does not block on a missing uplink or on unconnected segments.
 
 ### 4.5 CAN Interface
@@ -99,7 +99,7 @@ This module configures all network interfaces of the device with systemd-network
 | LAN0 – service & uplink | `lan0` | CM4 Gigabit port (`bcmgenet`) | DHCP from upstream | DHCP | decided |
 | IoT – sensors & actuators | `br-iot` (`lan1` + `wlan0_iot`) | LAN9514 port (`smsc95xx`) + IoT SSID | `172.30.10.0/24` | `172.30.10.1` | decided |
 | Guest | `wlan0_guest` | guest SSID | `172.30.20.0/24` | `172.30.20.1` | decided |
-| Uplink fallback | `wlan0_sta` | WLAN client | DHCP | DHCP | decided |
+| Uplink fallback | `wlan1_sta` | WLAN client | DHCP | DHCP | decided |
 | VPN | `wg0` | WireGuard | per `BASE-VPN` | per `BASE-VPN` | open |
 | USB service | `usb0` | USB gadget | `172.30.30.0/29` | `172.30.30.1` | decided (`BASE-USBG`) |
 | CAN | `can0` | MCP2515 | — | — | 125 kbit/s |
@@ -114,12 +114,12 @@ This module configures all network interfaces of the device with systemd-network
 | `/etc/systemd/network/30-br-iot.netdev` | `Kind=bridge`, `Name=br-iot` | `BASE-NETD-11`, `BASE-NETD-13` |
 | `/etc/systemd/network/30-br-iot.network` | `Address=172.30.10.1/24`, `IPForward=` per `BASE-FWP` | `BASE-NETD-21`, `BASE-NETD-14` |
 | `/etc/systemd/network/30-lan1.network` | `Bridge=br-iot` | `BASE-NETD-11` |
-| `/etc/systemd/network/40-wlan0_sta.network` | `DHCP=yes`, `[DHCPv4] RouteMetric=600` | `BASE-NETD-24`, `BASE-NETD-31` |
+| `/etc/systemd/network/40-wlan1_sta.network` | `DHCP=yes`, `[DHCPv4] RouteMetric=600` | `BASE-NETD-24`, `BASE-NETD-31` |
 | `/etc/systemd/network/50-can0.network` | `[CAN] BitRate=125000` | `BASE-NETD-40` |
 | `/etc/systemd/resolved.conf` | `MulticastDNS=no`, `LLMNR=no` | `BASE-NETD-26` |
 | `/etc/resolv.conf` | symlink to `/run/systemd/resolve/stub-resolv.conf` | `BASE-NETD-25` |
 | `*.network` | `LinkLocalAddressing=ipv6` (at least) | `BASE-NETD-23` |
-| `systemd-networkd-wait-online.service.d/` | `--any --interface=lan0 --interface=wlan0_sta` | `BASE-NETD-32` |
+| `systemd-networkd-wait-online.service.d/` | `--any --interface=lan0 --interface=wlan1_sta` | `BASE-NETD-32` |
 
 ---
 
@@ -130,7 +130,7 @@ This module configures all network interfaces of the device with systemd-network
 - Interface names, segments and address plan – used by `BASE-FW`, `BASE-FWP`, `BASE-WAP`, `BASE-DNS`, `BASE-TIME`, `BASE-VPN`, `BASE-USBG`, `THREAD-*`.
 - Bridge `br-iot` – used by `BASE-WAP` (hostapd adds `wlan0_iot` with `bridge=br-iot`).
 - Convention for `.link` / `.network` / `.netdev` files (`BASE-NETD-02`) – binding for `BASE-WAP`, `BASE-VPN` and `BASE-USBG`.
-- Uplink interfaces `lan0`, `wlan0_sta` – used by `BASE-FWP` (NAT for the guest segment, output rules).
+- Uplink interfaces `lan0`, `wlan1_sta` – used by `BASE-FWP` (NAT for the guest segment, output rules).
 - DNS stub resolver `127.0.0.53` – used by `BASE-DNS` (dnsmasq upstream) and all services of the device.
 - `can0` up at boot – used by the application layer.
 
@@ -154,17 +154,17 @@ This module configures all network interfaces of the device with systemd-network
 | `BASE-NETD-04` | `manifest` | `iproute2` in image manifest | present |
 | `BASE-NETD-10` | `device` | `networkctl list` | `lan0`, `br-iot`, `wlan0_guest` present and configured |
 | `BASE-NETD-11` | `device` | `bridge link` | `lan1` and `wlan0_iot` are ports of `br-iot` |
-| `BASE-NETD-12` | `device` | `bridge link` | `lan0`, `wlan0_guest`, `wlan0_sta` are not bridge ports |
+| `BASE-NETD-12` | `device` | `bridge link` | `lan0`, `wlan0_guest`, `wlan1_sta` are not bridge ports |
 | `BASE-NETD-14` | `device` | `sysctl net.ipv4.conf.<if>.forwarding` per interface | `1` only on routed interfaces |
 | `BASE-NETD-20` | `device` | Reboot twice, `ip link` | `lan0`, `lan1` always on the same physical port |
 | `BASE-NETD-21` | `device` | `ip -4 addr show br-iot`, `ip -4 addr show wlan0_guest` | addresses from the address plan |
 | `BASE-NETD-22` | `device` | `networkctl status lan0` | address from DHCP |
 | `BASE-NETD-23` | `device` | `ip -6 addr show scope link` | link-local address on every segment |
-| `BASE-NETD-24` | `device` | `networkctl status wlan0_sta` | address from DHCP via networkd |
+| `BASE-NETD-24` | `device` | `networkctl status wlan1_sta` | address from DHCP via networkd |
 | `BASE-NETD-25` | `device` | `resolvectl status`; `readlink /etc/resolv.conf` | DNS servers of the active uplink; stub resolver |
 | `BASE-NETD-26` | `device` | `resolvectl status` | `-mDNS -LLMNR` |
-| `BASE-NETD-30`, `-31` | `device` | `ip route show default` with `lan0` connected, then unplugged | via `lan0` (metric 100); after unplug via `wlan0_sta` |
-| `BASE-NETD-32` | `device` | Boot with `lan0` unplugged and `wlan0_sta` connected | boot does not wait for `lan0` |
+| `BASE-NETD-30`, `-31` | `device` | `ip route show default` with `lan0` connected, then unplugged | via `lan0` (metric 100); after unplug via `wlan1_sta` |
+| `BASE-NETD-32` | `device` | Boot with `lan0` unplugged and `wlan1_sta` connected | boot does not wait for `lan0` |
 | `BASE-NETD-40` | `device` | `ip -details link show can0` | `state UP`, `bitrate 125000` |
 
 ---

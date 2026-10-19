@@ -88,7 +88,7 @@ This module provides user-space access to the hardware buses of the device: CAN,
 - `BASE-HWT-30` **MUST** `ttyAMA0` (COM1/COM4) can be used as service port. When the service port is on, the device writes the kernel log and the journal to `ttyAMA0`. The service port offers no login (`BASE-INIT-40`).
 - `BASE-HWT-31` **MUST** Service port and field bus use of `ttyAMA0` exclude each other. While the service port is on, `ttyAMA0` and `/dev/serial-com14` are not accessible to the group `fieldbus`. While it is off, the device writes nothing to `ttyAMA0`.
 - `BASE-HWT-32` **MUST** root switches the service port on and off with a command (`modberry-serviceport on|off|status`). The state is stored persistently on the data partition and applied at boot.
-- `BASE-HWT-33` **MUST** Pressing the user button (GPIO13) switches the service port on for 30 minutes. Afterwards it returns to the stored state.
+- `BASE-HWT-33` **MUST** Holding the user button (GPIO13) for at least 5 seconds starts the **service mode** for 30 minutes: the serial service port and the USB service port (`BASE-USBG`) are on. Shorter presses are ignored. Afterwards the device returns to the stored state.
 - `BASE-HWT-34` **MUST** In the production image, the service port is off by default.
 - `BASE-HWT-35` **MUST** Every change of the service port state (command, button, timeout) is logged to the journal with the trigger.
 - `BASE-HWT-36` **MAY** In the debug image, the service port is on by default and offers a login (`BASE-INIT-41`).
@@ -105,7 +105,7 @@ This module provides user-space access to the hardware buses of the device: CAN,
 | Device tree / pinmux | GPIO17 as RTS of the PL011 UART (`ttyAMA0`); SC16IS740 RTS wired to the transceiver; no `linux,rs485-enabled-at-boot-time` (the application selects the mode) | `BASE-HWT-25` |
 | `/usr/sbin/modberry-serviceport` | `on` / `off` / `status`; state in `/data/serviceport/state` | `BASE-HWT-32` |
 | `modberry-serviceport.service` | when on: `chown root:root`, `chmod 0600` on `ttyAMA0`, then `journalctl -f -o short-precise` (kernel and system) to `ttyAMA0` at 115200 baud; `Restart=on-failure` | `BASE-HWT-30`, `BASE-HWT-31` |
-| `modberry-serviceport-button.service` | waits for GPIO13 (`gpiomon`), starts the service port for 30 minutes, then restores the stored state | `BASE-HWT-33` |
+| `modberry-serviceport-button.service` | waits for GPIO13 (`gpiomon`), measures the hold time (≥ 5 s), starts the service mode (`modberry-service-mode.target`) for 30 minutes, then restores the stored state | `BASE-HWT-33` |
 | Kernel command line in the FIT | no `console=ttyAMA0` / `console=serial0` in the production image | `BASE-HWT-31`, `BASE-HWT-34` |
 
 ---
@@ -118,6 +118,7 @@ This module provides user-space access to the hardware buses of the device: CAN,
 - Persistent CAN interface name – used by `BASE-NETD` (CAN `.network` file) and `BASE-MAC` (AppArmor profiles).
 - Access groups for serial and SPI nodes – used by `BASE-MAC` and the application layer.
 - Service port on `ttyAMA0` – used by service technicians; its state tells the application whether COM1/COM4 is available.
+- Service mode (`modberry-service-mode.target`, started by the user button) – used by `BASE-USBG`.
 
 ### Consumes
 
@@ -152,7 +153,7 @@ This module provides user-space access to the hardware buses of the device: CAN,
 | `BASE-HWT-30` | `device` | `modberry-serviceport on`; terminal on COM1 | journal and kernel messages visible; no login prompt |
 | `BASE-HWT-31` | `device` | Service port on: open `/dev/serial-com14` as member of `fieldbus`; service port off: watch COM1 | permission denied; no output |
 | `BASE-HWT-32` | `device` | `modberry-serviceport on`, reboot, `modberry-serviceport status` | `on` after reboot |
-| `BASE-HWT-33` | `device` | Service port off, press the user button, wait 30 minutes | on for 30 minutes, then off |
+| `BASE-HWT-33` | `device` | Press the user button for 1 s; then hold it for 5 s; wait 30 minutes | 1 s: nothing; 5 s: serial and USB service port on for 30 minutes, then off |
 | `BASE-HWT-34` | `device` | Fresh production image, `modberry-serviceport status` | `off` |
 | `BASE-HWT-35` | `device` | Switch by command and by button, `journalctl -t modberry-serviceport` | one entry per change with the trigger |
 
@@ -160,10 +161,10 @@ This module provides user-space access to the hardware buses of the device: CAN,
 
 ## 8. Constraints & Risks
 
-- `BASE-HWT-30`: the kernel command line is part of the signed FIT image (`BASE-VBOOT`, `BASE-MBOOT`) and cannot be changed at runtime. The service port therefore shows messages only from the start of journald; U-Boot and early kernel messages are not available on it in the production image.
-- `BASE-HWT-31`: today, `cmdline.txt` contains `console=serial0,115200` and `console=tty1`. Both are removed in the production image (`BASE-INIT-40`).
 - `BASE-HWT-25`: the RS-485 support of the PL011 driver (`amba-pl011`) was added to the mainline kernel only after 5.15 (around 5.18, to be verified). The kirkstone kernel (5.15) may not support `TIOCSRS485` on `ttyAMA0` (open point 9). `sc16is7xx` supports it.
 - `BASE-HWT-26`: the approach of <https://sourceforge.net/p/arduino-icsc/wiki/Raspberry%20Pi/> (direction GPIO set through `/dev/mem`) needs root and `/dev/mem`, which `BASE-BUILD-11` disables. It is not used.
+- `BASE-HWT-30`: the kernel command line is part of the signed FIT image (`BASE-VBOOT`, `BASE-MBOOT`) and cannot be changed at runtime. The service port therefore shows messages only from the start of journald; U-Boot and early kernel messages are not available on it in the production image.
+- `BASE-HWT-31`: today, `cmdline.txt` contains `console=serial0,115200` and `console=tty1`. Both are removed in the production image (`BASE-INIT-40`).
 - `BASE-HWT-33`: the user button needs a GPIO input with debouncing; `gpiomon` comes from `libgpiod-tools`, which must be added to the components.
 - A CAN interface is a network device. udev `GROUP`/`MODE` have no effect on it. Access to raw CAN sockets is controlled by `CAP_NET_RAW`, not by file permissions.
 - `spi0-2cs.dtbo` creates `spidev0.0` and `spidev0.1` by default. Both chip selects are bound to kernel drivers (CAN, TPM), so both `spidev` nodes must be disabled in the device tree (`BASE-HWT-14`). The machine conf also autoloads `spidev` and installs `spitools`; both are removed.

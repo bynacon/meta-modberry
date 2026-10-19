@@ -55,8 +55,9 @@ This module provides Bluetooth Low Energy for reading BLE sensors. The device ac
 
 - `BASE-BLE-10` **MUST** The device is not discoverable and does not advertise.
 - `BASE-BLE-11` **MUST** Pairing and bonding use LE Secure Connections only. Legacy pairing is refused.
-- `BASE-BLE-12` **MUST** The device connects only to sensors in an allow list (address or identity resolving key). The allow list is provisioned or managed by the application layer.
+- `BASE-BLE-12` **MUST** Only sensors released by Bynacon are accepted. The device connects to, and evaluates data only from, sensors in the Bynacon allow list (address or identity resolving key).
 - `BASE-BLE-13` **MUST** No Bluetooth profile is offered that gives access to the system (no PAN/BNEP networking, no serial port profile, no OBEX).
+- `BASE-BLE-14` **MUST** The allow list is issued by Bynacon as a signed file (via provisioning or an update). The device verifies the signature before it uses the list; it cannot be changed locally.
 
 ### 4.3 Access Control
 
@@ -74,6 +75,7 @@ This module provides Bluetooth Low Energy for reading BLE sensors. The device ac
 | `/etc/bluetooth/main.conf` | `[General] ControllerMode = le`, `Discoverable = false`, `DiscoverableTimeout = 0`, `Privacy = device`, `SecureConnections = only` | `BASE-BLE-02`, `BASE-BLE-10`, `BASE-BLE-11` |
 | `bluetooth.service.d/` | `ExecStart=… --noplugin=sap,network,input,hog` (only the plugins needed for LE sensors) | `BASE-BLE-13` |
 | `/etc/dbus-1/system.d/bluetooth.conf` | `allow` for group `bluetooth` only | `BASE-BLE-20` |
+| `/data/provisioning/ble/allowlist.json` + `.sig` | signed by the Bynacon key; public key in the image | `BASE-BLE-12`, `BASE-BLE-14` |
 | Build: production image | no `bluez5-noinst-tools`, `bluez5-obex` | `BASE-BLE-13` |
 
 ---
@@ -104,6 +106,7 @@ This module provides Bluetooth Low Energy for reading BLE sensors. The device ac
 | `BASE-BLE-11` | `device` | Pair with a test device that supports only legacy pairing | refused |
 | `BASE-BLE-12` | `device` | Connect to a sensor outside the allow list via the application | refused |
 | `BASE-BLE-13` | `device` | `sdptool browse local` / `bluetoothctl show` | no PAN, SPP or OBEX service |
+| `BASE-BLE-14` | `device` | Modify the allow list without re-signing, restart the application | list rejected, no sensor accepted |
 | `BASE-BLE-20` | `device` | `bluetoothctl list` as a user without group `bluetooth` | access denied |
 | `BASE-BLE-21` | `device` | Pair a test sensor, `journalctl -u bluetooth` | event logged |
 
@@ -122,5 +125,5 @@ This module provides Bluetooth Low Energy for reading BLE sensors. The device ac
 | # | Question | Affects | Decision |
 | :-- | :-- | :-- | :-- |
 | 1 | Which BLE sensors are used: advertisements only, or GATT connections with pairing? | `BASE-BLE-11`, `BASE-BLE-12` | |
-| 2 | Who manages the allow list (provisioning, web interface)? | `BASE-BLE-12` | |
+| 2 | Who manages the allow list (provisioning, web interface)? | `BASE-BLE-12` | **Decided:** Bynacon only; signed list (`BASE-BLE-14`). |
 | 3 | Bluetooth needed. | Scope | **Decided:** yes, BLE for sensors. |

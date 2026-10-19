@@ -56,7 +56,7 @@ This module defines how a device that runs the production image gets its per-dev
 
 ### 4.2 Provisioned Items
 
-- `BASE-PROV-10` **MUST** The image contains no per-device secrets. All items of section 5.1 are provisioned per device.
+- `BASE-PROV-10` **MUST** The image contains no per-device or per-installation secrets. All items of section 5.1 are provisioned per device, or per installation where section 5.1 says so (WLAN passphrases).
 - `BASE-PROV-11` **MUST** Private keys (WireGuard, nginx TLS, TPM device identity) are generated on the device and never leave it. Only public keys and certificate signing requests leave the device.
 - `BASE-PROV-12` **MUST** The nginx TLS certificate is signed by the Bynacon CA from a CSR generated on the device.
 
@@ -89,8 +89,8 @@ This module defines how a device that runs the production image gets its per-dev
 
 | Item | Generated | Stored as | Used by |
 | :-- | :-- | :-- | :-- |
-| AP passphrase IoT WLAN | factory script | `wlan/iot.psk` | `BASE-WAP-14` |
-| AP passphrase guest WLAN | factory script | `wlan/guest.psk` | `BASE-WAP-14`, `BASE-WAP-16` |
+| AP passphrase IoT WLAN (per installation) | device registry, per installation | `wlan/iot.psk` | `BASE-WAP-14` |
+| AP passphrase guest WLAN (per installation) | device registry, per installation | `wlan/guest.psk` | `BASE-WAP-14`, `BASE-WAP-16` |
 | WLAN country code (default `CH`) | factory script | `wlan/country` | `BASE-WAP-15` |
 | WLAN client credentials (optional) | factory script | iwd network file | `BASE-WCLI-21` |
 | Site entries of `service_nets` | factory script | `firewall/service_nets.nft` | `BASE-FWP-03` |

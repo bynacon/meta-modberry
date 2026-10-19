@@ -28,7 +28,7 @@ This module connects the device as a client to an existing WLAN, which serves as
 
 ### Out of scope
 
-- IP configuration and uplink role of `wlan0_sta` → `BASE-NETD`
+- IP configuration and uplink role of `wlan1_sta` → `BASE-NETD`
 - WLAN access point → `BASE-WAP`
 - Provisioning UI for WLAN credentials → application layer
 
@@ -48,8 +48,9 @@ This module connects the device as a client to an existing WLAN, which serves as
 ### 4.1 Daemon
 
 - `BASE-WCLI-01` **MUST** iwd is the only WLAN client daemon. `wpa-supplicant` is not part of the image.
-- `BASE-WCLI-02` **MUST** iwd manages only the client interface `wlan0_sta`. It does not touch the AP interfaces (`wlan0_iot`, `wlan0_guest`).
+- `BASE-WCLI-02` **MUST** iwd manages only the client interface `wlan1_sta`. It does not touch the AP interfaces (`wlan0_iot`, `wlan0_guest`).
 - `BASE-WCLI-03` **MUST** iwd does not configure IP addresses (`EnableNetworkConfiguration=false`). IP configuration is done by `BASE-NETD`.
+- `BASE-WCLI-04` **MUST** `wlan1_sta` is an interface of the USB WLAN adapter (`BASE-USB-05`), never of the on-board radio (`BASE-WAP-06`). Without the adapter, the device has no WLAN client and no fallback uplink.
 
 ### 4.2 Security
 
@@ -71,7 +72,7 @@ This module connects the device as a client to an existing WLAN, which serves as
 | :-- | :-- | :-- |
 | `/etc/iwd/main.conf` | `[General] EnableNetworkConfiguration=false` | `BASE-WCLI-03` |
 | `/etc/iwd/main.conf` | `[Settings] AlwaysRandomizeAddress=false` (stable MAC for DHCP) | `BASE-NETD-23` |
-| `iwd.service.d/10-interface.conf` | `ExecStart=` with `--interfaces=wlan0_sta` | `BASE-WCLI-02` |
+| `iwd.service.d/10-interface.conf` | `ExecStart=` with `--interfaces=wlan1_sta` | `BASE-WCLI-02` |
 | Kernel config fragment | `CONFIG_CRYPTO_USER_API_SKCIPHER`, `CONFIG_CRYPTO_USER_API_HASH`, `CONFIG_KEY_DH_OPERATIONS`, `CONFIG_CRYPTO_ECB`, `CONFIG_CRYPTO_CMAC`, `CONFIG_PKCS8_PRIVATE_KEY_PARSER` … | `BASE-WCLI-10` |
 | `/var/lib/iwd/` | mode `0700`, files `0600` | `BASE-WCLI-21` |
 
@@ -81,11 +82,11 @@ This module connects the device as a client to an existing WLAN, which serves as
 
 ### Provides
 
-- Connected client interface `wlan0_sta` – used by `BASE-NETD` (DHCP, uplink).
+- Connected client interface `wlan1_sta` – used by `BASE-NETD` (DHCP, uplink).
 
 ### Consumes
 
-- Interface name `wlan0_sta` and IP configuration – owned by `BASE-NETD`.
+- Interface name `wlan1_sta` and IP configuration – owned by `BASE-NETD`.
 - Persistent, encrypted storage for `/var/lib/iwd/` – owned by `BASE-ROOTFS` / `BASE-LUKS`.
 - Service integration rules – owned by `BASE-INIT`.
 
@@ -97,11 +98,11 @@ This module connects the device as a client to an existing WLAN, which serves as
 | :-- | :-- | :-- | :-- |
 | `BASE-WCLI-01` | `manifest` | `wpa-supplicant` in image manifest | absent |
 | `BASE-WCLI-01` | `device` | `systemctl is-active iwd` | `active` |
-| `BASE-WCLI-02` | `device` | `iwctl device list` | only `wlan0_sta` |
-| `BASE-WCLI-03` | `device` | `networkctl status wlan0_sta` | managed by networkd |
+| `BASE-WCLI-02` | `device` | `iwctl device list` | only `wlan1_sta` |
+| `BASE-WCLI-03` | `device` | `networkctl status wlan1_sta` | managed by networkd |
 | `BASE-WCLI-10` | `device` | Connect to a WPA3-only test network | connected |
-| `BASE-WCLI-11` | `device` | `iwctl station wlan0_sta connect <open network>` | refused |
-| `BASE-WCLI-12` | `device` | Connect to a transition-mode network, `iwctl station wlan0_sta show` | security `WPA3-Personal` |
+| `BASE-WCLI-11` | `device` | `iwctl station wlan1_sta connect <open network>` | refused |
+| `BASE-WCLI-12` | `device` | Connect to a transition-mode network, `iwctl station wlan1_sta show` | security `WPA3-Personal` |
 | `BASE-WCLI-20` | `rootfs` | `grep -r WIFI_ <layer> <local.conf>`; `ls <rootfs>/var/lib/iwd/` | no credentials |
 | `BASE-WCLI-21` | `device` | `stat -c '%U %a' /var/lib/iwd/*.psk` | `root 600` |
 | `BASE-WCLI-22` | `device` | `findmnt -T /var/lib/iwd` | encrypted data partition |

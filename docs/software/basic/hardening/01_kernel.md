@@ -130,7 +130,7 @@ This module hardens the kernel through `sysctl` parameters and makes the device 
 - `config.txt` contains `#dtparam=watchdog=off` today. The hardware watchdog is not active.
 - A too short `RuntimeWatchdogSec` causes resets under high load (e.g. during a long `fsck` or a TPM operation). 15 s is a starting value and must be verified on the device.
 - `StartLimitAction=reboot` on a service that fails at every boot causes a reboot loop. It is applied only to services that are known to start reliably, and only after the start limit (`BASE-INIT-25`).
-- `net.ipv4.conf.all.rp_filter = 1` (strict) can drop packets when the default route changes between `lan0` and `wlan0_sta` (`BASE-NETD-31`). This must be tested with the uplink fallback.
+- `net.ipv4.conf.all.rp_filter = 1` (strict) can drop packets when the default route changes between `lan0` and `wlan1_sta` (`BASE-NETD-31`). This must be tested with the uplink fallback.
 - The source specification names the `watchdog` daemon. With systemd as PID 1, systemd can feed the hardware watchdog itself. Both must not open the device at the same time (`BASE-KERN-13`).
 
 ---

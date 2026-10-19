@@ -188,7 +188,7 @@ Each shared resource has exactly one owner module. Other modules use it and neve
 | systemd, unit integration and sandboxing rules | `BASE-INIT` | all modules |
 | Distro conf `modberry`, image variants, accounts | `BASE-INIT` | all modules |
 | Interface names, address plan, `.network` / `.netdev` convention | `BASE-NETD` | `BASE-FW`, `BASE-FWP`, `BASE-WAP`, `BASE-DNS`, `BASE-TIME`, `BASE-VPN`, `BASE-USBG`, `THREAD-*` |
-| `.network` / `.netdev` file of an interface | module that owns the interface: `BASE-NETD` (`lan0`, `lan1`, `br-iot`, `wlan0_sta`, `can0`), `BASE-WAP` (`wlan0_iot`, `wlan0_guest`), `BASE-VPN` (`wg0`), `BASE-USBG` (`usb0`) | — |
+| `.network` / `.netdev` file of an interface | module that owns the interface: `BASE-NETD` (`lan0`, `lan1`, `br-iot`, `wlan1_sta`, `can0`), `BASE-WAP` (`wlan0_iot`, `wlan0_guest`), `BASE-VPN` (`wg0`), `BASE-USBG` (`usb0`) | — |
 | nftables table `inet filter`, ban sets, `/etc/nftables.d/` | `BASE-FW` | `BASE-FWP`, `BASE-IDS`, `BASE-CONT`, `THREAD-NAT64`, `meta-ota` |
 | Port, forward and output matrix, allow list `service_nets`, guest NAT | `BASE-FWP` | all modules with network services, `BASE-WEB`, `BASE-IDS` |
 | dnsmasq, `/etc/dnsmasq.d/` | `BASE-DNS` | `BASE-USBG`, `THREAD-NAT64` (DNS64) |

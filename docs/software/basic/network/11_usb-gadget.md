@@ -5,7 +5,7 @@
 | **Module ID** | `BASE-USBG` |
 | **Stack** | `basic` |
 | **Spec status** | `draft` |
-| **Depends on** | `BASE-INIT`, `BASE-NETD`, `BASE-FWP`, `BASE-DNS` |
+| **Depends on** | `BASE-INIT`, `BASE-HWT`, `BASE-NETD`, `BASE-FWP`, `BASE-DNS` |
 | **Hardware reference** | [M40804W_MAX.md](../../../hardware/M40804W_MAX.md) – section 5 (USB) |
 | **Risk** | `high` |
 
@@ -59,7 +59,7 @@ This module gives a service technician local access to the device over a USB cab
 
 ### 4.3 Activation
 
-- `BASE-USBG-20` **SHOULD** The service port is active only for a limited time after a physical action (e.g. pressing the user button, GPIO13) – see open point 1.
+- `BASE-USBG-20` **MUST** The USB service port is active only in service mode (user button held for 5 seconds, 30 minutes, `BASE-HWT-33`). By default it is off.
 
 ---
 
@@ -69,6 +69,7 @@ This module gives a service technician local access to the device over a USB cab
 | :-- | :-- | :-- |
 | `config.txt` / device tree | `dtoverlay=dwc2,dr_mode=<mode>` per hardware (see section 8) | `BASE-USBG-04` |
 | `modberry-usb-gadget.service` | configfs: `idVendor`, `idProduct`, one config with `ncm.usb0`, `host_addr`/`dev_addr` from the serial number | `BASE-USBG-01` … `BASE-USBG-03` |
+| `modberry-usb-gadget.service` | `WantedBy=modberry-service-mode.target`, `PartOf=modberry-service-mode.target` | `BASE-USBG-20` |
 | `/etc/systemd/network/70-usb0.network` | `Address=172.30.30.1/29`, no `DHCPServer=` | `BASE-USBG-10` |
 | `/etc/dnsmasq.d/70-usb0.conf` | `dhcp-range=usb0,172.30.30.2,172.30.30.6,1h`, `dhcp-option=usb0,3`, `dhcp-option=usb0,6` (empty router and DNS) | `BASE-USBG-11` |
 
@@ -98,7 +99,7 @@ This module gives a service technician local access to the device over a USB cab
 | `BASE-USBG-04` | `device` | Gadget active, `networkctl status lan1`; `usbguard list-devices` | `lan1` up, LAN9514 present |
 | `BASE-USBG-10`, `-11` | `device` | Laptop: `ip addr`, `ip route` | address in `172.30.30.0/29`, no default route via the device |
 | `BASE-USBG-12` | `device` | Laptop: `nmap 172.30.30.1`; ping an IoT device; ping the internet | only SVC ports; IoT reachable; no internet |
-| `BASE-USBG-20` | `device` | Without button press, connect the laptop | no `usb0` (if open point 1 is decided for the button) |
+| `BASE-USBG-20` | `device` | Connect the laptop without service mode; then hold the button for 5 s | no `usb0`; `usb0` for 30 minutes |
 
 ---
 
@@ -115,6 +116,6 @@ This module gives a service technician local access to the device over a USB cab
 
 | # | Question | Affects | Decision |
 | :-- | :-- | :-- | :-- |
-| 1 | Is the service port always active, or only for a limited time after pressing the user button (GPIO13)? Duration? | `BASE-USBG-20` | |
+| 1 | Is the service port always active, or only for a limited time after pressing the user button (GPIO13)? Duration? | `BASE-USBG-20` | **Decided:** only in service mode – button held for 5 seconds, 30 minutes, default off. |
 | 2 | Does the board have a USB connector for device mode that does not disconnect the LAN9514? | `BASE-USBG-04` | **Deferred:** needs the schematic → verification task. |
 | 3 | USB service access needed. | Scope | **Decided:** yes. |

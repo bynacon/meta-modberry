@@ -204,7 +204,7 @@
       "id": "T-BASE-HWT-4.1",
       "module": "BASE-HWT",
       "spec": "docs/software/basic/02_hw-tooling.md",
-      "spec_hash": "24ea25f660f95e00",
+      "spec_hash": "90590b6ec343360a",
       "group": "4.1",
       "title": "Hardware Interface Tooling – Tools",
       "phase": 1,
@@ -253,14 +253,13 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 660,
-      "needs_review": false
+      "pack_tokens": 660
     },
     {
       "id": "T-BASE-HWT-4.2",
       "module": "BASE-HWT",
       "spec": "docs/software/basic/02_hw-tooling.md",
-      "spec_hash": "24ea25f660f95e00",
+      "spec_hash": "90590b6ec343360a",
       "group": "4.2",
       "title": "Hardware Interface Tooling – Kernel Support",
       "phase": 1,
@@ -305,14 +304,13 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 870,
-      "needs_review": false
+      "pack_tokens": 870
     },
     {
       "id": "T-BASE-HWT-4.3",
       "module": "BASE-HWT",
       "spec": "docs/software/basic/02_hw-tooling.md",
-      "spec_hash": "24ea25f660f95e00",
+      "spec_hash": "90590b6ec343360a",
       "group": "4.3",
       "title": "Hardware Interface Tooling – udev Rules",
       "phase": 1,
@@ -376,14 +374,13 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 1439,
-      "needs_review": false
+      "pack_tokens": 1439
     },
     {
       "id": "T-BASE-HWT-4.4",
       "module": "BASE-HWT",
       "spec": "docs/software/basic/02_hw-tooling.md",
-      "spec_hash": "24ea25f660f95e00",
+      "spec_hash": "90590b6ec343360a",
       "group": "4.4",
       "title": "Hardware Interface Tooling – Service Port",
       "phase": 1,
@@ -434,14 +431,13 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 1311,
-      "needs_review": false
+      "pack_tokens": 1374
     },
     {
       "id": "V-BASE-HWT-OP9",
       "module": "BASE-HWT",
       "spec": "docs/software/basic/02_hw-tooling.md",
-      "spec_hash": "24ea25f660f95e00",
+      "spec_hash": "90590b6ec343360a",
       "group": "OP9",
       "title": "Verify: Does the kirkstone kernel (5.15) support RS-485 mode (`TIOCSRS485`) on the PL011 UART (`ttyAMA0`)? If not: backport of the driver change, or kernel update.",
       "phase": 1,
@@ -466,8 +462,7 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 252,
-      "needs_review": false
+      "pack_tokens": 252
     },
     {
       "id": "T-BASE-INIT-4.1",
@@ -1288,7 +1283,7 @@
       "id": "T-BASE-FWP-4.1",
       "module": "BASE-FWP",
       "spec": "docs/software/basic/network/03_firewall-policy.md",
-      "spec_hash": "9dff288ef56efb55",
+      "spec_hash": "f22b45ee178108e4",
       "group": "4.1",
       "title": "Firewall Policy (port, forward and output matrices) – Input",
       "phase": 2,
@@ -1331,7 +1326,7 @@
       "id": "T-BASE-FWP-4.2",
       "module": "BASE-FWP",
       "spec": "docs/software/basic/network/03_firewall-policy.md",
-      "spec_hash": "9dff288ef56efb55",
+      "spec_hash": "f22b45ee178108e4",
       "group": "4.2",
       "title": "Firewall Policy (port, forward and output matrices) – Forward & NAT",
       "phase": 2,
@@ -1382,7 +1377,7 @@
       "id": "T-BASE-FWP-4.3",
       "module": "BASE-FWP",
       "spec": "docs/software/basic/network/03_firewall-policy.md",
-      "spec_hash": "9dff288ef56efb55",
+      "spec_hash": "f22b45ee178108e4",
       "group": "4.3",
       "title": "Firewall Policy (port, forward and output matrices) – Output",
       "phase": 2,
@@ -1417,7 +1412,7 @@
       "id": "T-BASE-NETD-4.1",
       "module": "BASE-NETD",
       "spec": "docs/software/basic/network/01_networkd.md",
-      "spec_hash": "d28a3daa118dcdce",
+      "spec_hash": "c8231b0e582871fd",
       "group": "4.1",
       "title": "Network Configuration (systemd-networkd) – Network Daemon",
       "phase": 2,
@@ -1466,7 +1461,7 @@
       "id": "T-BASE-NETD-4.2",
       "module": "BASE-NETD",
       "spec": "docs/software/basic/network/01_networkd.md",
-      "spec_hash": "d28a3daa118dcdce",
+      "spec_hash": "c8231b0e582871fd",
       "group": "4.2",
       "title": "Network Configuration (systemd-networkd) – Network Segments",
       "phase": 2,
@@ -1515,7 +1510,7 @@
       "id": "T-BASE-NETD-4.3",
       "module": "BASE-NETD",
       "spec": "docs/software/basic/network/01_networkd.md",
-      "spec_hash": "d28a3daa118dcdce",
+      "spec_hash": "c8231b0e582871fd",
       "group": "4.3",
       "title": "Network Configuration (systemd-networkd) – Naming & Addressing",
       "phase": 2,
@@ -1572,7 +1567,7 @@
       "id": "T-BASE-NETD-4.4",
       "module": "BASE-NETD",
       "spec": "docs/software/basic/network/01_networkd.md",
-      "spec_hash": "d28a3daa118dcdce",
+      "spec_hash": "c8231b0e582871fd",
       "group": "4.4",
       "title": "Network Configuration (systemd-networkd) – Uplink",
       "phase": 2,
@@ -1607,13 +1602,13 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 641
+      "pack_tokens": 648
     },
     {
       "id": "T-BASE-NETD-4.5",
       "module": "BASE-NETD",
       "spec": "docs/software/basic/network/01_networkd.md",
-      "spec_hash": "d28a3daa118dcdce",
+      "spec_hash": "c8231b0e582871fd",
       "group": "4.5",
       "title": "Network Configuration (systemd-networkd) – CAN Interface",
       "phase": 2,
@@ -1646,7 +1641,7 @@
       "id": "T-BASE-WAP-4.1",
       "module": "BASE-WAP",
       "spec": "docs/software/basic/network/04_wlan-ap.md",
-      "spec_hash": "d2cd0f6c8bea1db3",
+      "spec_hash": "0d4328c4ed5b886b",
       "group": "4.1",
       "title": "WLAN Access Point (hostapd) – Interfaces & Service",
       "phase": 2,
@@ -1682,6 +1677,10 @@
         {
           "id": "BASE-WAP-06",
           "level": "MUST"
+        },
+        {
+          "id": "BASE-WAP-07",
+          "level": "MUST"
         }
       ],
       "verify_levels": [
@@ -1690,8 +1689,8 @@
       ],
       "blocked_by": [
         {
-          "open_point": "2",
-          "question": "SSID scheme (per device or fixed)?",
+          "open_point": "6",
+          "question": "Names of the IoT and guest SSIDs?",
           "decision": "open",
           "reqs": [
             "BASE-WAP-04"
@@ -1699,7 +1698,7 @@
         },
         {
           "open_point": "5",
-          "question": "Can `brcmfmac` run two APs plus a client, and SAE in AP mode?",
+          "question": "Does `brcmfmac` run two APs with SAE (WPA3) stably?",
           "decision": "**Deferred:** test on the device → verification task.",
           "reqs": [
             "BASE-WAP-06"
@@ -1718,13 +1717,14 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 1027
+      "pack_tokens": 1293,
+      "needs_review": false
     },
     {
       "id": "T-BASE-WAP-4.2",
       "module": "BASE-WAP",
       "spec": "docs/software/basic/network/04_wlan-ap.md",
-      "spec_hash": "d2cd0f6c8bea1db3",
+      "spec_hash": "0d4328c4ed5b886b",
       "group": "4.2",
       "title": "WLAN Access Point (hostapd) – Security",
       "phase": 2,
@@ -1773,7 +1773,7 @@
       "blocked_by": [
         {
           "open_point": "5",
-          "question": "Can `brcmfmac` run two APs plus a client, and SAE in AP mode?",
+          "question": "Does `brcmfmac` run two APs with SAE (WPA3) stably?",
           "decision": "**Deferred:** test on the device → verification task.",
           "reqs": [
             "BASE-WAP-10"
@@ -1791,13 +1791,14 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 1049
+      "pack_tokens": 1141,
+      "needs_review": false
     },
     {
       "id": "T-BASE-WAP-4.3",
       "module": "BASE-WAP",
       "spec": "docs/software/basic/network/04_wlan-ap.md",
-      "spec_hash": "d2cd0f6c8bea1db3",
+      "spec_hash": "0d4328c4ed5b886b",
       "group": "4.3",
       "title": "WLAN Access Point (hostapd) – Control Interface",
       "phase": 2,
@@ -1827,15 +1828,16 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 350
+      "pack_tokens": 350,
+      "needs_review": false
     },
     {
       "id": "V-BASE-WAP-OP5",
       "module": "BASE-WAP",
       "spec": "docs/software/basic/network/04_wlan-ap.md",
-      "spec_hash": "d2cd0f6c8bea1db3",
+      "spec_hash": "0d4328c4ed5b886b",
       "group": "OP5",
-      "title": "Verify: Can `brcmfmac` run two APs plus a client, and SAE in AP mode?",
+      "title": "Verify: Does `brcmfmac` run two APs with SAE (WPA3) stably?",
       "phase": 2,
       "risk": "medium",
       "human_gate": true,
@@ -1862,13 +1864,14 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 190
+      "pack_tokens": 203,
+      "needs_review": false
     },
     {
       "id": "T-BASE-WCLI-4.1",
       "module": "BASE-WCLI",
       "spec": "docs/software/basic/network/06_wlan-client.md",
-      "spec_hash": "16b9136419f5610e",
+      "spec_hash": "76d2e772043f814b",
       "group": "4.1",
       "title": "WLAN Client (iwd) – Daemon",
       "phase": 2,
@@ -1890,6 +1893,10 @@
         {
           "id": "BASE-WCLI-03",
           "level": "MUST"
+        },
+        {
+          "id": "BASE-WCLI-04",
+          "level": "MUST"
         }
       ],
       "verify_levels": [
@@ -1906,13 +1913,13 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 374
+      "pack_tokens": 428
     },
     {
       "id": "T-BASE-WCLI-4.2",
       "module": "BASE-WCLI",
       "spec": "docs/software/basic/network/06_wlan-client.md",
-      "spec_hash": "16b9136419f5610e",
+      "spec_hash": "76d2e772043f814b",
       "group": "4.2",
       "title": "WLAN Client (iwd) – Security",
       "phase": 2,
@@ -1954,7 +1961,7 @@
       "id": "T-BASE-WCLI-4.3",
       "module": "BASE-WCLI",
       "spec": "docs/software/basic/network/06_wlan-client.md",
-      "spec_hash": "16b9136419f5610e",
+      "spec_hash": "76d2e772043f814b",
       "group": "4.3",
       "title": "WLAN Client (iwd) – Credentials",
       "phase": 2,
@@ -2104,7 +2111,7 @@
       "id": "T-BASE-PROV-4.1",
       "module": "BASE-PROV",
       "spec": "docs/software/basic/07_provisioning.md",
-      "spec_hash": "e16e4038a9e12d06",
+      "spec_hash": "99972b99cfd5a539",
       "group": "4.1",
       "title": "Factory Provisioning – Access",
       "phase": 3,
@@ -2144,7 +2151,7 @@
       "id": "T-BASE-PROV-4.2",
       "module": "BASE-PROV",
       "spec": "docs/software/basic/07_provisioning.md",
-      "spec_hash": "e16e4038a9e12d06",
+      "spec_hash": "99972b99cfd5a539",
       "group": "4.2",
       "title": "Factory Provisioning – Provisioned Items",
       "phase": 3,
@@ -2195,13 +2202,13 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 879
+      "pack_tokens": 919
     },
     {
       "id": "T-BASE-PROV-4.3",
       "module": "BASE-PROV",
       "spec": "docs/software/basic/07_provisioning.md",
-      "spec_hash": "e16e4038a9e12d06",
+      "spec_hash": "99972b99cfd5a539",
       "group": "4.3",
       "title": "Factory Provisioning – Storage",
       "phase": 3,
@@ -2251,7 +2258,7 @@
       "id": "T-BASE-PROV-4.4",
       "module": "BASE-PROV",
       "spec": "docs/software/basic/07_provisioning.md",
-      "spec_hash": "e16e4038a9e12d06",
+      "spec_hash": "99972b99cfd5a539",
       "group": "4.4",
       "title": "Factory Provisioning – Behavior",
       "phase": 3,
@@ -2314,7 +2321,7 @@
       "id": "T-BASE-PROV-4.5",
       "module": "BASE-PROV",
       "spec": "docs/software/basic/07_provisioning.md",
-      "spec_hash": "e16e4038a9e12d06",
+      "spec_hash": "99972b99cfd5a539",
       "group": "4.5",
       "title": "Factory Provisioning – Factory Reset & Decommissioning",
       "phase": 3,
@@ -2856,7 +2863,7 @@
       "id": "T-BASE-BLE-4.1",
       "module": "BASE-BLE",
       "spec": "docs/software/basic/network/10_bluetooth.md",
-      "spec_hash": "3b5efd35d2b22aac",
+      "spec_hash": "9e4a0ad769411978",
       "group": "4.1",
       "title": "Bluetooth Low Energy (BlueZ) – Controller",
       "phase": 4,
@@ -2899,7 +2906,7 @@
       "id": "T-BASE-BLE-4.2",
       "module": "BASE-BLE",
       "spec": "docs/software/basic/network/10_bluetooth.md",
-      "spec_hash": "3b5efd35d2b22aac",
+      "spec_hash": "9e4a0ad769411978",
       "group": "4.2",
       "title": "Bluetooth Low Energy (BlueZ) – Roles & Pairing",
       "phase": 4,
@@ -2924,6 +2931,10 @@
         {
           "id": "BASE-BLE-13",
           "level": "MUST"
+        },
+        {
+          "id": "BASE-BLE-14",
+          "level": "MUST"
         }
       ],
       "verify_levels": [
@@ -2936,14 +2947,6 @@
           "decision": "open",
           "reqs": [
             "BASE-BLE-11",
-            "BASE-BLE-12"
-          ]
-        },
-        {
-          "open_point": "2",
-          "question": "Who manages the allow list (provisioning, web interface)?",
-          "decision": "open",
-          "reqs": [
             "BASE-BLE-12"
           ]
         }
@@ -2959,13 +2962,13 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 686
+      "pack_tokens": 837
     },
     {
       "id": "T-BASE-BLE-4.3",
       "module": "BASE-BLE",
       "spec": "docs/software/basic/network/10_bluetooth.md",
-      "spec_hash": "3b5efd35d2b22aac",
+      "spec_hash": "9e4a0ad769411978",
       "group": "4.3",
       "title": "Bluetooth Low Energy (BlueZ) – Access Control",
       "phase": 4,
@@ -3236,7 +3239,7 @@
       "id": "T-BASE-KERN-4.1",
       "module": "BASE-KERN",
       "spec": "docs/software/basic/hardening/01_kernel.md",
-      "spec_hash": "041731bca1cf1615",
+      "spec_hash": "774c77c249f481dc",
       "group": "4.1",
       "title": "Kernel Hardening & Watchdog – Kernel Parameters",
       "phase": 4,
@@ -3303,7 +3306,7 @@
       "id": "T-BASE-KERN-4.2",
       "module": "BASE-KERN",
       "spec": "docs/software/basic/hardening/01_kernel.md",
-      "spec_hash": "041731bca1cf1615",
+      "spec_hash": "774c77c249f481dc",
       "group": "4.2",
       "title": "Kernel Hardening & Watchdog – Hardware Watchdog",
       "phase": 4,
@@ -3348,7 +3351,7 @@
       "id": "T-BASE-KERN-4.3",
       "module": "BASE-KERN",
       "spec": "docs/software/basic/hardening/01_kernel.md",
-      "spec_hash": "041731bca1cf1615",
+      "spec_hash": "774c77c249f481dc",
       "group": "4.3",
       "title": "Kernel Hardening & Watchdog – Service Watchdogs",
       "phase": 4,
@@ -3389,7 +3392,7 @@
       "id": "T-BASE-KERN-4.4",
       "module": "BASE-KERN",
       "spec": "docs/software/basic/hardening/01_kernel.md",
-      "spec_hash": "041731bca1cf1615",
+      "spec_hash": "774c77c249f481dc",
       "group": "4.4",
       "title": "Kernel Hardening & Watchdog – Kernel Modules",
       "phase": 4,
@@ -3564,7 +3567,7 @@
       "id": "T-BASE-USBG-4.1",
       "module": "BASE-USBG",
       "spec": "docs/software/basic/network/11_usb-gadget.md",
-      "spec_hash": "772cf60c7e1603f6",
+      "spec_hash": "d48a6b14732d3d73",
       "group": "4.1",
       "title": "USB Service Port (USB gadget) – Gadget",
       "phase": 4,
@@ -3573,6 +3576,7 @@
       "depends_on_modules": [
         "BASE-DNS",
         "BASE-FWP",
+        "BASE-HWT",
         "BASE-INIT",
         "BASE-NETD"
       ],
@@ -3617,13 +3621,13 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 763
+      "pack_tokens": 766
     },
     {
       "id": "T-BASE-USBG-4.2",
       "module": "BASE-USBG",
       "spec": "docs/software/basic/network/11_usb-gadget.md",
-      "spec_hash": "772cf60c7e1603f6",
+      "spec_hash": "d48a6b14732d3d73",
       "group": "4.2",
       "title": "USB Service Port (USB gadget) – Service Segment",
       "phase": 4,
@@ -3632,6 +3636,7 @@
       "depends_on_modules": [
         "BASE-DNS",
         "BASE-FWP",
+        "BASE-HWT",
         "BASE-INIT",
         "BASE-NETD"
       ],
@@ -3661,13 +3666,13 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 478
+      "pack_tokens": 481
     },
     {
       "id": "T-BASE-USBG-4.3",
       "module": "BASE-USBG",
       "spec": "docs/software/basic/network/11_usb-gadget.md",
-      "spec_hash": "772cf60c7e1603f6",
+      "spec_hash": "d48a6b14732d3d73",
       "group": "4.3",
       "title": "USB Service Port (USB gadget) – Activation",
       "phase": 4,
@@ -3676,45 +3681,35 @@
       "depends_on_modules": [
         "BASE-DNS",
         "BASE-FWP",
+        "BASE-HWT",
         "BASE-INIT",
         "BASE-NETD"
       ],
       "reqs": [
         {
           "id": "BASE-USBG-20",
-          "level": "SHOULD"
+          "level": "MUST"
         }
       ],
       "verify_levels": [
         "device"
       ],
-      "blocked_by": [
-        {
-          "open_point": "1",
-          "question": "Is the service port always active, or only for a limited time after pressing the user button (GPIO13)? Duration?",
-          "decision": "open",
-          "reqs": [
-            "BASE-USBG-20"
-          ]
-        }
-      ],
-      "blocked_reqs": [
-        "BASE-USBG-20"
-      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
       "pack": "agent/packs/T-BASE-USBG-4.3.md",
-      "status": "blocked",
+      "status": "todo",
       "verified": {
         "device": "pending"
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 345
+      "pack_tokens": 428
     },
     {
       "id": "V-BASE-USBG-OP2",
       "module": "BASE-USBG",
       "spec": "docs/software/basic/network/11_usb-gadget.md",
-      "spec_hash": "772cf60c7e1603f6",
+      "spec_hash": "d48a6b14732d3d73",
       "group": "OP2",
       "title": "Verify: Does the board have a USB connector for device mode that does not disconnect the LAN9514?",
       "phase": 4,
