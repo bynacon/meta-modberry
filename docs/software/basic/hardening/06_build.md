@@ -67,8 +67,10 @@ This module hardens the image at build time and makes its content traceable. Bin
 
 - `BASE-BUILD-30` **MUST** Every build runs the CVE check (`cve-check`) and produces a report per image.
 - `BASE-BUILD-31` **MUST** Every release produces an SBOM in SPDX format (`create-spdx`) and stores it with the release artifacts.
-- `BASE-BUILD-32` **MUST** A release is published only after the CVE report has been reviewed. Known critical vulnerabilities in packages of the image are fixed or documented with an assessment before the release.
+- `BASE-BUILD-32` **MUST** The release gate is automated: the pipeline fails if the CVE check reports a vulnerability with CVSS ≥ 9.0 in a package of the image that is neither fixed nor assessed. Assessments (not affected, mitigated) are kept as versioned CVE status entries in the layer (`CVE_STATUS` / `CVE_CHECK_IGNORE` with reason).
 - `BASE-BUILD-33` **MUST** The build uses fixed revisions (commit hashes) of all layers. Updates of layer revisions are explicit changes.
+- `BASE-BUILD-34` **MUST** Release images are built only by a CI/CD pipeline, not on a developer machine.
+- `BASE-BUILD-35` **MUST** The SBOM of every released image is uploaded to a vulnerability management tool (e.g. OWASP Dependency-Track) that analyses it continuously. A new critical vulnerability in a released image triggers a notification to the maintainer.
 
 ---
 
@@ -81,6 +83,8 @@ This module hardens the image at build time and makes its content traceable. Bin
 | Image recipe | production: `IMAGE_FEATURES:remove` / no `EXTRA_IMAGE_FEATURES` of `BASE-BUILD-20` | `BASE-BUILD-20`, `BASE-BUILD-21` |
 | `/etc/systemd/coredump.conf.d/`, `/etc/security/limits.d/` | `Storage=none`, `ProcessSizeMax=0`; `* hard core 0`; `kernel.core_pattern=|/bin/false` | `BASE-BUILD-22` |
 | Distro conf `modberry` | `INHERIT += "cve-check create-spdx"` | `BASE-BUILD-30`, `BASE-BUILD-31` |
+| `conf/distro/include/cve-status.inc` (new) | assessed CVEs with reason | `BASE-BUILD-32` |
+| CI/CD pipeline (build host) | build → CVE gate → SBOM upload to the vulnerability management tool → release artifacts | `BASE-BUILD-32`, `BASE-BUILD-34`, `BASE-BUILD-35` |
 | `scripts/Yocto/Build_kirkstone.sh` | `git clone` + `git checkout <commit>` per layer (revisions in one versioned file) | `BASE-BUILD-33` |
 
 ---
@@ -112,7 +116,10 @@ This module hardens the image at build time and makes its content traceable. Bin
 | `BASE-BUILD-22` | `device` | `ulimit -c`; `sysctl kernel.core_pattern` | `0`; no dump target |
 | `BASE-BUILD-30` | `build` | `ls tmp/deploy/images/*/*.json` (cve report) | report per image |
 | `BASE-BUILD-31` | `build` | `ls tmp/deploy/spdx/` | SPDX documents for the image |
+| `BASE-BUILD-32` | `build` | Add a test package with a known critical CVE | pipeline fails at the CVE gate |
 | `BASE-BUILD-33` | `build` | Build twice from the same revision file | identical layer revisions |
+| `BASE-BUILD-34` | `build` | Release artifacts and pipeline log | every release image has a pipeline run |
+| `BASE-BUILD-35` | `build` | Vulnerability management tool | SBOM of the latest release present; notification rule active |
 
 ---
 
@@ -130,4 +137,5 @@ This module hardens the image at build time and makes its content traceable. Bin
 | # | Question | Affects | Decision |
 | :-- | :-- | :-- | :-- |
 | 1 | Kirkstone is end of life since April 2026: migrate to scarthgap (LTS until April 2028) or the next LTS release, or stay on kirkstone with own backports? | `BASE-BUILD-30`, `BASE-BUILD-32`, all modules | |
-| 2 | Where are CVE reports and SBOMs stored, and who reviews them per release? | `BASE-BUILD-31`, `BASE-BUILD-32` | |
+| 2 | Where are CVE reports and SBOMs stored, and who reviews them per release? | `BASE-BUILD-31`, `BASE-BUILD-32` | **Decided:** automated in a CI/CD pipeline: CVE gate per build, continuous SBOM analysis in a vulnerability management tool, notification of the maintainer. |
+| 3 | Which CI/CD system and which vulnerability management tool (e.g. GitHub Actions / GitLab CI, Dependency-Track)? | `BASE-BUILD-34`, `BASE-BUILD-35` | |

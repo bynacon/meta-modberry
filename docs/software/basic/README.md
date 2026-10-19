@@ -4,7 +4,7 @@ This folder specifies the base system layer of the Modberry image: init system, 
 
 Device-specific values (UART paths, GPIO numbers, I2C addresses) are defined only in the [hardware specification](../../hardware/M40804W_MAX.md). The module files reference it.
 
-> This folder replaces [`01_basic.md`](../01_basic.md). All modules of the basic stack are written; `01_basic.md` is no longer needed as reference and can be removed.
+> This folder replaces the former `01_basic.md` (removed; available in the Git history).
 
 ---
 
@@ -35,6 +35,7 @@ Device-specific values (UART paths, GPIO numbers, I2C addresses) are defined onl
 | `BASE-LOG` | [05_logging.md](05_logging.md) | journald, syslog-ng (local) | INIT, TIME | low | `draft` |
 | `BASE-LOGDB` | [06_log-database.md](06_log-database.md) | syslog-ng → PostgreSQL | LOG, ROOTFS, LUKS, *PostgreSQL* | low | `draft` |
 | `BASE-PROV` | [07_provisioning.md](07_provisioning.md) | Factory provisioning, factory reset | INIT, TPM, FWP, SSH | high | `draft` |
+| `BASE-BSP` | [09_board-support.md](09_board-support.md) | Board device tree, RTC/EEPROM/ADC/1-Wire/GPIO-expander drivers, named digital I/O | INIT, HWT | medium | `draft` |
 | `BASE-CONT` | [08_container.md](08_container.md) | Docker without network exposure, userns, nftables integration | INIT, FW, FWP, ROOTFS, MAC | high | `draft` |
 | `BASE-NETD` | [network/01_networkd.md](network/01_networkd.md) | systemd-networkd, segments, uplink fallback, resolved | INIT | medium | `draft` |
 | `BASE-FW` | [network/02_firewall.md](network/02_firewall.md) | nftables framework: chains, policies, ban sets, logging | INIT, NETD | high | `draft` |
@@ -70,6 +71,7 @@ flowchart TD
 
     subgraph Foundation
         HWT[BASE-HWT<br/>HW tooling]
+        BSP[BASE-BSP<br/>board support]
         TPM[BASE-TPM<br/>TPM & crypto]
         KERN[BASE-KERN<br/>sysctl, watchdog]
         USB[BASE-USB<br/>USBGuard]
@@ -117,7 +119,8 @@ flowchart TD
     FW --> FWP & WAP & DNS
     NETD --> FWP
     FWP --> VPN & SSH & WEB
-    HWT --> WAP & BLE
+    HWT --> WAP & BLE & BSP
+    BSP --> TIME
     TPM --> WEB
     TIME --> WEB
     TPM --> PROV
@@ -164,7 +167,7 @@ The order follows the dependency graph and the risk. Low-risk modules that can b
 | Phase | Modules | Goal | Gate |
 | :-- | :-- | :-- | :-- |
 | **0 – Cleanup** | — | Create the distro conf `conf/distro/modberry.conf`. Define the production and debug image variants. Remove legacy components that conflict with the specification: `dhcpcd`, `init-ifupdown`, `ifplugd`, `iptables`, `wpa-supplicant`, `systemd-timesyncd`, `hostapddeamon`, `dropbear`. Change the WLAN credentials and the AP passphrase that are in the Git history. Add the layers `meta-security` and `meta-webserver` to the build script and `LAYERDEPENDS`. Decide the LTS migration (`BASE-BUILD` open point 1). Build and verify the board device tree patch. | Image builds and boots, all devices of the hardware spec present |
-| **1 – Foundation** | `BASE-INIT`, `BASE-BUILD`, `BASE-HWT`, `BASE-TPM` | systemd-only image, hardened build, bus access, working TPM | `systemctl --failed` empty, `/dev/tpmrm0` present, CVE report produced |
+| **1 – Foundation** | `BASE-INIT`, `BASE-BUILD`, `BASE-HWT`, `BASE-BSP`, `BASE-TPM` | systemd-only image, hardened build, bus access, all board devices, working TPM | `systemctl --failed` empty, `/dev/tpmrm0` present, CVE report produced |
 | **2 – Network** | `BASE-NETD`, `BASE-FW`, `BASE-FWP`, `BASE-DNS`, `BASE-WAP` | All interfaces via networkd, firewall with matrices | **Human gate:** firewall tested with console access |
 | **3 – Services** | `BASE-TIME`, `BASE-LOG`, `BASE-SSH`, `BASE-VPN`, `BASE-WEB`, `BASE-PROV` | Correct time, local logging, secured remote access, factory provisioning | **Human gate:** service-key login and provisioning work before password login is disabled and the first production image is flashed |
 | **4 – Hardening & interfaces** | `BASE-KERN`, `BASE-USB`, `BASE-IDS`, `BASE-BLE` | Kernel hardening, USB allow list, intrusion detection, BLE | **Human gate:** USB allow list tested with console access (`lan1` is a USB device) |
@@ -191,6 +194,7 @@ Each shared resource has exactly one owner module. Other modules use it and neve
 | hostapd control interface, service AP | `BASE-WAP` | `BASE-IDS`, `BASE-FWP`, `BASE-WEB` |
 | Service mode (user button, 30 min) | `BASE-HWT` | `BASE-WAP`, `BASE-BLE` |
 | `/dev/tpmrm0`, TSS2, OpenSSL TPM provider | `BASE-TPM` | `BASE-MBOOT`, `BASE-ROOTFS`, `BASE-LUKS`, `BASE-WEB`, `BASE-PROV` |
+| Board device tree, board drivers, named GPIO lines | `BASE-BSP` | `BASE-TIME`, `BASE-PROV`, `BASE-HWT`, application layer |
 | Persistent device names (serial, CAN), group `fieldbus` | `BASE-HWT` | `BASE-AUDIT`, `BASE-MAC`, application layer |
 | System time, `time-sync.target` | `BASE-TIME` | `BASE-WEB`, `BASE-VPN`, `BASE-LOG` |
 | Persistent data partition, persistent paths | `BASE-ROOTFS` / `BASE-LUKS` | `BASE-LOG`, `BASE-LOGDB`, `BASE-AUDIT`, `BASE-CONT`, application layer |

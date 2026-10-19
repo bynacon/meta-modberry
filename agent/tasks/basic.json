@@ -12,10 +12,177 @@
   ],
   "tasks": [
     {
+      "id": "T-BASE-BSP-4.1",
+      "module": "BASE-BSP",
+      "spec": "docs/software/basic/09_board-support.md",
+      "spec_hash": "0bfd41822420e50b",
+      "group": "4.1",
+      "title": "Board Support (device tree and board drivers) – Device Tree",
+      "phase": 1,
+      "risk": "medium",
+      "human_gate": false,
+      "depends_on_modules": [
+        "BASE-HWT",
+        "BASE-INIT"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-BSP-01",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-BSP-02",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-BSP-03",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "build",
+        "device"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-BSP-4.1.md",
+      "status": "todo",
+      "verified": {
+        "build": "pending",
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 760
+    },
+    {
+      "id": "T-BASE-BSP-4.2",
+      "module": "BASE-BSP",
+      "spec": "docs/software/basic/09_board-support.md",
+      "spec_hash": "0bfd41822420e50b",
+      "group": "4.2",
+      "title": "Board Support (device tree and board drivers) – Board Devices",
+      "phase": 1,
+      "risk": "medium",
+      "human_gate": false,
+      "depends_on_modules": [
+        "BASE-HWT",
+        "BASE-INIT"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-BSP-10",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-BSP-11",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-BSP-12",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-BSP-13",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-BSP-14",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-BSP-15",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-BSP-16",
+          "level": "MUST"
+        }
+      ],
+      "verify_levels": [
+        "device"
+      ],
+      "blocked_by": [
+        {
+          "open_point": "1",
+          "question": "Which MCP23008 (0x21) pins are LED1, LED2 (if not GPIO27), buzzer and the PCI/power/reset lines exactly? The hardware specification names only LED1 = GP1 and buzzer = GP5.",
+          "decision": "open",
+          "reqs": [
+            "BASE-BSP-15",
+            "BASE-BSP-16"
+          ]
+        }
+      ],
+      "blocked_reqs": [
+        "BASE-BSP-15",
+        "BASE-BSP-16"
+      ],
+      "pack": "agent/packs/T-BASE-BSP-4.2.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 1016
+    },
+    {
+      "id": "T-BASE-BSP-4.3",
+      "module": "BASE-BSP",
+      "spec": "docs/software/basic/09_board-support.md",
+      "spec_hash": "0bfd41822420e50b",
+      "group": "4.3",
+      "title": "Board Support (device tree and board drivers) – Digital I/O",
+      "phase": 1,
+      "risk": "medium",
+      "human_gate": false,
+      "depends_on_modules": [
+        "BASE-HWT",
+        "BASE-INIT"
+      ],
+      "reqs": [
+        {
+          "id": "BASE-BSP-20",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-BSP-21",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-BSP-22",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-BSP-23",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-BSP-24",
+          "level": "SHOULD"
+        }
+      ],
+      "verify_levels": [
+        "device",
+        "rootfs"
+      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
+      "pack": "agent/packs/T-BASE-BSP-4.3.md",
+      "status": "todo",
+      "verified": {
+        "device": "pending",
+        "rootfs": "pending"
+      },
+      "evidence": [],
+      "notes": "",
+      "pack_tokens": 904
+    },
+    {
       "id": "T-BASE-BUILD-4.1",
       "module": "BASE-BUILD",
       "spec": "docs/software/basic/hardening/06_build.md",
-      "spec_hash": "cc62212798dd5715",
+      "spec_hash": "fee28690921d2b2e",
       "group": "4.1",
       "title": "Build Hardening & Vulnerability Management – Compiler Hardening",
       "phase": 1,
@@ -48,13 +215,14 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 367
+      "pack_tokens": 367,
+      "needs_review": false
     },
     {
       "id": "T-BASE-BUILD-4.2",
       "module": "BASE-BUILD",
       "spec": "docs/software/basic/hardening/06_build.md",
-      "spec_hash": "cc62212798dd5715",
+      "spec_hash": "fee28690921d2b2e",
       "group": "4.2",
       "title": "Build Hardening & Vulnerability Management – Kernel Configuration",
       "phase": 1,
@@ -85,13 +253,14 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 404
+      "pack_tokens": 404,
+      "needs_review": false
     },
     {
       "id": "T-BASE-BUILD-4.3",
       "module": "BASE-BUILD",
       "spec": "docs/software/basic/hardening/06_build.md",
-      "spec_hash": "cc62212798dd5715",
+      "spec_hash": "fee28690921d2b2e",
       "group": "4.3",
       "title": "Build Hardening & Vulnerability Management – Image Content",
       "phase": 1,
@@ -130,13 +299,14 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 499
+      "pack_tokens": 499,
+      "needs_review": false
     },
     {
       "id": "T-BASE-BUILD-4.4",
       "module": "BASE-BUILD",
       "spec": "docs/software/basic/hardening/06_build.md",
-      "spec_hash": "cc62212798dd5715",
+      "spec_hash": "fee28690921d2b2e",
       "group": "4.4",
       "title": "Build Hardening & Vulnerability Management – Vulnerability Management",
       "phase": 1,
@@ -161,6 +331,14 @@
         {
           "id": "BASE-BUILD-33",
           "level": "MUST"
+        },
+        {
+          "id": "BASE-BUILD-34",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-BUILD-35",
+          "level": "MUST"
         }
       ],
       "verify_levels": [
@@ -177,19 +355,20 @@
           ]
         },
         {
-          "open_point": "2",
-          "question": "Where are CVE reports and SBOMs stored, and who reviews them per release?",
+          "open_point": "3",
+          "question": "Which CI/CD system and which vulnerability management tool (e.g. GitHub Actions / GitLab CI, Dependency-Track)?",
           "decision": "open",
           "reqs": [
-            "BASE-BUILD-31",
-            "BASE-BUILD-32"
+            "BASE-BUILD-34",
+            "BASE-BUILD-35"
           ]
         }
       ],
       "blocked_reqs": [
         "BASE-BUILD-30",
-        "BASE-BUILD-31",
-        "BASE-BUILD-32"
+        "BASE-BUILD-32",
+        "BASE-BUILD-34",
+        "BASE-BUILD-35"
       ],
       "pack": "agent/packs/T-BASE-BUILD-4.4.md",
       "status": "todo",
@@ -198,7 +377,8 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 674
+      "pack_tokens": 1055,
+      "needs_review": false
     },
     {
       "id": "T-BASE-HWT-4.1",
@@ -1320,8 +1500,7 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 1010,
-      "needs_review": false
+      "pack_tokens": 1010
     },
     {
       "id": "T-BASE-FWP-4.2",
@@ -1368,8 +1547,7 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 878,
-      "needs_review": false
+      "pack_tokens": 878
     },
     {
       "id": "T-BASE-FWP-4.3",
@@ -1404,8 +1582,7 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 592,
-      "needs_review": false
+      "pack_tokens": 592
     },
     {
       "id": "T-BASE-NETD-4.1",
@@ -1454,8 +1631,7 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 659,
-      "needs_review": false
+      "pack_tokens": 659
     },
     {
       "id": "T-BASE-NETD-4.2",
@@ -1504,8 +1680,7 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 937,
-      "needs_review": false
+      "pack_tokens": 937
     },
     {
       "id": "T-BASE-NETD-4.3",
@@ -1558,8 +1733,7 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 1256,
-      "needs_review": false
+      "pack_tokens": 1256
     },
     {
       "id": "T-BASE-NETD-4.4",
@@ -1600,8 +1774,7 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 618,
-      "needs_review": false
+      "pack_tokens": 618
     },
     {
       "id": "T-BASE-NETD-4.5",
@@ -1634,8 +1807,7 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 430,
-      "needs_review": false
+      "pack_tokens": 430
     },
     {
       "id": "T-BASE-WAP-4.1",
@@ -1704,8 +1876,7 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 1237,
-      "needs_review": false
+      "pack_tokens": 1237
     },
     {
       "id": "T-BASE-WAP-4.2",
@@ -1775,8 +1946,7 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 1064,
-      "needs_review": false
+      "pack_tokens": 1064
     },
     {
       "id": "T-BASE-WAP-4.3",
@@ -1813,8 +1983,7 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 353,
-      "needs_review": false
+      "pack_tokens": 353
     },
     {
       "id": "T-BASE-WAP-4.4",
@@ -1898,8 +2067,7 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 1936,
-      "needs_review": false
+      "pack_tokens": 1936
     },
     {
       "id": "V-BASE-WAP-OP5",
@@ -1934,8 +2102,7 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 243,
-      "needs_review": false
+      "pack_tokens": 243
     },
     {
       "id": "T-BASE-WCLI-4.1",
@@ -2215,8 +2382,7 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 377,
-      "needs_review": false
+      "pack_tokens": 377
     },
     {
       "id": "T-BASE-PROV-4.2",
@@ -2273,8 +2439,7 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 917,
-      "needs_review": false
+      "pack_tokens": 917
     },
     {
       "id": "T-BASE-PROV-4.3",
@@ -2324,8 +2489,7 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 570,
-      "needs_review": false
+      "pack_tokens": 570
     },
     {
       "id": "T-BASE-PROV-4.4",
@@ -2388,8 +2552,7 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 811,
-      "needs_review": false
+      "pack_tokens": 811
     },
     {
       "id": "T-BASE-PROV-4.5",
@@ -2433,8 +2596,7 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 484,
-      "needs_review": false
+      "pack_tokens": 484
     },
     {
       "id": "T-BASE-SSH-4",
@@ -2503,7 +2665,7 @@
       "id": "T-BASE-TIME-4.1",
       "module": "BASE-TIME",
       "spec": "docs/software/basic/04_time.md",
-      "spec_hash": "23d378c6b216b491",
+      "spec_hash": "103ef1dd0790ee03",
       "group": "4.1",
       "title": "Time Synchronization – Time Service",
       "phase": 3,
@@ -2541,13 +2703,14 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 265
+      "pack_tokens": 265,
+      "needs_review": false
     },
     {
       "id": "T-BASE-TIME-4.2",
       "module": "BASE-TIME",
       "spec": "docs/software/basic/04_time.md",
-      "spec_hash": "23d378c6b216b491",
+      "spec_hash": "103ef1dd0790ee03",
       "group": "4.2",
       "title": "Time Synchronization – Authenticated Sources",
       "phase": 3,
@@ -2585,13 +2748,14 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 419
+      "pack_tokens": 419,
+      "needs_review": false
     },
     {
       "id": "T-BASE-TIME-4.3",
       "module": "BASE-TIME",
       "spec": "docs/software/basic/04_time.md",
-      "spec_hash": "23d378c6b216b491",
+      "spec_hash": "103ef1dd0790ee03",
       "group": "4.3",
       "title": "Time Synchronization – Hardware RTC",
       "phase": 3,
@@ -2622,19 +2786,8 @@
       "verify_levels": [
         "device"
       ],
-      "blocked_by": [
-        {
-          "open_point": "4",
-          "question": "Is the MCP79412 battery-backed on this device? The hardware spec does not say. Without a battery, `BASE-TIME-20` cannot be met after power loss.",
-          "decision": "**Deferred:** needs hardware information → verification task.",
-          "reqs": [
-            "BASE-TIME-20"
-          ]
-        }
-      ],
-      "blocked_reqs": [
-        "BASE-TIME-20"
-      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
       "pack": "agent/packs/T-BASE-TIME-4.3.md",
       "status": "todo",
       "verified": {
@@ -2642,13 +2795,14 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 655
+      "pack_tokens": 619,
+      "needs_review": false
     },
     {
       "id": "T-BASE-TIME-4.4",
       "module": "BASE-TIME",
       "spec": "docs/software/basic/04_time.md",
-      "spec_hash": "23d378c6b216b491",
+      "spec_hash": "103ef1dd0790ee03",
       "group": "4.4",
       "title": "Time Synchronization – NTP Server",
       "phase": 3,
@@ -2684,13 +2838,14 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 369
+      "pack_tokens": 369,
+      "needs_review": false
     },
     {
       "id": "T-BASE-TIME-4.5",
       "module": "BASE-TIME",
       "spec": "docs/software/basic/04_time.md",
-      "spec_hash": "23d378c6b216b491",
+      "spec_hash": "103ef1dd0790ee03",
       "group": "4.5",
       "title": "Time Synchronization – Service Ordering",
       "phase": 3,
@@ -2718,13 +2873,14 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 235
+      "pack_tokens": 235,
+      "needs_review": false
     },
     {
       "id": "T-BASE-TIME-4.6",
       "module": "BASE-TIME",
       "spec": "docs/software/basic/04_time.md",
-      "spec_hash": "23d378c6b216b491",
+      "spec_hash": "103ef1dd0790ee03",
       "group": "4.6",
       "title": "Time Synchronization – Time Zone",
       "phase": 3,
@@ -2752,7 +2908,8 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 226
+      "pack_tokens": 226,
+      "needs_review": false
     },
     {
       "id": "V-BASE-TIME-OP4",
@@ -2777,7 +2934,7 @@
       "blocked_by": [],
       "blocked_reqs": [],
       "pack": "agent/packs/V-BASE-TIME-OP4.md",
-      "status": "todo",
+      "status": "obsolete",
       "verified": {
         "device": "pending"
       },
@@ -3382,8 +3539,7 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 912,
-      "needs_review": false
+      "pack_tokens": 912
     },
     {
       "id": "T-BASE-KERN-4.2",
@@ -3428,8 +3584,7 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 731,
-      "needs_review": false
+      "pack_tokens": 731
     },
     {
       "id": "T-BASE-KERN-4.3",
@@ -3470,8 +3625,7 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 581,
-      "needs_review": false
+      "pack_tokens": 581
     },
     {
       "id": "T-BASE-KERN-4.4",
@@ -3504,8 +3658,7 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 411,
-      "needs_review": false
+      "pack_tokens": 411
     },
     {
       "id": "T-BASE-USB-4.1",
@@ -3573,8 +3726,7 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 1298,
-      "needs_review": false
+      "pack_tokens": 1298
     },
     {
       "id": "T-BASE-USB-4.2",
@@ -3621,8 +3773,7 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 432,
-      "needs_review": false
+      "pack_tokens": 432
     },
     {
       "id": "V-BASE-USB-OP1",
@@ -3653,8 +3804,7 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 221,
-      "needs_review": false
+      "pack_tokens": 221
     },
     {
       "id": "T-BASE-USBG-4.1",
@@ -4217,8 +4367,7 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 458,
-      "needs_review": false
+      "pack_tokens": 458
     },
     {
       "id": "T-BASE-ROOTFS-4.2",
@@ -4266,8 +4415,7 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 768,
-      "needs_review": false
+      "pack_tokens": 768
     },
     {
       "id": "T-BASE-ROOTFS-4.3",
@@ -4313,8 +4461,7 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 974,
-      "needs_review": false
+      "pack_tokens": 974
     },
     {
       "id": "T-BASE-ROOTFS-4.4",
@@ -4352,8 +4499,7 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 418,
-      "needs_review": false
+      "pack_tokens": 418
     },
     {
       "id": "T-BASE-VBOOT-4.1",
@@ -4760,7 +4906,7 @@
       "id": "T-BASE-CONT-4.1",
       "module": "BASE-CONT",
       "spec": "docs/software/basic/08_container.md",
-      "spec_hash": "5c171b6e6397d70f",
+      "spec_hash": "45dd81fe2375908d",
       "group": "4.1",
       "title": "Container Runtime (Docker) – Daemon",
       "phase": 6,
@@ -4807,13 +4953,14 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 611
+      "pack_tokens": 627,
+      "needs_review": false
     },
     {
       "id": "T-BASE-CONT-4.2",
       "module": "BASE-CONT",
       "spec": "docs/software/basic/08_container.md",
-      "spec_hash": "5c171b6e6397d70f",
+      "spec_hash": "45dd81fe2375908d",
       "group": "4.2",
       "title": "Container Runtime (Docker) – Isolation",
       "phase": 6,
@@ -4851,19 +4998,8 @@
       "verify_levels": [
         "device"
       ],
-      "blocked_by": [
-        {
-          "open_point": "2",
-          "question": "Rootless Docker instead of `userns-remap`?",
-          "decision": "open",
-          "reqs": [
-            "BASE-CONT-10"
-          ]
-        }
-      ],
-      "blocked_reqs": [
-        "BASE-CONT-10"
-      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
       "pack": "agent/packs/T-BASE-CONT-4.2.md",
       "status": "todo",
       "verified": {
@@ -4871,13 +5007,14 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 543
+      "pack_tokens": 570,
+      "needs_review": false
     },
     {
       "id": "T-BASE-CONT-4.3",
       "module": "BASE-CONT",
       "spec": "docs/software/basic/08_container.md",
-      "spec_hash": "5c171b6e6397d70f",
+      "spec_hash": "45dd81fe2375908d",
       "group": "4.3",
       "title": "Container Runtime (Docker) – Networking",
       "phase": 6,
@@ -4916,13 +5053,14 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 507
+      "pack_tokens": 523,
+      "needs_review": false
     },
     {
       "id": "T-BASE-CONT-4.4",
       "module": "BASE-CONT",
       "spec": "docs/software/basic/08_container.md",
-      "spec_hash": "5c171b6e6397d70f",
+      "spec_hash": "45dd81fe2375908d",
       "group": "4.4",
       "title": "Container Runtime (Docker) – Images",
       "phase": 6,
@@ -4946,31 +5084,20 @@
         }
       ],
       "verify_levels": [
-        "device"
+        "device",
+        "rootfs"
       ],
-      "blocked_by": [
-        {
-          "open_point": "1",
-          "question": "Which registry, and signed images (Notation/cosign) or pinned digests?",
-          "decision": "open",
-          "reqs": [
-            "BASE-CONT-30",
-            "BASE-CONT-31"
-          ]
-        }
-      ],
-      "blocked_reqs": [
-        "BASE-CONT-30",
-        "BASE-CONT-31"
-      ],
+      "blocked_by": [],
+      "blocked_reqs": [],
       "pack": "agent/packs/T-BASE-CONT-4.4.md",
-      "status": "blocked",
+      "status": "todo",
       "verified": {
         "device": "pending"
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 329
+      "pack_tokens": 453,
+      "needs_review": true
     },
     {
       "id": "T-BASE-LOGDB-4",
@@ -5113,8 +5240,7 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 534,
-      "needs_review": false
+      "pack_tokens": 534
     },
     {
       "id": "T-BASE-MAC-4.2",
@@ -5159,8 +5285,7 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 839,
-      "needs_review": false
+      "pack_tokens": 839
     },
     {
       "id": "T-BASE-MAC-4.3",
@@ -5201,8 +5326,7 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 711,
-      "needs_review": false
+      "pack_tokens": 711
     },
     {
       "id": "T-BASE-MAC-4.4",
@@ -5235,8 +5359,7 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 249,
-      "needs_review": false
+      "pack_tokens": 249
     }
   ]
 }

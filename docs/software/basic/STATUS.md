@@ -6,7 +6,8 @@ Generated: 2026-10-19. Source of the state: `agent/tasks/basic.json`.
 
 | Phase | Module | Spec status | Tasks | Reqs | todo | in progress | implemented | verified | blocked | needs review |
 | :-: | :-- | :-- | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| 1 | [`BASE-BUILD`](hardening/06_build.md) | draft | 4 | 11 | 4 | 0 | 0 | 0 | 0 | 0 |
+| 1 | [`BASE-BSP`](09_board-support.md) | draft | 3 | 15 | 3 | 0 | 0 | 0 | 0 | 0 |
+| 1 | [`BASE-BUILD`](hardening/06_build.md) | draft | 4 | 13 | 4 | 0 | 0 | 0 | 0 | 0 |
 | 1 | [`BASE-HWT`](02_hw-tooling.md) | draft | 5 | 26 | 5 | 0 | 0 | 0 | 0 | 0 |
 | 1 | [`BASE-INIT`](01_init.md) | draft | 6 | 28 | 6 | 0 | 0 | 0 | 0 | 0 |
 | 1 | [`BASE-TPM`](03_tpm.md) | draft | 5 | 15 | 5 | 0 | 0 | 0 | 0 | 0 |
@@ -19,7 +20,7 @@ Generated: 2026-10-19. Source of the state: `agent/tasks/basic.json`.
 | 3 | [`BASE-LOG`](05_logging.md) | draft | 2 | 10 | 2 | 0 | 0 | 0 | 0 | 0 |
 | 3 | [`BASE-PROV`](07_provisioning.md) | draft | 5 | 17 | 5 | 0 | 0 | 0 | 0 | 0 |
 | 3 | [`BASE-SSH`](network/08_ssh.md) | draft | 1 | 7 | 1 | 0 | 0 | 0 | 0 | 0 |
-| 3 | [`BASE-TIME`](04_time.md) | draft | 7 | 16 | 7 | 0 | 0 | 0 | 0 | 0 |
+| 3 | [`BASE-TIME`](04_time.md) | draft | 6 | 15 | 6 | 0 | 0 | 0 | 0 | 0 |
 | 3 | [`BASE-VPN`](network/07_vpn.md) | draft | 1 | 7 | 1 | 0 | 0 | 0 | 0 | 0 |
 | 3 | [`BASE-WEB`](network/09_web-proxy.md) | draft | 1 | 7 | 1 | 0 | 0 | 0 | 0 | 0 |
 | 4 | [`BASE-BLE`](network/10_bluetooth.md) | draft | 3 | 14 | 3 | 0 | 0 | 0 | 0 | 0 |
@@ -32,7 +33,7 @@ Generated: 2026-10-19. Source of the state: `agent/tasks/basic.json`.
 | 5 | [`BASE-ROOTFS`](boot-chain/03_rootfs-integrity.md) | draft | 4 | 12 | 4 | 0 | 0 | 0 | 0 | 0 |
 | 5 | [`BASE-VBOOT`](boot-chain/01_verified-boot.md) | draft | 5 | 14 | 4 | 0 | 0 | 0 | 1 | 0 |
 | 6 | [`BASE-AUDIT`](hardening/03_audit-integrity.md) | draft | 3 | 14 | 3 | 0 | 0 | 0 | 0 | 0 |
-| 6 | [`BASE-CONT`](08_container.md) | draft | 4 | 15 | 3 | 0 | 0 | 0 | 1 | 0 |
+| 6 | [`BASE-CONT`](08_container.md) | draft | 4 | 15 | 4 | 0 | 0 | 0 | 0 | 1 |
 | 6 | [`BASE-LOGDB`](06_log-database.md) | draft | 1 | 6 | 0 | 0 | 0 | 0 | 1 | 0 |
 | 6 | [`BASE-MAC`](hardening/02_mac.md) | draft | 4 | 11 | 4 | 0 | 0 | 0 | 0 | 0 |
 
@@ -42,13 +43,13 @@ A task is `blocked` only if all its requirements are blocked; otherwise the bloc
 
 | Task | Status | Blocked requirements | Open point |
 | :-- | :-- | :-- | :-- |
-| `T-BASE-BUILD-4.4` | todo | BASE-BUILD-30, BASE-BUILD-31, BASE-BUILD-32 | 1: Kirkstone is end of life since April 2026: migrate to scarthgap (LTS until April 2028) or the next LTS release, or stay on kirkstone with own backports?; 2: Where are CVE reports and SBOMs stored, and who reviews them per release? |
+| `T-BASE-BSP-4.2` | todo | BASE-BSP-15, BASE-BSP-16 | 1: Which MCP23008 (0x21) pins are LED1, LED2 (if not GPIO27), buzzer and the PCI/power/reset lines exactly? The hardware specification names only LED1 = GP1 and buzzer = GP5. |
+| `T-BASE-BUILD-4.4` | todo | BASE-BUILD-30, BASE-BUILD-32, BASE-BUILD-34, BASE-BUILD-35 | 1: Kirkstone is end of life since April 2026: migrate to scarthgap (LTS until April 2028) or the next LTS release, or stay on kirkstone with own backports?; 3: Which CI/CD system and which vulnerability management tool (e.g. GitHub Actions / GitLab CI, Dependency-Track)? |
 | `T-BASE-HWT-4.3` | todo | BASE-HWT-25 | 9: Does the kirkstone kernel (5.15) support RS-485 mode (`TIOCSRS485`) on the PL011 UART (`ttyAMA0`)? If not: backport of the driver change, or kernel update. |
 | `T-BASE-WAP-4.2` | todo | BASE-WAP-10 | 5: Does `brcmfmac` run the IoT AP with SAE stably, and IoT AP (SAE) + service AP (WPA2-PSK) during service mode? |
 | `T-BASE-WAP-4.4` | todo | BASE-WAP-40 | 5: Does `brcmfmac` run the IoT AP with SAE stably, and IoT AP (SAE) + service AP (WPA2-PSK) during service mode? |
 | `T-BASE-PROV-4.2` | todo | BASE-PROV-12 | 1: Where does the factory script live, and where are the Bynacon CA and the device registry operated? |
 | `T-BASE-PROV-4.4` | todo | BASE-PROV-32 | 1: Where does the factory script live, and where are the Bynacon CA and the device registry operated? |
-| `T-BASE-TIME-4.3` | todo | BASE-TIME-20 | 4: Is the MCP79412 battery-backed on this device? The hardware spec does not say. Without a battery, `BASE-TIME-20` cannot be met after power loss. |
 | `T-BASE-VPN-4` | todo | BASE-VPN-04, BASE-VPN-06 | 2: Values of `VPN_ENDPOINT`, port and VPN subnet. |
 | `T-BASE-WEB-4` | todo | BASE-WEB-01, BASE-WEB-05 | 1: Which web application runs behind nginx, and on which port or socket? |
 | `T-BASE-IDS-4.4` | todo | BASE-IDS-30, BASE-IDS-31 | 3: Does `brcmfmac` report deauthentication and authentication failure events to hostapd? If not, `BASE-IDS-31` cannot be met with the on-board radio. |
@@ -59,8 +60,6 @@ A task is `blocked` only if all its requirements are blocked; otherwise the bloc
 | `T-BASE-VBOOT-4.2` | todo | BASE-VBOOT-10 | 4: Key rotation: how is a new public key brought onto devices (U-Boot update via OTA, signed with the old key)? |
 | `T-BASE-VBOOT-4.4` | blocked | BASE-VBOOT-30, BASE-VBOOT-31, BASE-VBOOT-32 | 2: Where are the production signing key and the development key kept (HSM, build host), and who may sign? |
 | `T-BASE-AUDIT-4.3` | todo | BASE-AUDIT-23, BASE-AUDIT-24 | 3: Is the AIDE database protected against modification (hash sealed in the TPM, upload off the device)?; 4: Who updates the baseline after an OTA update – the OTA layer, or a procedure of this module? |
-| `T-BASE-CONT-4.2` | todo | BASE-CONT-10 | 2: Rootless Docker instead of `userns-remap`? |
-| `T-BASE-CONT-4.4` | blocked | BASE-CONT-30, BASE-CONT-31 | 1: Which registry, and signed images (Notation/cosign) or pinned digests? |
 | `T-BASE-LOGDB-4` | blocked | BASE-LOGDB-01, BASE-LOGDB-02, BASE-LOGDB-03, BASE-LOGDB-04, BASE-LOGDB-05, BASE-LOGDB-06 | 1: Which module owns PostgreSQL (database, user, log table, retention)?; 2: Retention of log entries in the database (time, row count)?; 3: Are all severities written into the database, or only from a minimum level (e.g. `info`)?; 4: Maximum size of the disk buffer? |
 
 ## Verification Tasks (device / schematic)
@@ -69,7 +68,6 @@ A task is `blocked` only if all its requirements are blocked; otherwise the bloc
 | :-- | :-- | :-- |
 | `V-BASE-HWT-OP9` | todo | Does the kirkstone kernel (5.15) support RS-485 mode (`TIOCSRS485`) on the PL011 UART (`ttyAMA0`)? If not: backport of the driver change, or kernel update. |
 | `V-BASE-WAP-OP5` | todo | Does `brcmfmac` run the IoT AP with SAE stably, and IoT AP (SAE) + service AP (WPA2-PSK) during service mode? |
-| `V-BASE-TIME-OP4` | todo | Is the MCP79412 battery-backed on this device? The hardware spec does not say. Without a battery, `BASE-TIME-20` cannot be met after power loss. |
 | `V-BASE-IDS-OP3` | todo | Does `brcmfmac` report deauthentication and authentication failure events to hostapd? If not, `BASE-IDS-31` cannot be met with the on-board radio. |
 | `V-BASE-USB-OP1` | todo | Read the vendor/product IDs and ports of the internal USB devices on the device (`usbguard generate-policy`). |
 | `V-BASE-LUKS-OP5` | todo | Cipher: `aes-xts-plain64` (as in `BASE-LUKS-01`) or Adiantum? Decide after a throughput measurement on the device. |

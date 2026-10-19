@@ -152,6 +152,6 @@ This module keeps the system time correct. A correct time is required for TLS ce
 | 1 | Which NTS servers are used (public servers, or a company time server)? | `BASE-TIME-10`, `BASE-TIME-12` | **Decided:** public NTS servers of at least 3 operators (section 5). |
 | 2 | To which networks does the device serve time: LAN0 (service), LAN1 (sensor/actuator), WLAN AP, Thread? | `BASE-TIME-30`, `BASE-TIME-31` | **Decided:** IoT segment only. |
 | 3 | Is `nocerttimecheck` allowed as a fallback when the RTC is invalid? | `BASE-TIME-20` | **Decided:** yes, one update (`BASE-TIME-23`). |
-| 4 | Is the MCP79412 battery-backed on this device? The hardware spec does not say. Without a battery, `BASE-TIME-20` cannot be met after power loss. | `BASE-TIME-20` | **Deferred:** needs hardware information → verification task. |
+| 4 | Is the MCP79412 battery-backed on this device? | `BASE-TIME-20` | **Decided:** yes, the RTC is buffered (hardware specification, section 1). |
 | 5 | The source spec mentions "TPM PCR timestamping". TPM PCRs have no timestamps. What is meant (e.g. timestamps in attestation quotes or in the event log)? | Purpose | **Decided:** removed; PCRs have no timestamps. |
 | 6 | Time zone of the device (UTC, or `Europe/Zurich`)? Which module owns it? | Scope | **Decided:** UTC, owned by this module (`BASE-TIME-50`). |

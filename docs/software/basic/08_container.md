@@ -40,7 +40,7 @@ This module provides the container runtime for the application layer. Docker run
 | Package | Source layer | Replaces / removes |
 | :-- | :-- | :-- |
 | `docker-ce` (or `docker-moby`), `containerd`, `runc` | `meta-virtualization` | — |
-| `python3-docker-compose` → Compose v2 plugin (open point 3) | `meta-virtualization` | — |
+| Docker Compose v2 plugin (`docker compose`) | `meta-virtualization` (or own recipe, see section 8) | `python3-docker-compose` (Compose v1, unsupported) |
 | `modberry-docker-config` (new) | `meta-modberry` | Docker `iptables` rules |
 
 ---
@@ -71,8 +71,8 @@ This module provides the container runtime for the application layer. Docker run
 
 ### 4.4 Images
 
-- `BASE-CONT-30` **MUST** Container images come only from a defined registry (Bynacon registry or images shipped with the OTA system).
-- `BASE-CONT-31` **MUST** Image integrity is verified before start (signed images or pinned digests).
+- `BASE-CONT-30` **MUST** Container images come only from the Bynacon registry.
+- `BASE-CONT-31` **MUST** Compose files reference every image by digest (`image: <registry>/<name>@sha256:…`), never by tag. The compose files themselves are delivered signed through the OTA system.
 
 ---
 
@@ -86,6 +86,7 @@ This module provides the container runtime for the application layer. Docker run
 | `/etc/nftables.d/60-container.nft` | forward and masquerade rules for the Docker bridge networks | `BASE-CONT-21` |
 | Image recipe | no `usermod -a -G docker` for human accounts | `BASE-CONT-02` |
 | systemd units of the application | `docker compose up` per application, `Restart=on-failure` | `BASE-CONT-02` |
+| Compose files of the application | `image: <bynacon-registry>/<name>@sha256:<digest>` | `BASE-CONT-30`, `BASE-CONT-31` |
 
 ---
 
@@ -119,7 +120,7 @@ This module provides the container runtime for the application layer. Docker run
 | `BASE-CONT-20` | `device` | `iptables` command absent; `nft list ruleset` | no Docker-created tables |
 | `BASE-CONT-21` | `device` | Container reaches only the destinations allowed by `BASE-FWP` | as specified |
 | `BASE-CONT-22` | `device` | `ss -ltnp` | container ports only on `127.0.0.1` or matrix interfaces |
-| `BASE-CONT-31` | `device` | Start a container with a modified image | refused |
+| `BASE-CONT-30`, `-31` | `rootfs` / `device` | `grep image: <compose files>`; start with a modified image of the same tag | only Bynacon registry, only `@sha256:` references; modified image not used |
 
 ---
 
@@ -128,6 +129,7 @@ This module provides the container runtime for the application layer. Docker run
 - `BASE-CONT-02`: today, `user` is in the group `docker` (`rpi-cm4.bb`). Membership in `docker` is equivalent to root access.
 - `BASE-CONT-03`: Docker needs a writable, large `/data/app/docker`; with a read-only root filesystem this is mandatory.
 - `BASE-CONT-10`: `userns-remap` changes file ownership of volumes; existing volumes of the application must be prepared for it.
+- Components: kirkstone `meta-virtualization` ships Compose v1 (`python3-docker-compose`). Whether a Compose v2 recipe is available for kirkstone must be checked; otherwise the plugin binary is packaged by an own recipe.
 - `BASE-CONT-12`: `docker-default` requires AppArmor to be enabled (`BASE-MAC-01`).
 - `BASE-CONT-20`: with `iptables: false`, Docker sets up no NAT for container networks; `BASE-CONT-21` must provide it, otherwise containers have no network.
 
@@ -137,7 +139,7 @@ This module provides the container runtime for the application layer. Docker run
 
 | # | Question | Affects | Decision |
 | :-- | :-- | :-- | :-- |
-| 1 | Which registry, and signed images (Notation/cosign) or pinned digests? | `BASE-CONT-30`, `BASE-CONT-31` | |
-| 2 | Rootless Docker instead of `userns-remap`? | `BASE-CONT-10` | |
-| 3 | Compose v1 (`python3-docker-compose`) or the Compose v2 plugin? | Components | |
+| 1 | Which registry, and signed images (Notation/cosign) or pinned digests? | `BASE-CONT-30`, `BASE-CONT-31` | **Decided:** Bynacon registry; images pinned by digest; compose files signed via OTA. |
+| 2 | Rootless Docker instead of `userns-remap`? | `BASE-CONT-10` | **Decided:** `userns-remap`. |
+| 3 | Compose v1 (`python3-docker-compose`) or the Compose v2 plugin? | Components | **Decided:** Compose v2 plugin. |
 | 4 | Docker in the base image. | Scope | **Decided:** own base module. |
