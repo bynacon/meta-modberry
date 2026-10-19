@@ -5,144 +5,144 @@
 ![Yocto Kirkstone](https://img.shields.io/badge/Yocto-Kirkstone-blue.svg?style=for-the-badge)
 ![Raspberry Pi CM4](https://img.shields.io/badge/Raspberry%20Pi-CM4-C51A4A.svg?style=for-the-badge&logo=raspberry-pi)
 
-Yocto-Layer für den Techbase Modberry Industriecomputer, basierend auf dem Raspberry Pi Compute Module 4.
-**[Release Notes anzeigen](#9-release-notes-modberry)**
+Yocto layer for the Techbase Modberry industrial computer, based on the Raspberry Pi Compute Module 4.
+**[Show release notes](#9-release-notes-modberry)**
 
-Dieses README beschreibt den Inhalt des Layers `meta-modberry`, seine Spezifikationen und wie die Spezifikationen mit dem Agent-System umgesetzt werden.
+This README describes the content of the `meta-modberry` layer, its specifications, and how the specifications are implemented with the agent system.
 
-## Inhaltsverzeichnis
+## Table of Contents
 
-1. [Überblick](#1-überblick)
-2. [Abhängigkeiten (Dependencies)](#2-abhängigkeiten-dependencies)
-3. [Layer zum Build hinzufügen](#3-layer-zum-build-hinzufügen)
-4. [Repository-Struktur](#4-repository-struktur)
-5. [Hardware-Dokumentation](#5-hardware-dokumentation)
-6. [Software-Spezifikation](#6-software-spezifikation)
-7. [Umsetzung mit dem Agent-System](#7-umsetzung-mit-dem-agent-system)
+1. [Overview](#1-overview)
+2. [Dependencies](#2-dependencies)
+3. [Adding the Layer to a Build](#3-adding-the-layer-to-a-build)
+4. [Repository Structure](#4-repository-structure)
+5. [Hardware Documentation](#5-hardware-documentation)
+6. [Software Specification](#6-software-specification)
+7. [Implementation with the Agent System](#7-implementation-with-the-agent-system)
 8. [Patches](#8-patches)
 9. [Release Notes Modberry](#9-release-notes-modberry)
-   - [Release Note Nummerierung](#release-note-nummerierung)
+   - [Release Note Numbering](#release-note-numbering)
 
 ---
 
-## 1. Überblick
+## 1. Overview
 
-Der Layer stellt das Basis-Image für den **Techbase Modberry M40804W MAX** (CM4) bereit: Maschinenkonfiguration, Board-Support (Device Tree, Overlays, Treiber), Basissystem und Sicherheitsfunktionen.
+The layer provides the base image for the **Techbase Modberry M40804W MAX** (CM4): machine configuration, board support (device tree, overlays, drivers), base system and security functions.
 
-| Begriff | Wert |
+| Item | Value |
 | :-- | :-- |
-| Yocto-Release | `kirkstone` (die Migration auf ein aktuelles LTS-Release ist offen, siehe `BASE-BUILD`) |
-| Machine (Basis-Image) | `modberry-m40804w-max-basic` |
-| Gemeinsame Machine-Konfiguration | `modberry-m40804w-max` (wird von der Basis-Machine eingebunden) |
+| Yocto release | `kirkstone` (the migration to a current LTS release is open, see `BASE-BUILD`) |
+| Machine (base image) | `modberry-m40804w-max-basic` |
+| Common machine configuration | `modberry-m40804w-max` (included by the base machine) |
 | Image | `rpi-cm4` ([recipes-core/images/rpi-cm4.bb](recipes-core/images/rpi-cm4.bb)) |
 | Bootloader | U-Boot (`RPI_USE_U_BOOT = "1"`) |
 
-**Ist- und Soll-Stand:** Das Soll ist in den Modul-Spezifikationen unter [docs/software/basic/](docs/software/basic/README.md) festgelegt. Der heutige Stand der Rezepte (z. B. `dhcpcd`, `init-ifupdown`, `iptables`, `wpa-supplicant`) wird Task für Task durch die spezifizierten Module ersetzt (z. B. systemd-networkd, nftables). Der Fortschritt steht in [STATUS.md](docs/software/basic/STATUS.md).
+**Current and target state:** the target state is defined in the module specifications under [docs/software/basic/](docs/software/basic/README.md). The current recipes (e.g. `dhcpcd`, `init-ifupdown`, `iptables`, `wpa-supplicant`) are replaced task by task by the specified modules (e.g. systemd-networkd, nftables). The progress is shown in [STATUS.md](docs/software/basic/STATUS.md).
 
 ---
 
-## 2. Abhängigkeiten (Dependencies)
+## 2. Dependencies
 
-Dieser Layer hat die folgenden Abhängigkeiten:
+This layer depends on:
 
-| Layer | URI | Branch | Notwendigkeit |
+| Layer | URI | Branch | Requirement |
 | :--- | :--- | :--- | :--- |
-| `poky` | `<https://github.com/yoctoproject/poky.git>` | `kirkstone` | **Erforderlich** |
-| `meta-raspberrypi` | `git://git.yoctoproject.org/meta-raspberrypi` | `kirkstone` | **Erforderlich** |
-| `meta-openembedded` | `<https://github.com/openembedded/meta-openembedded.git>` | `kirkstone` | **Erforderlich** |
-| `meta-security` | `git://git.yoctoproject.org/meta-security.git` | `kirkstone` | **Erforderlich** |
-| `meta-virtualization` | `git://git.yoctoproject.org/meta-virtualization` | `kirkstone` | **Erforderlich** |
-| `meta-edgecon` | `git@github.com:bynacon/meta-edgecon.git` | `kirkstone` | Optional (nur für OTA, privat) |
-| `meta-ota` | `<https://github.com/bynacon/meta-ota.git>` | `kirkstone` | Optional (nur für OTA, privat) |
+| `poky` | `<https://github.com/yoctoproject/poky.git>` | `kirkstone` | **Required** |
+| `meta-raspberrypi` | `git://git.yoctoproject.org/meta-raspberrypi` | `kirkstone` | **Required** |
+| `meta-openembedded` | `<https://github.com/openembedded/meta-openembedded.git>` | `kirkstone` | **Required** |
+| `meta-security` | `git://git.yoctoproject.org/meta-security.git` | `kirkstone` | **Required** |
+| `meta-virtualization` | `git://git.yoctoproject.org/meta-virtualization` | `kirkstone` | **Required** |
+| `meta-edgecon` | `git@github.com:bynacon/meta-edgecon.git` | `kirkstone` | Optional (OTA only, private) |
+| `meta-ota` | `<https://github.com/bynacon/meta-ota.git>` | `kirkstone` | Optional (OTA only, private) |
 
-**Hinweis:** Die Layer `meta-edgecon` und `meta-ota` sind nur für Builds mit OTA-Update-Funktionalität erforderlich. Die OTA-Machine-Konfigurationen und alle OTA-spezifischen Einstellungen liegen in `meta-ota`; `meta-modberry` enthält keine OTA-Konfiguration. `meta-ota` erweitert diesen Layer nur über die Erweiterungspunkte der Module (z. B. `/etc/nftables.d/`, `/etc/dnsmasq.d/`, Image-bbappend). Für ein Basis-Image (Machine: `modberry-m40804w-max-basic.conf`) werden sie nicht benötigt.
+**Note:** the layers `meta-edgecon` and `meta-ota` are required only for builds with OTA update functionality. The OTA machine configurations and all OTA-specific settings are in `meta-ota`; `meta-modberry` contains no OTA configuration. `meta-ota` extends this layer only through the extension points of the modules (e.g. `/etc/nftables.d/`, `/etc/dnsmasq.d/`, image bbappend). A base image (machine: `modberry-m40804w-max-basic.conf`) does not need them.
 
 ---
 
-## 3. Layer zum Build hinzufügen
+## 3. Adding the Layer to a Build
 
-Führen Sie `bitbake-layers add-layer meta-modberry` aus und fügen Sie alle weiteren, oben aufgelisteten Abhängigkeiten zu Ihrer `bblayers.conf`-Datei hinzu.
+Run `bitbake-layers add-layer meta-modberry` and add all other dependencies listed above to your `bblayers.conf` file.
 
-Basis-Image bauen:
+Build the base image:
 
 ```bash
-source poky/oe-init-build-env <build-verzeichnis>
+source poky/oe-init-build-env <build-directory>
 MACHINE=modberry-m40804w-max-basic bitbake rpi-cm4
 ```
 
-Zugangsdaten und Schlüssel (WLAN, Accounts, Zertifikate) gehören nicht in das Repository und nicht in die `local.conf`. Sie werden bei der Provisionierung auf dem Gerät gesetzt (`BASE-PROV`, `/data/provisioning/`).
+Credentials and keys (WLAN, accounts, certificates) belong neither in the repository nor in `local.conf`. They are set on the device during provisioning (`BASE-PROV`, `/data/provisioning/`).
 
 ---
 
-## 4. Repository-Struktur
+## 4. Repository Structure
 
-| Pfad | Inhalt | Geändert von |
+| Path | Content | Changed by |
 | :-- | :-- | :-- |
-| [conf/](conf/) | `layer.conf`, Machine-Konfigurationen | Entwickler, Agenten |
-| `recipes-bsp/` | Boot-Dateien (`config.txt`, cmdline), U-Boot, udev | Entwickler, Agenten |
-| `recipes-connectivity/` | Netzwerk-Dienste (hostapd, dnsmasq, OpenSSH, …) | Entwickler, Agenten |
-| `recipes-core/` | Image `rpi-cm4`, systemd, Sprache/Locale | Entwickler, Agenten |
-| `recipes-extended/` | libmbus, sudo | Entwickler, Agenten |
-| `recipes-kernel/` | Kernel-bbappend, Device-Tree-Patch und Overlays (RTC, CAN, TPM, MCP23008, SC16IS740) | Entwickler, Agenten |
-| `recipes-security/` | tpm2-tss | Entwickler, Agenten |
-| [docs/hardware/](docs/hardware/README.md) | Hardware-Spezifikation und Datenblätter | nur Menschen |
-| [docs/software/](docs/software/basic/README.md) | Modul-Spezifikationen des Basis-Stacks, Vorlage `_TEMPLATE.md` | nur Menschen |
-| [agent/](agent/playbook.md) | Playbook, Tasks (`tasks/basic.json`), Task-Packs, Generator | Generator und Runner, nie Agenten direkt |
+| [conf/](conf/) | `layer.conf`, machine configurations | developers, agents |
+| `recipes-bsp/` | boot files (`config.txt`, cmdline), U-Boot, udev | developers, agents |
+| `recipes-connectivity/` | network services (hostapd, dnsmasq, OpenSSH, …) | developers, agents |
+| `recipes-core/` | image `rpi-cm4`, systemd, language/locale | developers, agents |
+| `recipes-extended/` | libmbus, sudo | developers, agents |
+| `recipes-kernel/` | kernel bbappend, device tree patch and overlays (RTC, CAN, TPM, MCP23008, SC16IS740) | developers, agents |
+| `recipes-security/` | tpm2-tss | developers, agents |
+| [docs/hardware/](docs/hardware/README.md) | hardware specification and datasheets | humans only |
+| [docs/software/](docs/software/basic/README.md) | module specifications of the base stack, template `_TEMPLATE.md` | humans only |
+| [agent/](agent/playbook.md) | playbook, tasks (`tasks/basic.json`), task packs, generator | generator and runner, never agents directly |
 
 ---
 
-## 5. Hardware-Dokumentation
+## 5. Hardware Documentation
 
-Dieser Layer stellt die Maschinenkonfiguration für den **Techbase Modberry M40804W MAX** bereit, einschliesslich grundlegender GPIO-Zuweisungen und Hardware-Einstellungen.
+This layer provides the machine configuration for the **Techbase Modberry M40804W MAX**, including basic GPIO assignments and hardware settings.
 
-Für detaillierte Hardware-Spezifikationen, Pinouts und Implementierungshinweise ist ausschliesslich die zentrale Hardware-Dokumentation massgebend:
-➡️ **[Hardware-Spezifikation (M40804W_MAX.md)](docs/hardware/M40804W_MAX.md)**
+For detailed hardware specifications, pinouts and implementation notes, only the central hardware documentation is authoritative:
+➡️ **[Hardware specification (M40804W_MAX.md)](docs/hardware/M40804W_MAX.md)**
 
-Datenblätter liegen unter [docs/hardware/datasheets/](docs/hardware/datasheets/). Gerätespezifische Werte (UART-Pfade, GPIO-Nummern, I2C-Adressen) stehen nur in der Hardware-Spezifikation; die Software-Spezifikationen verweisen darauf.
-
----
-
-## 6. Software-Spezifikation
-
-Die Spezifikation des Basis-Stacks liegt unter [docs/software/basic/](docs/software/basic/README.md). Sie legt fest, **was** das Image leisten muss, nicht wie es umgesetzt wird.
-
-- **Module:** 28 Module mit der ID `BASE-<MODUL>`, gruppiert in Basissystem, Netzwerk (`network/`), Boot-Kette (`boot-chain/`) und Härtung (`hardening/`). Die Übersicht mit Abhängigkeiten und Risiko steht im [README der Spezifikation](docs/software/basic/README.md).
-- **Anforderungen:** IDs `BASE-<MODUL>-<NN>` mit den Stufen `MUST`, `SHOULD`, `MAY`; Prüfstufen `build`, `manifest`, `rootfs`, `device`.
-- **Spec-Status:** `planned` → `draft` → `review` → `approved`. Nur Module im Status `approved` werden umgesetzt.
-- **Offene Punkte:** enden als *Decided* oder *Deferred*. Ein offener Punkt, der eine Messung am Gerät oder eine Prüfung im Schema braucht, wird zu einer Verifikations-Task (`V-…`).
-- **Neue Module:** nach der Vorlage [_TEMPLATE.md](docs/software/_TEMPLATE.md).
+Datasheets are in [docs/hardware/datasheets/](docs/hardware/datasheets/). Device-specific values (UART paths, GPIO numbers, I2C addresses) are defined only in the hardware specification; the software specifications reference it.
 
 ---
 
-## 7. Umsetzung mit dem Agent-System
+## 6. Software Specification
 
-Die Spezifikationen werden vom separaten Repository `agent-system` (CrewAI mit lokalen LLMs auf dem ASUS GX10) umgesetzt. Ein Agent bearbeitet pro Lauf genau eine Task.
+The specification of the base stack is in [docs/software/basic/](docs/software/basic/README.md). It defines **what** the image must provide, not how it is implemented.
+
+- **Modules:** 28 modules with the ID `BASE-<MODULE>`, grouped into base system, network (`network/`), boot chain (`boot-chain/`) and hardening (`hardening/`). The overview with dependencies and risk is in the [README of the specification](docs/software/basic/README.md).
+- **Requirements:** IDs `BASE-<MODULE>-<NN>` with the levels `MUST`, `SHOULD`, `MAY`; verification levels `build`, `manifest`, `rootfs`, `device`.
+- **Spec status:** `planned` → `draft` → `review` → `approved`. Only modules in status `approved` are implemented.
+- **Open points:** end as *Decided* or *Deferred*. An open point that needs a measurement on the device or a check of the schematic becomes a verification task (`V-…`).
+- **New modules:** follow the template [_TEMPLATE.md](docs/software/_TEMPLATE.md).
+
+---
+
+## 7. Implementation with the Agent System
+
+The specifications are implemented by the separate repository `agent-system` (CrewAI with local LLMs on the ASUS GX10). An agent works on exactly one task per run.
 
 ```mermaid
 flowchart LR
-    S[docs/software/basic<br/>Spezifikationen] --> G[agent/tools/gen_tasks.py]
-    G --> T[agent/tasks/basic.json<br/>Tasks + Status]
-    G --> P[agent/packs/*.md<br/>Task-Packs]
+    S[docs/software/basic<br/>specifications] --> G[agent/tools/gen_tasks.py]
+    G --> T[agent/tasks/basic.json<br/>tasks + status]
+    G --> P[agent/packs/*.md<br/>task packs]
     G --> ST[STATUS.md]
-    T --> R[agent-system Runner]
+    T --> R[agent-system runner]
     P --> R
-    R --> L[Rezepte und conf/<br/>Commit pro Task]
+    R --> L[recipes and conf/<br/>one commit per task]
 ```
 
-| Datei | Zweck |
+| File | Purpose |
 | :-- | :-- |
-| [agent/playbook.md](agent/playbook.md) | Regeln für die Agenten: Schreibbereich, kirkstone-Syntax, keine Secrets, Definition of Done |
-| [agent/tools/gen_tasks.py](agent/tools/gen_tasks.py) | erzeugt aus den Spezifikationen eine Task pro Abschnitt `4.x`, die Task-Packs und `STATUS.md`; behält den Status bestehender Tasks |
-| `agent/tasks/basic.json` | Tasks mit Phase, Abhängigkeiten, Anforderungen und Status (`status`, `verified`, `evidence`, `notes`) |
-| `agent/packs/` | ein kleines Kontext-Paket pro Task (nur die Anforderungen und Repo-Hinweise dieser Task) |
-| [docs/software/basic/STATUS.md](docs/software/basic/STATUS.md) | generierter Umsetzungsstand pro Modul – nicht von Hand bearbeiten |
+| [agent/playbook.md](agent/playbook.md) | rules for the agents: write area, kirkstone syntax, no secrets, Definition of Done |
+| [agent/tools/gen_tasks.py](agent/tools/gen_tasks.py) | generates one task per section `4.x` from the specifications, plus the task packs and `STATUS.md`; keeps the state of existing tasks |
+| `agent/tasks/basic.json` | tasks with phase, dependencies, requirements and state (`status`, `verified`, `evidence`, `notes`) |
+| `agent/packs/` | one small context pack per task (only the requirements and repository hints of that task) |
+| [docs/software/basic/STATUS.md](docs/software/basic/STATUS.md) | generated implementation status per module – do not edit by hand |
 
-Regeln:
+Rules:
 
-- Agenten schreiben nur in `conf/`, `recipes-*/`, `classes/`, `wic/`, `files/`. `docs/` und `agent/` sind für sie gesperrt.
-- Den Task-Status schreibt nur der Runner. Jede Task endet in einem eigenen Commit `<Task-ID>: <Zusammenfassung>` mit den Anforderungs-IDs. Gepusht wird von Hand.
-- Tasks mit *Human Gate* enden bei `implemented`; der Gerätetest wird von Hand gemacht.
-- Nach einer Änderung an den Spezifikationen den Generator neu laufen lassen:
+- Agents write only to `conf/`, `recipes-*/`, `classes/`, `wic/`, `files/`. `docs/` and `agent/` are locked for them.
+- Only the runner writes the task state. Each task ends in its own commit `<task ID>: <summary>` with the requirement IDs. Pushing is done by hand.
+- Tasks with a *human gate* end at `implemented`; the device test is done by hand.
+- After a change to the specifications, run the generator again:
 
 ```bash
 python3 agent/tools/gen_tasks.py
@@ -152,23 +152,23 @@ python3 agent/tools/gen_tasks.py
 
 ## 8. Patches
 
-Bitte senden Sie alle Patches für den `meta-modberry`-Layer an den Bynacon-Maintainer:  
+Please send all patches for the `meta-modberry` layer to the Bynacon maintainer:  
 **Ben Roethlisberger** - `ben.roethlisberger@bynacon.ch`
 
 ---
 
 ## 9. Release Notes Modberry
 
-### Release Note Nummerierung
+### Release Note Numbering
 
-Informationen zur Nummerierung der Release Notes (z.B. `5.04.12.023`):
+Numbering of the release notes (e.g. `5.04.12.023`):
 
-- **Erste Zahl (5):** Geräteversion (5 = Modberry)
-- **Zweite Zahl (04):** Haupt-Release-Nummer
-- **Dritte Zahl (12):** Sub-Versionierungsnummer
-- **Vierte Zahl (023):** Patch-Nummer
+- **First number (5):** device version (5 = Modberry)
+- **Second number (04):** major release number
+- **Third number (12):** sub-version number
+- **Fourth number (023):** patch number
 
 ### Release 5.00.00.001
 
-- **Erster Commit:** Standardkonfiguration für Modberry M40804W MAX.
-- Grundlegende GPIO-Zuweisungen definiert.
+- **First commit:** default configuration for Modberry M40804W MAX.
+- Basic GPIO assignments defined.
