@@ -48,7 +48,7 @@ This module connects the device as a client to an existing WLAN, which serves as
 ### 4.1 Daemon
 
 - `BASE-WCLI-01` **MUST** iwd is the only WLAN client daemon. `wpa-supplicant` is not part of the image.
-- `BASE-WCLI-02` **MUST** iwd manages only the client interface `wlan1_sta`. It does not touch the AP interfaces (`wlan0_iot`, `wlan0_guest`).
+- `BASE-WCLI-02` **MUST** iwd manages only the client interface `wlan1_sta`. It does not touch the AP interface `wlan0_iot`.
 - `BASE-WCLI-03` **MUST** iwd does not configure IP addresses (`EnableNetworkConfiguration=false`). IP configuration is done by `BASE-NETD`.
 - `BASE-WCLI-04` **MUST** `wlan1_sta` is an interface of the USB WLAN adapter (`BASE-USB-05`), never of the on-board radio (`BASE-WAP-06`). Without the adapter, the device has no WLAN client and no fallback uplink.
 

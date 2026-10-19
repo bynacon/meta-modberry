@@ -13,7 +13,7 @@
 
 ## 1. Purpose
 
-This module provides two WLAN networks with hostapd. The IoT WLAN connects sensors and actuators (e.g. ESP32 devices) and is part of the IoT segment. The guest WLAN gives guest devices internet access without access to sensors and actuators. Both networks use WPA3 and client isolation. Addresses and DNS are provided by `BASE-DNS`.
+This module provides the IoT WLAN with hostapd. It connects sensors and actuators (e.g. ESP32 devices) and is part of the IoT segment. The network uses WPA3 and client isolation, and has the same SSID on all devices. The on-board radio runs only this one access point. Addresses and DNS are provided by `BASE-DNS`.
 
 ---
 
@@ -21,16 +21,18 @@ This module provides two WLAN networks with hostapd. The IoT WLAN connects senso
 
 ### In scope
 
-- Virtual AP interfaces `wlan0_iot` and `wlan0_guest` and their `.netdev` / `.network` files.
-- hostapd configuration and security settings for both networks.
+- Virtual AP interface `wlan0_iot` and its `.netdev` / `.network` files.
+- hostapd configuration and security settings.
+- Use of the on-board radio.
 - hostapd control interface for event scripts.
 
 ### Out of scope
 
 - DHCP and DNS for the AP clients → `BASE-DNS`
 - hostapd event scripts and MAC bans → `BASE-IDS`
-- Firewall rules, NAT and isolation between segments → `BASE-FWP`
+- Firewall rules and isolation between segments → `BASE-FWP`
 - Segments, bridge `br-iot`, subnets → `BASE-NETD`
+- WLAN client uplink (USB WLAN adapter) → `BASE-WCLI`
 
 ---
 
@@ -46,25 +48,24 @@ This module provides two WLAN networks with hostapd. The IoT WLAN connects senso
 
 ## 4. Requirements
 
-### 4.1 Interfaces & Service
+### 4.1 Interface & Service
 
-- `BASE-WAP-01` **MUST** The AP interfaces are virtual interfaces on the WLAN radio, created by systemd-networkd `.netdev` files.
+- `BASE-WAP-01` **MUST** The AP interface `wlan0_iot` is a virtual interface on the on-board radio, created by a systemd-networkd `.netdev` file.
 - `BASE-WAP-02` **MUST** hostapd is started by its upstream systemd unit. No wrapper service starts or restarts hostapd.
-- `BASE-WAP-03` **MUST** hostapd starts only after the AP interfaces and `br-iot` exist.
-- `BASE-WAP-04` **MUST** The device provides two networks with separate SSIDs: IoT (`wlan0_iot`) and guest (`wlan0_guest`). The SSIDs are the same on all devices, so that clients roam between devices and a WLAN mesh can be added later.
-- `BASE-WAP-05` **MUST** `wlan0_iot` is a member of the bridge `br-iot`. `wlan0_guest` is not bridged.
-- `BASE-WAP-06` **MUST** The on-board radio (BCM43455) runs only the two AP interfaces. It runs no client or mesh interface. If it cannot run both APs stably, the IoT network has priority (see section 8).
-- `BASE-WAP-07` **MUST** WLAN roles beyond the two APs (client uplink, mesh) use a separate USB WLAN adapter (`BASE-USB-05`), never the on-board radio.
+- `BASE-WAP-03` **MUST** hostapd starts only after `wlan0_iot` and `br-iot` exist.
+- `BASE-WAP-04` **MUST** The device provides one WLAN network, the IoT WLAN, with the SSID `bynacon-iot`. The SSID is the same on all devices, so that clients roam between devices.
+- `BASE-WAP-05` **MUST** `wlan0_iot` is a member of the bridge `br-iot`.
+- `BASE-WAP-06` **MUST** The on-board radio (BCM43455) runs exactly one interface: the IoT AP. It runs no second AP, no client and no mesh interface.
+- `BASE-WAP-07` **MUST** Further WLAN roles (client uplink, mesh) use a separate USB WLAN adapter (`BASE-USB-05`), never the on-board radio.
 
 ### 4.2 Security
 
-- `BASE-WAP-10` **MUST** Both networks use WPA3-Personal (SAE) only. WPA2 is not offered.
+- `BASE-WAP-10` **MUST** The network uses WPA3-Personal (SAE) only. WPA2 is not offered.
 - `BASE-WAP-11` **MUST** Protected Management Frames are required (`ieee80211w=2`).
-- `BASE-WAP-12` **MUST** Client isolation is enabled on both networks (`ap_isolate=1`).
+- `BASE-WAP-12` **MUST** Client isolation is enabled (`ap_isolate=1`).
 - `BASE-WAP-13` **MUST** WEP, WPA-TKIP and WPS are disabled.
-- `BASE-WAP-14` **MUST** The passphrases are not stored in the image, the layer repository or the build configuration. They are provisioned per installation (site): all devices of one installation share them, different installations have different passphrases (`BASE-PROV`).
+- `BASE-WAP-14` **MUST** The passphrase is not stored in the image, the layer repository or the build configuration. It is provisioned per installation (site): all devices of one installation share it, different installations have different passphrases (`BASE-PROV`).
 - `BASE-WAP-15` **MUST** The country code is provisioned per device (`BASE-PROV`). Default is `CH`.
-- `BASE-WAP-16` **MUST** The IoT and guest networks have different passphrases.
 
 ### 4.3 Control Interface
 
@@ -76,17 +77,15 @@ This module provides two WLAN networks with hostapd. The IoT WLAN connects senso
 
 | Target path | Key settings | Req. |
 | :-- | :-- | :-- |
-| `/etc/systemd/network/50-wlan0_iot.netdev` | `Kind=wlan`, `[WLAN] PhysicalDevice=0`, `Type=ap` | `BASE-WAP-01` |
+| `/etc/systemd/network/50-wlan0_iot.netdev` | `Kind=wlan`, `[WLAN] PhysicalDevice=0`, `Type=ap` | `BASE-WAP-01`, `BASE-WAP-06` |
 | `/etc/systemd/network/50-wlan0_iot.network` | `Bridge=br-iot` | `BASE-WAP-05` |
-| `/etc/systemd/network/50-wlan0_guest.netdev` | `Kind=wlan`, `[WLAN] PhysicalDevice=0`, `Type=ap` | `BASE-WAP-01` |
-| `/etc/systemd/network/50-wlan0_guest.network` | `Address=172.30.20.1/24`, no `DHCPServer=`, no `IPMasquerade=` | `BASE-WAP-01` |
-| `/etc/hostapd.conf` | first BSS `interface=wlan0_iot`, `bridge=br-iot`, `ssid=<iot-ssid>`; second BSS `bss=wlan0_guest`, `ssid=<guest-ssid>` (fixed values, identical on all devices) | `BASE-WAP-04`, `BASE-WAP-05` |
-| `/etc/hostapd.conf` (per BSS) | `wpa=2`, `wpa_key_mgmt=SAE`, `rsn_pairwise=CCMP`, `ieee80211w=2`, `sae_require_mfp=1` | `BASE-WAP-10`, `BASE-WAP-11` |
-| `/etc/hostapd.conf` (per BSS) | `ap_isolate=1`, `wps_state=0`, no `wep_key*`, no `TKIP` | `BASE-WAP-12`, `BASE-WAP-13` |
+| `/etc/hostapd.conf` | `interface=wlan0_iot`, `bridge=br-iot`, `ssid=bynacon-iot` | `BASE-WAP-04`, `BASE-WAP-05` |
+| `/etc/hostapd.conf` | `wpa=2`, `wpa_key_mgmt=SAE`, `rsn_pairwise=CCMP`, `ieee80211w=2`, `sae_require_mfp=1` | `BASE-WAP-10`, `BASE-WAP-11` |
+| `/etc/hostapd.conf` | `ap_isolate=1`, `wps_state=0`, no `wep_key*`, no `TKIP` | `BASE-WAP-12`, `BASE-WAP-13` |
 | `/etc/hostapd.conf` | `country_code=` from `/data/provisioning/wlan/country`, `ieee80211d=1` | `BASE-WAP-15` |
 | `/etc/hostapd.conf` | `ctrl_interface=/run/hostapd`, `ctrl_interface_group=<group>`, mode `0600` | `BASE-WAP-14`, `BASE-WAP-30` |
-| hostapd passphrases | `sae_password=` per BSS from `/data/provisioning/wlan/iot.psk` and `guest.psk` (config generated by an `ExecStartPre=` helper) | `BASE-WAP-14`, `BASE-WAP-16` |
-| `hostapd.service.d/` | `After=` / `BindsTo=` the AP interface devices | `BASE-WAP-03` |
+| hostapd passphrase | `sae_password=` from `/data/provisioning/wlan/iot.psk` (config generated by an `ExecStartPre=` helper) | `BASE-WAP-14` |
+| `hostapd.service.d/` | `After=` / `BindsTo=` the `wlan0_iot` device | `BASE-WAP-03` |
 
 ---
 
@@ -94,13 +93,13 @@ This module provides two WLAN networks with hostapd. The IoT WLAN connects senso
 
 ### Provides
 
-- AP interfaces `wlan0_iot`, `wlan0_guest` – used by `BASE-NETD` (bridge member), `BASE-DNS`, `BASE-FWP` and `BASE-IDS`.
+- AP interface `wlan0_iot` – used by `BASE-NETD` (bridge member), `BASE-DNS`, `BASE-FWP` and `BASE-IDS`.
 - hostapd control interface – used by `BASE-IDS` (event scripts via `hostapd_cli`).
 
 ### Consumes
 
-- Bridge `br-iot`, subnets, `.netdev` convention – owned by `BASE-NETD`.
-- Passphrases and country code – owned by `BASE-PROV`.
+- Bridge `br-iot`, subnet, `.netdev` convention – owned by `BASE-NETD`.
+- Passphrase and country code – owned by `BASE-PROV`.
 - Firewall framework – owned by `BASE-FW`.
 
 ---
@@ -109,20 +108,20 @@ This module provides two WLAN networks with hostapd. The IoT WLAN connects senso
 
 | Req. | Level | Check | Expected |
 | :-- | :-- | :-- | :-- |
-| `BASE-WAP-01` | `device` | `iw dev` | `wlan0_iot`, `wlan0_guest` type AP on `phy0` |
+| `BASE-WAP-01` | `device` | `iw dev` | `wlan0_iot` type AP on `phy0` |
 | `BASE-WAP-02` | `manifest` | `hostapddeamon` in image manifest | absent |
 | `BASE-WAP-02` | `device` | `systemctl is-active hostapd` | `active` |
 | `BASE-WAP-03` | `device` | Reboot 5×, `systemctl status hostapd` | started without error every time |
-| `BASE-WAP-04` | `device` | Scan from a phone | both SSIDs visible |
-| `BASE-WAP-05` | `device` | `bridge link` | `wlan0_iot` is a port of `br-iot`, `wlan0_guest` is not |
-| `BASE-WAP-06` | `device` | `iw list` → "valid interface combinations" | documented result; IoT network runs in every supported combination |
-| `BASE-WAP-10` | `device` | Connect a WPA3 client; `hostapd_cli -i <if> all_sta`; connect a WPA2-only client | `AKMSuiteSelector=000fac-8`; WPA2 refused |
-| `BASE-WAP-11` | `rootfs` | `grep ieee80211w <rootfs>/etc/hostapd.conf` | `2` for each BSS |
-| `BASE-WAP-12` | `device` | Two clients in the same network ping each other | no answer |
+| `BASE-WAP-04` | `device` | Scan from a phone near two devices | one SSID `bynacon-iot` |
+| `BASE-WAP-05` | `device` | `bridge link` | `wlan0_iot` is a port of `br-iot` |
+| `BASE-WAP-06` | `device` | `iw dev` | exactly one interface on `phy0` |
+| `BASE-WAP-07` | `rootfs` | `.netdev` / iwd configuration of the image | no client or mesh interface on `phy0` |
+| `BASE-WAP-10` | `device` | Connect a WPA3 client; `hostapd_cli -i wlan0_iot all_sta`; connect a WPA2-only client | `AKMSuiteSelector=000fac-8`; WPA2 refused |
+| `BASE-WAP-11` | `rootfs` | `grep ieee80211w <rootfs>/etc/hostapd.conf` | `2` |
+| `BASE-WAP-12` | `device` | Two clients ping each other | no answer |
 | `BASE-WAP-13` | `rootfs` | `grep -E 'wep_key\|TKIP\|wps_state=[12]' <rootfs>/etc/hostapd.conf` | no match |
 | `BASE-WAP-14` | `rootfs` | `grep -E 'wpa_passphrase=\|sae_password=' <rootfs>/etc/hostapd.conf`; `git grep` in the layer and scripts repos | no passphrase |
 | `BASE-WAP-15` | `device` | `iw reg get` | provisioned country (default `CH`) |
-| `BASE-WAP-16` | `device` | Compare the passphrases of both BSS in the generated config | different |
 | `BASE-WAP-30` | `device` | `stat -c '%U:%G %a' /run/hostapd/*` | `root:<group>`, not world-accessible |
 
 ---
@@ -130,10 +129,10 @@ This module provides two WLAN networks with hostapd. The IoT WLAN connects senso
 ## 8. Constraints & Risks
 
 - `BASE-WAP-02`: `hostapddeamon` starts hostapd via `systemctl start` from a oneshot unit; it is removed.
-- `BASE-WAP-06`: `brcmfmac` is a FullMAC driver; the firmware supports at most two virtual interfaces (1× client + 1× AP, or 2× AP). Three interfaces (2× AP + client) are not supported. With only the two APs, the radio is not forced onto the channel of an upstream router.
-- `BASE-WAP-06`, `BASE-WAP-10`: SAE is offloaded to the firmware. With parallel virtual interfaces, firmware crashes and missing authentication answers (`nl80211: MLME command failed`) are known. Two APs with SAE must be tested for stability on the device (open point 5).
+- `BASE-WAP-04`, `BASE-WAP-14`: all installations use the SSID `bynacon-iot` with different passphrases. A client near two installations may try the wrong one; with SAE it fails to authenticate and retries.
+- `BASE-WAP-06`: `brcmfmac` is a FullMAC driver; the firmware supports at most two virtual interfaces, and SAE is offloaded to the firmware. With parallel virtual interfaces, firmware crashes and missing authentication answers (`nl80211: MLME command failed`) are known. One interface is the most stable configuration.
 - `BASE-WAP-07`: `brcmfmac` does not support mesh point mode (802.11s). A mesh needs a USB WLAN adapter with a `mac80211` driver that supports mesh point and software SAE (e.g. `mt76`).
-- `BASE-WAP-10`: SAE in AP mode with `brcmfmac` must be tested on the device. All ESP32 devices need ESP-IDF ≥ 4.3 with WPA3 SAE enabled.
+- `BASE-WAP-10`: SAE in AP mode with `brcmfmac` must be tested on the device (open point 5). All ESP32 devices need ESP-IDF ≥ 4.3 with WPA3 SAE enabled.
 - `BASE-WAP-14`: **interim** – until `BASE-PROV` is implemented, the passphrase comes from the non-versioned `secrets_kirkstone.conf` and is written into the image (`/etc/hostapd.conf`, mode `0600`). The old passphrase is in the Git history and must be changed.
 - `BASE-WAP-15`: today's config uses `country_code=DE`, the WLAN client config `country=CH`.
 
@@ -143,11 +142,11 @@ This module provides two WLAN networks with hostapd. The IoT WLAN connects senso
 
 | # | Question | Affects | Decision |
 | :-- | :-- | :-- | :-- |
-| 1 | Security mode. | `BASE-WAP-10`, `BASE-WAP-11` | **Decided:** WPA3-only (SAE) on both networks. |
-| 2 | SSID scheme (per device or fixed)? | `BASE-WAP-04` | **Decided:** the same SSIDs on all devices; passphrases per installation. |
-| 6 | Names of the IoT and guest SSIDs? | `BASE-WAP-04` | |
-| 7 | Distribution of the WLAN roles on the radios. | `BASE-WAP-06`, `BASE-WAP-07` | **Decided:** on-board radio runs IoT AP and guest AP; client uplink and mesh only with a USB WLAN adapter. |
-| 8 | WLAN mesh between devices (802.11s or batman-adv over a USB adapter): scope, adapter model, backhaul? | Scope | **Deferred:** specified when the USB WLAN adapter is chosen. |
+| 1 | Security mode. | `BASE-WAP-10`, `BASE-WAP-11` | **Decided:** WPA3-only (SAE). |
+| 2 | SSID scheme (per device or fixed)? | `BASE-WAP-04` | **Decided:** the same SSID on all devices; passphrase per installation. |
 | 3 | Country of operation. | `BASE-WAP-15` | **Decided:** provisioned per device, default `CH`. |
-| 4 | Two networks (IoT and guest). | `BASE-WAP-04` | **Decided:** IoT and guest WLAN, if the hardware supports it. |
-| 5 | Does `brcmfmac` run two APs with SAE (WPA3) stably? | `BASE-WAP-06`, `BASE-WAP-10` | **Deferred:** test on the device → verification task. |
+| 4 | WLAN networks of the device. | `BASE-WAP-04` | **Decided:** IoT WLAN only; no guest WLAN. |
+| 5 | Does `brcmfmac` run an AP with SAE (WPA3) stably? | `BASE-WAP-10` | **Deferred:** test on the device → verification task. |
+| 6 | SSID name. | `BASE-WAP-04` | **Decided:** `bynacon-iot`. |
+| 7 | Use of the on-board radio. | `BASE-WAP-06`, `BASE-WAP-07` | **Decided:** only the IoT AP; client uplink and mesh only with a USB WLAN adapter. |
+| 8 | WLAN mesh between devices (802.11s or batman-adv over a USB adapter): scope, adapter model, backhaul? | Scope | **Deferred:** specified when the USB WLAN adapter is chosen. |

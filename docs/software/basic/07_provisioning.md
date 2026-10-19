@@ -90,7 +90,6 @@ This module defines how a device that runs the production image gets its per-dev
 | Item | Generated | Stored as | Used by |
 | :-- | :-- | :-- | :-- |
 | AP passphrase IoT WLAN (per installation) | device registry, per installation | `wlan/iot.psk` | `BASE-WAP-14` |
-| AP passphrase guest WLAN (per installation) | device registry, per installation | `wlan/guest.psk` | `BASE-WAP-14`, `BASE-WAP-16` |
 | WLAN country code (default `CH`) | factory script | `wlan/country` | `BASE-WAP-15` |
 | WLAN client credentials (optional) | factory script | iwd network file | `BASE-WCLI-21` |
 | Site entries of `service_nets` | factory script | `firewall/service_nets.nft` | `BASE-FWP-03` |

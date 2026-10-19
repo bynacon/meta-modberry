@@ -39,8 +39,8 @@ Device-specific values (UART paths, GPIO numbers, I2C addresses) are defined onl
 | `BASE-NETD` | [network/01_networkd.md](network/01_networkd.md) | systemd-networkd, segments, uplink fallback, resolved | INIT | medium | `draft` |
 | `BASE-FW` | [network/02_firewall.md](network/02_firewall.md) | nftables framework: chains, policies, ban sets, logging | INIT, NETD | high | `draft` |
 | `BASE-FWP` | [network/03_firewall-policy.md](network/03_firewall-policy.md) | Port/forward/output matrices, `service_nets`, NAT | FW, NETD, PROV | high | `draft` |
-| `BASE-WAP` | [network/04_wlan-ap.md](network/04_wlan-ap.md) | hostapd: IoT and guest WLAN, WPA3 | INIT, NETD, FW, PROV | medium | `draft` |
-| `BASE-DNS` | [network/05_dhcp-dns.md](network/05_dhcp-dns.md) | dnsmasq for IoT, guest and USB service segment | INIT, NETD, FW | low | `draft` |
+| `BASE-WAP` | [network/04_wlan-ap.md](network/04_wlan-ap.md) | hostapd: IoT WLAN (`bynacon-iot`), WPA3, on-board radio only | INIT, NETD, FW, PROV | medium | `draft` |
+| `BASE-DNS` | [network/05_dhcp-dns.md](network/05_dhcp-dns.md) | dnsmasq for the IoT and USB service segments | INIT, NETD, FW | low | `draft` |
 | `BASE-WCLI` | [network/06_wlan-client.md](network/06_wlan-client.md) | iwd (fallback uplink) | INIT, NETD | low | `draft` |
 | `BASE-VPN` | [network/07_vpn.md](network/07_vpn.md) | WireGuard client to the Bynacon VPN server | INIT, NETD, FWP, PROV | high | `draft` |
 | `BASE-SSH` | [network/08_ssh.md](network/08_ssh.md) | OpenSSH, key-only, Bynacon service key | INIT, FWP, PROV | high | `draft` |
@@ -188,9 +188,9 @@ Each shared resource has exactly one owner module. Other modules use it and neve
 | systemd, unit integration and sandboxing rules | `BASE-INIT` | all modules |
 | Distro conf `modberry`, image variants, accounts | `BASE-INIT` | all modules |
 | Interface names, address plan, `.network` / `.netdev` convention | `BASE-NETD` | `BASE-FW`, `BASE-FWP`, `BASE-WAP`, `BASE-DNS`, `BASE-TIME`, `BASE-VPN`, `BASE-USBG`, `THREAD-*` |
-| `.network` / `.netdev` file of an interface | module that owns the interface: `BASE-NETD` (`lan0`, `lan1`, `br-iot`, `wlan1_sta`, `can0`), `BASE-WAP` (`wlan0_iot`, `wlan0_guest`), `BASE-VPN` (`wg0`), `BASE-USBG` (`usb0`) | — |
+| `.network` / `.netdev` file of an interface | module that owns the interface: `BASE-NETD` (`lan0`, `lan1`, `br-iot`, `wlan1_sta`, `can0`), `BASE-WAP` (`wlan0_iot`), `BASE-VPN` (`wg0`), `BASE-USBG` (`usb0`) | — |
 | nftables table `inet filter`, ban sets, `/etc/nftables.d/` | `BASE-FW` | `BASE-FWP`, `BASE-IDS`, `BASE-CONT`, `THREAD-NAT64`, `meta-ota` |
-| Port, forward and output matrix, allow list `service_nets`, guest NAT | `BASE-FWP` | all modules with network services, `BASE-WEB`, `BASE-IDS` |
+| Port, forward and output matrix, allow list `service_nets`, NAT table | `BASE-FWP` | all modules with network services, `BASE-WEB`, `BASE-IDS` |
 | dnsmasq, `/etc/dnsmasq.d/` | `BASE-DNS` | `BASE-USBG`, `THREAD-NAT64` (DNS64) |
 | hostapd control interface | `BASE-WAP` | `BASE-IDS` |
 | `/dev/tpmrm0`, TSS2, OpenSSL TPM provider | `BASE-TPM` | `BASE-MBOOT`, `BASE-ROOTFS`, `BASE-LUKS`, `BASE-WEB`, `BASE-PROV` |

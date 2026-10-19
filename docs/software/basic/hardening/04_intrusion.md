@@ -71,7 +71,7 @@ This module detects attacks from the network and blocks the attackers for a limi
 
 ### 4.4 hostapd Events
 
-- `BASE-IDS-30` **MUST** An event script reacts to hostapd events on both AP interfaces (`wlan0_iot`, `wlan0_guest`).
+- `BASE-IDS-30` **MUST** An event script reacts to hostapd events on the AP interface `wlan0_iot`.
 - `BASE-IDS-31` **MUST** A deauthentication flood or repeated authentication failures from one MAC address lead to a temporary MAC ban.
 - `BASE-IDS-32` **MUST** The event script runs as a systemd service with `Restart=on-failure` (`BASE-INIT-23`) and connects to the hostapd control interface as member of the control interface group (`BASE-WAP-30`).
 

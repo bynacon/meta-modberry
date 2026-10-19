@@ -89,6 +89,7 @@ This module makes the root filesystem read-only and verifies every block that is
 | `/var/lib/iwd/` | `/data/lib/iwd/` | `BASE-WCLI-22` |
 | `/var/lib/chrony/` | `/data/lib/chrony/` | `BASE-TIME` (NTS cookies, drift) |
 | `/etc/ssh/ssh_host_*` | via `/etc` overlay | `BASE-SSH-04` |
+| `/var/lib/bluetooth/` | `/data/lib/bluetooth/` | `BASE-BLE-16` |
 | `/var/lib/misc/` (dnsmasq leases) | `/data/lib/misc/` | `BASE-DNS` |
 | syslog-ng disk buffer | `/data/lib/syslog-ng/` | `BASE-LOGDB-06` |
 | application data (database, Docker) | `/data/app/` | application layer, `BASE-CONT` (`/data/app/docker`) |

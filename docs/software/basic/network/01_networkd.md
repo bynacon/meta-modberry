@@ -13,7 +13,7 @@
 
 ## 1. Purpose
 
-This module configures all network interfaces of the device with systemd-networkd. It defines the network segments of the device and keeps them isolated from each other: the service and uplink network (LAN0), the IoT network for sensors and actuators (LAN1 and the IoT WLAN), and the guest WLAN. It also defines the interface names, the address plan and the uplink that all other network modules use.
+This module configures all network interfaces of the device with systemd-networkd. It defines the network segments of the device and keeps them isolated from each other: the service and uplink network (LAN0) and the IoT network for sensors and actuators (LAN1 and the IoT WLAN). It also defines the interface names, the address plan and the uplink that all other network modules use.
 
 ---
 
@@ -29,7 +29,7 @@ This module configures all network interfaces of the device with systemd-network
 
 ### Out of scope
 
-- WLAN AP interfaces (`wlan0_iot`, `wlan0_guest`) and their `.netdev` / `.network` files → `BASE-WAP`
+- WLAN AP interface (`wlan0_iot`) and its `.netdev` / `.network` files → `BASE-WAP`
 - WireGuard interface and its `.network` / `.netdev` files → `BASE-VPN`
 - USB service interface `usb0` → `BASE-USBG`
 - WLAN client authentication (iwd) → `BASE-WCLI`
@@ -62,16 +62,16 @@ This module configures all network interfaces of the device with systemd-network
 
 ### 4.2 Network Segments
 
-- `BASE-NETD-10` **MUST** The device provides the segments of the address plan (section 5.1): LAN0 (service and uplink), IoT (sensors and actuators), guest.
+- `BASE-NETD-10` **MUST** The device provides the segments of the address plan (section 5.1): LAN0 (service and uplink), IoT (sensors and actuators), and the USB service segment (`BASE-USBG`).
 - `BASE-NETD-11` **MUST** The IoT segment is one bridge `br-iot`. Its members are the LAN1 Ethernet port and the IoT WLAN interface (`wlan0_iot`, owned by `BASE-WAP`).
-- `BASE-NETD-12` **MUST** No interface of one segment is a member of another segment. LAN0 and the guest network are never bridged.
+- `BASE-NETD-12` **MUST** No interface of one segment is a member of another segment. LAN0 is never bridged.
 - `BASE-NETD-13` **MUST** Bridges are defined as systemd-networkd `.netdev` files.
 - `BASE-NETD-14` **MUST** IP forwarding is enabled only on interfaces whose traffic is routed by the forward matrix of `BASE-FWP`.
 
 ### 4.3 Naming & Addressing
 
 - `BASE-NETD-20` **MUST** Both Ethernet ports get persistent names (`lan0`, `lan1`) via `.link` files that match the driver or the device path, not the probe order.
-- `BASE-NETD-21` **MUST** The device has a static address in the IoT and guest segments (section 5.1).
+- `BASE-NETD-21` **MUST** The device has a static address in the IoT segment (section 5.1).
 - `BASE-NETD-22` **MUST** `lan0` gets its address via DHCP from the upstream network.
 - `BASE-NETD-23` **MUST** IPv6 link-local addressing is enabled on all segments (required for Thread border routing).
 - `BASE-NETD-24` **MUST** The WLAN client interface gets its address via DHCP from networkd, not from iwd.
@@ -98,8 +98,7 @@ This module configures all network interfaces of the device with systemd-network
 | :-- | :-- | :-- | :-- | :-- | :-- |
 | LAN0 – service & uplink | `lan0` | CM4 Gigabit port (`bcmgenet`) | DHCP from upstream | DHCP | decided |
 | IoT – sensors & actuators | `br-iot` (`lan1` + `wlan0_iot`) | LAN9514 port (`smsc95xx`) + IoT SSID | `172.30.10.0/24` | `172.30.10.1` | decided |
-| Guest | `wlan0_guest` | guest SSID | `172.30.20.0/24` | `172.30.20.1` | decided |
-| Uplink fallback | `wlan1_sta` | WLAN client | DHCP | DHCP | decided |
+| Uplink fallback | `wlan1_sta` | WLAN client on the USB WLAN adapter (optional) | DHCP | DHCP | decided |
 | VPN | `wg0` | WireGuard | per `BASE-VPN` | per `BASE-VPN` | open |
 | USB service | `usb0` | USB gadget | `172.30.30.0/29` | `172.30.30.1` | decided (`BASE-USBG`) |
 | CAN | `can0` | MCP2515 | — | — | 125 kbit/s |
@@ -130,7 +129,7 @@ This module configures all network interfaces of the device with systemd-network
 - Interface names, segments and address plan – used by `BASE-FW`, `BASE-FWP`, `BASE-WAP`, `BASE-DNS`, `BASE-TIME`, `BASE-VPN`, `BASE-USBG`, `THREAD-*`.
 - Bridge `br-iot` – used by `BASE-WAP` (hostapd adds `wlan0_iot` with `bridge=br-iot`).
 - Convention for `.link` / `.network` / `.netdev` files (`BASE-NETD-02`) – binding for `BASE-WAP`, `BASE-VPN` and `BASE-USBG`.
-- Uplink interfaces `lan0`, `wlan1_sta` – used by `BASE-FWP` (NAT for the guest segment, output rules).
+- Uplink interfaces `lan0`, `wlan1_sta` – used by `BASE-FWP` (output rules).
 - DNS stub resolver `127.0.0.53` – used by `BASE-DNS` (dnsmasq upstream) and all services of the device.
 - `can0` up at boot – used by the application layer.
 
@@ -152,12 +151,12 @@ This module configures all network interfaces of the device with systemd-network
 | `BASE-NETD-02` | `rootfs` | `ls <rootfs>/etc/systemd/network/` | only files listed in the owning modules |
 | `BASE-NETD-03` | `rootfs` | `grep -r 'RUN+=' <rootfs>/etc/udev/rules.d/` | no network setup commands |
 | `BASE-NETD-04` | `manifest` | `iproute2` in image manifest | present |
-| `BASE-NETD-10` | `device` | `networkctl list` | `lan0`, `br-iot`, `wlan0_guest` present and configured |
+| `BASE-NETD-10` | `device` | `networkctl list` | `lan0`, `br-iot` present and configured |
 | `BASE-NETD-11` | `device` | `bridge link` | `lan1` and `wlan0_iot` are ports of `br-iot` |
-| `BASE-NETD-12` | `device` | `bridge link` | `lan0`, `wlan0_guest`, `wlan1_sta` are not bridge ports |
+| `BASE-NETD-12` | `device` | `bridge link` | `lan0`, `wlan1_sta` are not bridge ports |
 | `BASE-NETD-14` | `device` | `sysctl net.ipv4.conf.<if>.forwarding` per interface | `1` only on routed interfaces |
 | `BASE-NETD-20` | `device` | Reboot twice, `ip link` | `lan0`, `lan1` always on the same physical port |
-| `BASE-NETD-21` | `device` | `ip -4 addr show br-iot`, `ip -4 addr show wlan0_guest` | addresses from the address plan |
+| `BASE-NETD-21` | `device` | `ip -4 addr show br-iot` | `172.30.10.1/24` |
 | `BASE-NETD-22` | `device` | `networkctl status lan0` | address from DHCP |
 | `BASE-NETD-23` | `device` | `ip -6 addr show scope link` | link-local address on every segment |
 | `BASE-NETD-24` | `device` | `networkctl status wlan1_sta` | address from DHCP via networkd |
@@ -172,7 +171,7 @@ This module configures all network interfaces of the device with systemd-network
 ## 8. Constraints & Risks
 
 - **Two Ethernet ports:** 100 Mbit/s via LAN9514 (`smsc95xx`) and 1 Gbit/s via the CM4 PHY (`bcmgenet`). The second port must still be confirmed in the hardware specification. Kernel names (`eth0`, `eth1`) depend on probe order, so `.link` files are required (`BASE-NETD-20`).
-- **The WLAN radio is shared** by the WLAN client and the AP interfaces (`phy0`, BCM43455). All interfaces must use the same channel. Whether the radio supports two AP interfaces plus a client at the same time is open (see `BASE-WAP`). If not, the IoT or guest WLAN cannot run while the WLAN client is used as uplink.
+- `BASE-NETD-30`: the on-board radio runs only the IoT AP (`BASE-WAP-06`). The WLAN client `wlan1_sta` exists only with a USB WLAN adapter; without it, `lan0` is the only uplink.
 - When `lan0` is the uplink, every host in the upstream network is in "LAN0". Access from LAN0 to the IoT segment and to the management services is therefore restricted by `BASE-FW` to an allow list (`service_nets`), which is empty by default.
 - There is no direct service access on `lan0` (no static service address). A service technician uses the upstream network (with an entry in `service_nets`) or the VPN.
 - The `.link` files match by driver. If a USB Ethernet adapter with the `smsc95xx` driver is plugged in, it would also match `10-lan1.link`. If this is a risk, the match must use `Path=` instead (determined on the device with `udevadm info`).
@@ -188,10 +187,10 @@ This module configures all network interfaces of the device with systemd-network
 | # | Question | Affects | Decision |
 | :-- | :-- | :-- | :-- |
 | 1 | Which physical port is LAN0 and which is LAN1? | `BASE-NETD-20` | **Decided:** LAN0 = CM4 Gigabit port (`bcmgenet`), LAN1 = LAN9514 port (`smsc95xx`). |
-| 2 | IPv4 subnets of the IoT and guest segments? | `BASE-NETD-21` | **Decided:** IoT `172.30.10.0/24` (device `.1`), guest `172.30.20.0/24` (device `.1`). |
+| 2 | IPv4 subnets of the local segments? | `BASE-NETD-21` | **Decided:** IoT `172.30.10.0/24` (device `.1`); USB service `172.30.30.0/29`. No guest segment. |
 | 3 | Direct service access on LAN0, and restriction of LAN0 → IoT. | `BASE-NETD-22`, `BASE-FWP-02`, `BASE-FWP-13` | **Decided:** no direct access (no static service address); access from LAN0 only from the allow list `service_nets` of `BASE-FW`. |
 | 4 | CAN bitrate? | `BASE-NETD-40` | **Decided:** 125 kbit/s. |
 | 5 | DNS resolver of the device. | `BASE-NETD-25`, `BASE-NETD-26` | **Decided:** `systemd-resolved`. |
 | 6 | LAN0 and LAN1 as separate ports. | `BASE-NETD-10` | **Decided:** two physical ports (LAN9514 and CM4 Gigabit PHY). |
 | 7 | Uplink. | `BASE-NETD-30` | **Decided:** LAN0 preferred, WLAN client as fallback. |
-| 8 | Network segments. | `BASE-NETD-10`, `BASE-NETD-11` | **Decided:** LAN0 (service & uplink), IoT (LAN1 + IoT WLAN), guest WLAN. |
+| 8 | Network segments. | `BASE-NETD-10`, `BASE-NETD-11` | **Decided:** LAN0 (service & uplink), IoT (LAN1 + IoT WLAN), USB service; no guest WLAN. |
