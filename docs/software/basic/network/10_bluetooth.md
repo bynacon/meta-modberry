@@ -5,7 +5,7 @@
 | **Module ID** | `BASE-BLE` |
 | **Stack** | `basic` |
 | **Spec status** | `draft` |
-| **Depends on** | `BASE-INIT` |
+| **Depends on** | `BASE-INIT`, `BASE-HWT` |
 | **Hardware reference** | [M40804W_MAX.md](../../../hardware/M40804W_MAX.md) – CM4 Bluetooth (BCM43455) |
 | **Risk** | `medium` |
 
@@ -60,6 +60,8 @@ This module provides Bluetooth Low Energy for reading BLE sensors. The device ac
 - `BASE-BLE-14` **MUST** The allow list is issued by Bynacon as a signed file (via provisioning or an update). The device verifies the signature before it uses the list; it cannot be changed locally.
 - `BASE-BLE-15` **MUST** Sensors are connected over GATT with pairing and bonding (LE Secure Connections). Pairing is started only by the application, and only for sensors in the Bynacon allow list; incoming pairing requests are refused.
 - `BASE-BLE-16` **MUST** Bonding keys are stored persistently on the encrypted data partition (`/var/lib/bluetooth`, `BASE-ROOTFS`).
+- `BASE-BLE-17` **MUST** Bynacon releases only sensors that support passkey or out-of-band (OOB) pairing. Sensors that support only "Just Works" are released only for pairing in a controlled environment. Each entry of the allow list states the allowed pairing method (`passkey`, `oob` or `controlled`).
+- `BASE-BLE-18` **MUST** The device enforces the pairing method of the allow list: for `passkey` and `oob` entries, "Just Works" pairing is refused. A `controlled` entry can be paired only while the service mode is active (user button held for 5 seconds, `BASE-HWT-33`).
 
 ### 4.3 Access Control
 
@@ -78,7 +80,7 @@ This module provides Bluetooth Low Energy for reading BLE sensors. The device ac
 | `bluetooth.service.d/` | `ExecStart=… --noplugin=sap,network,input,hog` (only the plugins needed for LE sensors) | `BASE-BLE-13` |
 | `/etc/dbus-1/system.d/bluetooth.conf` | `allow` for group `bluetooth` only | `BASE-BLE-20` |
 | `/var/lib/bluetooth/` | on `/data` (`BASE-ROOTFS`), mode `0700` | `BASE-BLE-16` |
-| `/data/provisioning/ble/allowlist.json` + `.sig` | signed by the Bynacon key; public key in the image | `BASE-BLE-12`, `BASE-BLE-14` |
+| `/data/provisioning/ble/allowlist.json` + `.sig` | signed by the Bynacon key; public key in the image; per entry: address or IRK, sensor type, `pairing` = `passkey` \| `oob` \| `controlled` | `BASE-BLE-12`, `BASE-BLE-14`, `BASE-BLE-17` |
 | Build: production image | no `bluez5-noinst-tools`, `bluez5-obex` | `BASE-BLE-13` |
 
 ---
@@ -112,6 +114,8 @@ This module provides Bluetooth Low Energy for reading BLE sensors. The device ac
 | `BASE-BLE-14` | `device` | Modify the allow list without re-signing, restart the application | list rejected, no sensor accepted |
 | `BASE-BLE-15` | `device` | Pair an allow-listed test sensor via the application; start pairing from a phone | sensor bonded; phone refused |
 | `BASE-BLE-16` | `device` | Bond a sensor, reboot, reconnect | reconnects without new pairing; keys under `/data` |
+| `BASE-BLE-17` | `rootfs` | Validate the allow list schema | every entry has a `pairing` method |
+| `BASE-BLE-18` | `device` | Pair a `passkey` sensor with "Just Works"; pair a `controlled` sensor outside and inside service mode | refused; refused outside, accepted inside service mode |
 | `BASE-BLE-20` | `device` | `bluetoothctl list` as a user without group `bluetooth` | access denied |
 | `BASE-BLE-21` | `device` | Pair a test sensor, `journalctl -u bluetooth` | event logged |
 
@@ -121,7 +125,7 @@ This module provides Bluetooth Low Energy for reading BLE sensors. The device ac
 
 - `BASE-BLE-01`: with `miniuart-bt`, Bluetooth uses the mini UART, whose baud rate depends on the VPU core clock. The core clock must be fixed (`core_freq` in `config.txt`), otherwise the BT link is unstable.
 - `BASE-BLE-10`: BLE and WLAN share the BCM43455 radio (2.4 GHz coexistence). Heavy BLE scanning can reduce WLAN throughput.
-- `BASE-BLE-15`: sensors without display or keys support only "Just Works" pairing, which has no protection against man-in-the-middle attacks during pairing. Bynacon should release only sensors that support passkey or out-of-band pairing, or pair them in a controlled environment.
+- `BASE-BLE-17`, `BASE-BLE-18`: "Just Works" pairing has no protection against man-in-the-middle attacks during pairing. Binding it to the service mode requires physical access to the device during pairing; the risk remains for that moment.
 
 ---
 
@@ -132,3 +136,4 @@ This module provides Bluetooth Low Energy for reading BLE sensors. The device ac
 | 1 | Which BLE sensors are used: advertisements only, or GATT connections with pairing? | `BASE-BLE-11`, `BASE-BLE-12` | **Decided:** GATT with pairing and bonding, only for sensors released by Bynacon (`BASE-BLE-15`). |
 | 2 | Who manages the allow list (provisioning, web interface)? | `BASE-BLE-12` | **Decided:** Bynacon only; signed list (`BASE-BLE-14`). |
 | 3 | Bluetooth needed. | Scope | **Decided:** yes, BLE for sensors. |
+| 4 | Pairing methods of released sensors. | `BASE-BLE-17`, `BASE-BLE-18` | **Decided:** only passkey or OOB sensors; "Just Works" sensors only in a controlled environment (service mode). |

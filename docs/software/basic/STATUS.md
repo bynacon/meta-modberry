@@ -22,7 +22,7 @@ Generated: 2026-10-19. Source of the state: `agent/tasks/basic.json`.
 | 3 | [`BASE-TIME`](04_time.md) | draft | 7 | 16 | 7 | 0 | 0 | 0 | 0 | 0 |
 | 3 | [`BASE-VPN`](network/07_vpn.md) | draft | 1 | 7 | 1 | 0 | 0 | 0 | 0 | 0 |
 | 3 | [`BASE-WEB`](network/09_web-proxy.md) | draft | 1 | 7 | 1 | 0 | 0 | 0 | 0 | 0 |
-| 4 | [`BASE-BLE`](network/10_bluetooth.md) | draft | 3 | 12 | 3 | 0 | 0 | 0 | 0 | 0 |
+| 4 | [`BASE-BLE`](network/10_bluetooth.md) | draft | 3 | 14 | 3 | 0 | 0 | 0 | 0 | 0 |
 | 4 | [`BASE-IDS`](hardening/04_intrusion.md) | draft | 5 | 16 | 5 | 0 | 0 | 0 | 0 | 0 |
 | 4 | [`BASE-KERN`](hardening/01_kernel.md) | draft | 4 | 17 | 4 | 0 | 0 | 0 | 0 | 0 |
 | 4 | [`BASE-USB`](hardening/05_usb.md) | draft | 3 | 11 | 3 | 0 | 0 | 0 | 0 | 0 |

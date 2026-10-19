@@ -2828,13 +2828,14 @@
       "id": "T-BASE-BLE-4.1",
       "module": "BASE-BLE",
       "spec": "docs/software/basic/network/10_bluetooth.md",
-      "spec_hash": "bf82976d086bd760",
+      "spec_hash": "26469be4f4c79e20",
       "group": "4.1",
       "title": "Bluetooth Low Energy (BlueZ) – Controller",
       "phase": 4,
       "risk": "medium",
       "human_gate": false,
       "depends_on_modules": [
+        "BASE-HWT",
         "BASE-INIT"
       ],
       "reqs": [
@@ -2865,20 +2866,21 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 522,
+      "pack_tokens": 525,
       "needs_review": false
     },
     {
       "id": "T-BASE-BLE-4.2",
       "module": "BASE-BLE",
       "spec": "docs/software/basic/network/10_bluetooth.md",
-      "spec_hash": "bf82976d086bd760",
+      "spec_hash": "26469be4f4c79e20",
       "group": "4.2",
       "title": "Bluetooth Low Energy (BlueZ) – Roles & Pairing",
       "phase": 4,
       "risk": "medium",
       "human_gate": false,
       "depends_on_modules": [
+        "BASE-HWT",
         "BASE-INIT"
       ],
       "reqs": [
@@ -2909,10 +2911,19 @@
         {
           "id": "BASE-BLE-16",
           "level": "MUST"
+        },
+        {
+          "id": "BASE-BLE-17",
+          "level": "MUST"
+        },
+        {
+          "id": "BASE-BLE-18",
+          "level": "MUST"
         }
       ],
       "verify_levels": [
-        "device"
+        "device",
+        "rootfs"
       ],
       "blocked_by": [],
       "blocked_reqs": [],
@@ -2923,20 +2934,21 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 1033,
+      "pack_tokens": 1315,
       "needs_review": false
     },
     {
       "id": "T-BASE-BLE-4.3",
       "module": "BASE-BLE",
       "spec": "docs/software/basic/network/10_bluetooth.md",
-      "spec_hash": "bf82976d086bd760",
+      "spec_hash": "26469be4f4c79e20",
       "group": "4.3",
       "title": "Bluetooth Low Energy (BlueZ) – Access Control",
       "phase": 4,
       "risk": "medium",
       "human_gate": false,
       "depends_on_modules": [
+        "BASE-HWT",
         "BASE-INIT"
       ],
       "reqs": [
@@ -2961,7 +2973,7 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 308,
+      "pack_tokens": 311,
       "needs_review": false
     },
     {
@@ -4087,8 +4099,7 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 458,
-      "needs_review": false
+      "pack_tokens": 458
     },
     {
       "id": "T-BASE-ROOTFS-4.2",
@@ -4136,8 +4147,7 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 768,
-      "needs_review": false
+      "pack_tokens": 768
     },
     {
       "id": "T-BASE-ROOTFS-4.3",
@@ -4183,8 +4193,7 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 988,
-      "needs_review": false
+      "pack_tokens": 988
     },
     {
       "id": "T-BASE-ROOTFS-4.4",
@@ -4222,8 +4231,7 @@
       },
       "evidence": [],
       "notes": "",
-      "pack_tokens": 418,
-      "needs_review": false
+      "pack_tokens": 418
     },
     {
       "id": "T-BASE-VBOOT-4.1",
